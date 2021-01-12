@@ -16,6 +16,8 @@ if __name__ == '__main__':
     road2.set_colorkey('white')
     cloud = pygame.image.load('imgs/cloud.png')
     cloud.set_colorkey('white')
+    night_sun = pygame.image.load('imgs/night_sun.png')
+    night_sun.set_colorkey('black')
     moon = pygame.image.load('imgs/moon.png')
     moon.set_colorkey('black')
     star = pygame.image.load('imgs/star.png')
@@ -87,6 +89,7 @@ if __name__ == '__main__':
         screen.blit(cloud, (200, 100))
         screen.blit(moon, (400, 80))
         screen.blit(star, (500, 130))
+        screen.blit(night_sun, (650, 100))
 
         screen.blit(road1, (road_cord_x1, 270))
         screen.blit(road2, (road_cord_x2, 270))
