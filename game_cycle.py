@@ -6,7 +6,7 @@ from dino import Dino
 from bird import Bird
 
 FPS = 60
-color = 'white'
+color = 'black'
 
 if __name__ == '__main__':
     pygame.init()
