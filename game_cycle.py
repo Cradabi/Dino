@@ -37,6 +37,7 @@ if __name__ == '__main__':
     road_cord_x1 = 0
     road_cord_x2 = 2398
     running = True
+    road_v = 1.0
     while running:
 
         clock.tick(FPS)
@@ -93,11 +94,12 @@ if __name__ == '__main__':
             road_cord_x1 = 0
             road_cord_x2 = 2398
         else:
-            road_cord_x1 -= 10
-            road_cord_x2 -= 10
+            road_cord_x1 -= int(10 * road_v)
+            road_cord_x2 -= int(10 * road_v)
+        if road_v < 1.7:
+            road_v += 0.00016
 
         if fire_status:
-            # d.fire_anim(screen)
             pygame.draw.circle(screen, (245, 109, 12), (fire_cor_x, fire_cor_y), 20)
             fire_cor_x += 10
         if fire_cor_x > 800:
