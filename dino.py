@@ -43,17 +43,6 @@ class Dino:
             self.out_now_sit = 'img1'
         screen.blit(self.out, (self.x, self.y))
 
-    def fire_anim(self, screen):
-        t = 0
-        for i in range(20):
-            t += 1
-            if t % 10 == 0:
-                screen.fill('black')
-                screen.blit(self.fire_img2, (self.x, self.y))
-            if t % 19 == 0:
-                screen.fill('black')
-                screen.blit(self.fire_img1, (self.x, self.y))
-
     def jump_anim(self, screen):
         k = 20
         while k > 0:
