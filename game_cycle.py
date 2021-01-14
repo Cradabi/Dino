@@ -35,6 +35,9 @@ if __name__ == '__main__':
     fire_status = False
     fire_cor_x = 355
     fire_cor_y = 230
+    water_status = False
+    water_cor_x = 355
+    water_cor_y = 230
     jump_status = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
@@ -51,13 +54,22 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                fire_status = True
+                if event.button == 1:
+                    fire_status = True
+                if event.button == 3:
+                    water_status = True
                 if status_dino == 'sit':
                     fire_cor_y = 264
                     fire_cor_x = 380
                 elif not fire_status:
                     fire_cor_x = 355
                     fire_cor_y = 230
+                if status_dino == 'sit':
+                    water_cor_y = 264
+                    water_cor_x = 380
+                elif not water_status:
+                    water_cor_x = 355
+                    water_cor_y = 230
             if event.type == pygame.KEYDOWN:
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
@@ -108,6 +120,13 @@ if __name__ == '__main__':
         if fire_cor_x > 800:
             fire_cor_x = 355
             fire_status = False
+
+        if water_status:
+            pygame.draw.circle(screen, (0, 128, 255), (water_cor_x, water_cor_y), 20)
+            water_cor_x += 10
+        if water_cor_x > 800:
+            water_cor_x = 355
+            water_status = False
 
         # отрисовка и изменение свойств объектов
         # ...
