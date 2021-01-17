@@ -1,5 +1,4 @@
 import pygame
-from cactus import Cactus
 
 
 class Dino(pygame.sprite.Sprite):
@@ -72,9 +71,9 @@ class Dino(pygame.sprite.Sprite):
             screen.fill('black')
             screen.blit(self.fire_img1, (self.x, self.y))
 
-    def collide_check(self, all_cacti):
-        collide_sprite = pygame.sprite.spritecollideany(self, all_cacti)
-        if isinstance(collide_sprite, Cactus):
+    def collide_check(self, group, spr_class):
+        collide_sprite = pygame.sprite.spritecollideany(self, group)
+        if isinstance(collide_sprite, spr_class):
             self.die()
 
     def die(self):  # TODO сделать нормальную смерть а не вот это

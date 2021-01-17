@@ -85,7 +85,7 @@ if __name__ == '__main__':
     t_b = 0
     time = 0
     d = Dino()
-    b = Bird()
+    birds = pygame.sprite.Group()
     status_dino = 'run'
     fire_status = False
     fire_cor_x = d.x + 89
@@ -98,14 +98,16 @@ if __name__ == '__main__':
     road_cord_x2 = 2398
     running = True
     road_v = 1.0
-    road_speed = 5
+    road_speed = 10
     score = 0
     num_s = ''
     score_t = 0
     score_cord_x = 570
     score_cord_y = 50
     rand_time = -30
+    now_barier = 'cactus'
     next_barier = 'cactus'
+    last_cactus = True
     score_str = str(score)
     while running:
 
@@ -156,29 +158,52 @@ if __name__ == '__main__':
             elif status_dino == 'sit':
                 d.sit_anim(screen)
             # b.fly_anim(screen)
-        if time % (70 + rand_time) == 0 and next_barier == 'cactus':
+        if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
+                next_barier == 'cactus' and not last_cactus):
+            last_cactus = True
             # TODO сделать нормальное время между появлениями кактусов(препятсвий)
             Cactus(800, 226, cacti[randint(0, 4)], all_cacti)
+            now_barier = 'cactus'
             time = time % 10
             rand_time = randint(-10, 40)
-            # if score > 500:
-            #    choose = randint(1, 4)
-            #    if choose == 4:
-            #        next_barier = 'bird'
-            #    else:
-            #        next_barier = 'cactus'
+        elif (time % (70 + rand_time) == 0 and next_barier == 'bird' and last_cactus) or (
+                next_barier == 'bird' and not last_cactus):
+            last_cactus = False
+            Bird(800, 150, birds)
+            now_barier = 'bird'
+            next_barier = ''
 
         screen.fill('black')
 
         screen.blit(d.out, (d.x, d.y))
         # screen.blit(b.out, (b.x, b.y))
-        d.collide_check(all_cacti)
+        d.collide_check(all_cacti, Cactus)
+        d.collide_check(birds, Bird)
 
-        all_cacti.update(road_v * road_speed)
-        for cactus in all_cacti:
-            if cactus.rect.x < -35:
-                cactus.kill()
-        all_cacti.draw(screen)
+        if now_barier == 'cactus':
+            all_cacti.update(road_v * road_speed)
+            for cactus in all_cacti:
+                if cactus.rect.x < -34:  # только если маленький кактус
+                    cactus.kill()
+                    if score > 50:
+                        choose = randint(1, 4)
+                        if choose == 4:
+                            next_barier = 'bird'
+                        else:
+                            next_barier = 'cactus'
+            all_cacti.draw(screen)
+        if now_barier == 'bird':
+            birds.update(road_v * road_speed, time)
+            for bird in birds:
+                if bird.rect.x < -94:
+                    bird.kill()
+            if not birds.spritedict:
+                choose = randint(1, 4)
+                if choose == 4:
+                    next_barier = 'bird'
+                else:
+                    next_barier = 'cactus'
+            birds.draw(screen)
 
         screen.blit(cloud, (200, 100))
         screen.blit(moon, (400, 80))
