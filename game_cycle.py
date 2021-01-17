@@ -45,6 +45,8 @@ if __name__ == '__main__':
     num_9.set_colorkey('white')
     rerun_img = pygame.image.load('imgs/rerun.png')
     rerun_img.set_colorkey('white')
+    game_over_img = pygame.image.load('imgs/game_over.png')
+    game_over_img.set_colorkey('white')
     size = width, height = 800, 600
     screen = pygame.display.set_mode(size)
     screen.fill(color)
@@ -126,8 +128,6 @@ if __name__ == '__main__':
         screen.blit(moon, (400, 80))
         screen.blit(star, (500, 130))
         screen.blit(night_sun, (30, 100))
-        screen.blit(num_0, (580, 100))
-        screen.blit(num_1, (610, 100))
 
         screen.blit(road1, (road_cord_x1, 270))
         screen.blit(road2, (road_cord_x2, 270))
