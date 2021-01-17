@@ -4,6 +4,7 @@
 import pygame
 from dino import Dino
 from bird import Bird
+import sqlite3
 
 FPS = 60
 color = 'black'
@@ -22,6 +23,10 @@ if __name__ == '__main__':
     moon.set_colorkey('black')
     star = pygame.image.load('imgs/star.png')
     star.set_colorkey('black')
+    num_0 = pygame.image.load('imgs/0.png')
+    num_0.set_colorkey('white')
+    num_1 = pygame.image.load('imgs/1.png')
+    num_1.set_colorkey('white')
     size = width, height = 800, 600
     screen = pygame.display.set_mode(size)
     screen.fill(color)
@@ -76,7 +81,8 @@ if __name__ == '__main__':
                     d.y += 34
                     time = -1
                 elif event.key == 119:  # elif event.unicode == 'w':
-                    jump_status = 1
+                    if jump_status == 0:
+                        jump_status = 1
             if event.type == pygame.KEYUP:
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'run'
@@ -101,7 +107,9 @@ if __name__ == '__main__':
         screen.blit(cloud, (200, 100))
         screen.blit(moon, (400, 80))
         screen.blit(star, (500, 130))
-        screen.blit(night_sun, (650, 100))
+        screen.blit(night_sun, (30, 100))
+        screen.blit(num_0, (580, 100))
+        screen.blit(num_1, (610, 100))
 
         screen.blit(road1, (road_cord_x1, 270))
         screen.blit(road2, (road_cord_x2, 270))
