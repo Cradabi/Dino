@@ -80,7 +80,6 @@ class Dino(pygame.sprite.Sprite):
     def collide_check(self, group, spr_class):
         collide_sprite = pygame.sprite.spritecollideany(self, group)
         if isinstance(collide_sprite, spr_class):
->>>>>>> 0b7527942fee13b8555d3c92875ba659cbeb5662
             self.die()
 
     def die(self):  # TODO сделать нормальную смерть а не вот это
