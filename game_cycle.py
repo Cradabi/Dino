@@ -171,6 +171,7 @@ if __name__ == '__main__':
                     d.y = d_y
                     jump_status = 0
 
+
             # b.fly_anim(screen)
         if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
                 next_barier == 'cactus' and not last_cactus):
