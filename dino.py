@@ -55,9 +55,32 @@ class Dino(pygame.sprite.Sprite):
         self.rect.x = self.x - 5
         self.rect.y = self.y
 
+<<<<<<< HEAD
     def collide_check(self, all_cacti):
         collide_sprite = pygame.sprite.spritecollideany(self, all_cacti)
         if isinstance(collide_sprite, Cactus):
+=======
+    def jump_anim(self, screen):
+        k = 20
+        while k > 0:
+            k -= 1
+            self.y -= 5
+            screen.fill('black')
+            screen.blit(self.fire_img1, (self.x, self.y))
+        k = 5
+        while k > 0:
+            k -= 1
+        k = 20
+        while k > 0:
+            k -= 1
+            self.y += 5
+            screen.fill('black')
+            screen.blit(self.fire_img1, (self.x, self.y))
+
+    def collide_check(self, group, spr_class):
+        collide_sprite = pygame.sprite.spritecollideany(self, group)
+        if isinstance(collide_sprite, spr_class):
+>>>>>>> 0b7527942fee13b8555d3c92875ba659cbeb5662
             self.die()
 
     def die(self):  # TODO сделать нормальную смерть а не вот это
