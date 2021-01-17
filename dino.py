@@ -1,5 +1,4 @@
 import pygame
-from cactus import Cactus
 
 
 class Dino(pygame.sprite.Sprite):
@@ -55,11 +54,6 @@ class Dino(pygame.sprite.Sprite):
         self.rect.x = self.x - 5
         self.rect.y = self.y
 
-<<<<<<< HEAD
-    def collide_check(self, all_cacti):
-        collide_sprite = pygame.sprite.spritecollideany(self, all_cacti)
-        if isinstance(collide_sprite, Cactus):
-=======
     def jump_anim(self, screen):
         k = 20
         while k > 0:
