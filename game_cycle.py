@@ -70,6 +70,11 @@ if __name__ == '__main__':
     road_cord_x2 = 2398
     running = True
     road_v = 1.0
+    score = 0
+    num_s = ''
+    score_t = 0
+    score_cord = 0
+    score_str = str(score)
     while running:
 
         clock.tick(FPS)
@@ -113,7 +118,6 @@ if __name__ == '__main__':
 
         time += 1
         if time % 10 == 0:
-
             screen.fill('black')
             if status_dino == 'run':
                 d.run_anim(screen)
@@ -130,6 +134,137 @@ if __name__ == '__main__':
         screen.blit(moon, (400, 80))
         screen.blit(star, (500, 130))
         screen.blit(night_sun, (30, 100))
+        if score < 10:
+            screen.blit(num_0, (570, 50))
+            screen.blit(num_0, (600, 50))
+            screen.blit(num_0, (630, 50))
+            screen.blit(num_0, (660, 50))
+            if score == 0:
+                screen.blit(num_0, (690, 50))
+            elif score == 1:
+                screen.blit(num_1, (690, 50))
+            elif score == 2:
+                screen.blit(num_2, (690, 50))
+            elif score == 3:
+                screen.blit(num_3, (690, 50))
+            elif score == 4:
+                screen.blit(num_4, (690, 50))
+            elif score == 5:
+                screen.blit(num_5, (690, 50))
+            elif score == 6:
+                screen.blit(num_6, (690, 50))
+            elif score == 7:
+                screen.blit(num_7, (690, 50))
+            elif score == 8:
+                screen.blit(num_8, (690, 50))
+            elif score == 9:
+                screen.blit(num_9, (690, 50))
+        elif score < 100:
+            screen.blit(num_0, (570, 50))
+            screen.blit(num_0, (600, 50))
+            screen.blit(num_0, (630, 50))
+            score_cord = 630
+            for i in range(2):
+                score_cord += 30
+                if score_str[i] == '0':
+                    screen.blit(num_0, (score_cord, 50))
+                elif score_str[i] == '1':
+                    screen.blit(num_1, (score_cord, 50))
+                elif score_str[i] == '2':
+                    screen.blit(num_2, (score_cord, 50))
+                elif score_str[i] == '3':
+                    screen.blit(num_3, (score_cord, 50))
+                elif score_str[i] == '4':
+                    screen.blit(num_4, (score_cord, 50))
+                elif score_str[i] == '5':
+                    screen.blit(num_5, (score_cord, 50))
+                elif score_str[i] == '6':
+                    screen.blit(num_6, (score_cord, 50))
+                elif score_str[i] == '7':
+                    screen.blit(num_7, (score_cord, 50))
+                elif score_str[i] == '8':
+                    screen.blit(num_8, (score_cord, 50))
+                elif score_str[i] == '9':
+                    screen.blit(num_9, (score_cord, 50))
+        elif score < 1000:
+            screen.blit(num_0, (570, 50))
+            screen.blit(num_0, (600, 50))
+            score_cord = 600
+            for i in range(3):
+                score_cord += 30
+                if score_str[i] == '0':
+                    screen.blit(num_0, (score_cord, 50))
+                elif score_str[i] == '1':
+                    screen.blit(num_1, (score_cord, 50))
+                elif score_str[i] == '2':
+                    screen.blit(num_2, (score_cord, 50))
+                elif score_str[i] == '3':
+                    screen.blit(num_3, (score_cord, 50))
+                elif score_str[i] == '4':
+                    screen.blit(num_4, (score_cord, 50))
+                elif score_str[i] == '5':
+                    screen.blit(num_5, (score_cord, 50))
+                elif score_str[i] == '6':
+                    screen.blit(num_6, (score_cord, 50))
+                elif score_str[i] == '7':
+                    screen.blit(num_7, (score_cord, 50))
+                elif score_str[i] == '8':
+                    screen.blit(num_8, (score_cord, 50))
+                elif score_str[i] == '9':
+                    screen.blit(num_9, (score_cord, 50))
+        elif score < 10000:
+            screen.blit(num_0, (570, 50))
+            score_cord = 570
+            for i in range(4):
+                score_cord += 30
+                if score_str[i] == '0':
+                    screen.blit(num_0, (score_cord, 50))
+                elif score_str[i] == '1':
+                    screen.blit(num_1, (score_cord, 50))
+                elif score_str[i] == '2':
+                    screen.blit(num_2, (score_cord, 50))
+                elif score_str[i] == '3':
+                    screen.blit(num_3, (score_cord, 50))
+                elif score_str[i] == '4':
+                    screen.blit(num_4, (score_cord, 50))
+                elif score_str[i] == '5':
+                    screen.blit(num_5, (score_cord, 50))
+                elif score_str[i] == '6':
+                    screen.blit(num_6, (score_cord, 50))
+                elif score_str[i] == '7':
+                    screen.blit(num_7, (score_cord, 50))
+                elif score_str[i] == '8':
+                    screen.blit(num_8, (score_cord, 50))
+                elif score_str[i] == '9':
+                    screen.blit(num_9, (score_cord, 50))
+        elif score < 100000:
+            score_cord = 540
+            for i in range(5):
+                score_cord += 30
+                if score_str[i] == '0':
+                    screen.blit(num_0, (score_cord, 50))
+                elif score_str[i] == '1':
+                    screen.blit(num_1, (score_cord, 50))
+                elif score_str[i] == '2':
+                    screen.blit(num_2, (score_cord, 50))
+                elif score_str[i] == '3':
+                    screen.blit(num_3, (score_cord, 50))
+                elif score_str[i] == '4':
+                    screen.blit(num_4, (score_cord, 50))
+                elif score_str[i] == '5':
+                    screen.blit(num_5, (score_cord, 50))
+                elif score_str[i] == '6':
+                    screen.blit(num_6, (score_cord, 50))
+                elif score_str[i] == '7':
+                    screen.blit(num_7, (score_cord, 50))
+                elif score_str[i] == '8':
+                    screen.blit(num_8, (score_cord, 50))
+                elif score_str[i] == '9':
+                    screen.blit(num_9, (score_cord, 50))
+        if score_t % 3 == 0:
+            score += 1
+            score_str = str(score)
+        score_t += 1
 
         screen.blit(road1, (road_cord_x1, 270))
         screen.blit(road2, (road_cord_x2, 270))
