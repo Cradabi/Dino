@@ -101,7 +101,7 @@ if __name__ == '__main__':
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
                     d.y += 34
-                    time = -1
+                    d.sit_anim(screen)  # time = -1
                 elif event.key == 119:  # elif event.unicode == 'w':
                     if jump_status == 0:
                         jump_status = 1
@@ -109,7 +109,7 @@ if __name__ == '__main__':
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'run'
                     d.y -= 34
-                    time = -1
+                    d.run_anim(screen)  # time = -1
 
         time += 1
         if time % 10 == 0:
