@@ -2,8 +2,10 @@
 
 
 import pygame
+from random import randint
 from dino import Dino
 from bird import Bird
+from cactus import Cactus
 import sqlite3
 
 FPS = 60
@@ -61,6 +63,20 @@ if __name__ == '__main__':
     game_over_img.set_colorkey('white')
     HI_img = pygame.image.load('imgs/HI.png')
     HI_img.set_colorkey('white')
+
+    small_cactus1 = pygame.image.load('imgs/small_cactus1.png')
+    small_cactus1.set_colorkey('white')
+    small_cactus2 = pygame.image.load('imgs/small_cactus2.png')
+    small_cactus2.set_colorkey('white')
+    small_cactus3 = pygame.image.load('imgs/small_cactus3.png')
+    small_cactus3.set_colorkey('white')
+    small_cactus4 = pygame.image.load('imgs/small_cactus4.png')
+    small_cactus4.set_colorkey('white')
+    small_cactus5 = pygame.image.load('imgs/small_cactus5.png')
+    small_cactus5.set_colorkey('white')
+    cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5]
+    all_cacti = pygame.sprite.Group()
+
     size = width, height = 800, 600
     screen = pygame.display.set_mode(size)
     screen.fill(color)
@@ -72,21 +88,24 @@ if __name__ == '__main__':
     b = Bird()
     status_dino = 'run'
     fire_status = False
-    fire_cor_x = 355
+    fire_cor_x = d.x + 89
     fire_cor_y = 230
     water_status = False
-    water_cor_x = 355
+    water_cor_x = d.x + 89
     water_cor_y = 230
     jump_status = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
     running = True
     road_v = 1.0
+    road_speed = 5
     score = 0
     num_s = ''
     score_t = 0
     score_cord_x = 570
     score_cord_y = 50
+    rand_time = -30
+    next_barier = 'cactus'
     score_str = str(score)
     while running:
 
@@ -105,15 +124,15 @@ if __name__ == '__main__':
                     water_status = True
                 if status_dino == 'sit':
                     fire_cor_y = 264
-                    fire_cor_x = 380
+                    fire_cor_x = d.x + 120
                 elif not fire_status:
-                    fire_cor_x = 355
+                    fire_cor_x = d.x + 89
                     fire_cor_y = 230
                 if status_dino == 'sit':
                     water_cor_y = 264
-                    water_cor_x = 380
+                    water_cor_x = d.x + 120
                 elif not water_status:
-                    water_cor_x = 355
+                    water_cor_x = d.x + 89
                     water_cor_y = 230
             if event.type == pygame.KEYDOWN:
                 if event.key == 115:  # if event.unicode == 's':
@@ -136,12 +155,30 @@ if __name__ == '__main__':
                 d.run_anim(screen)
             elif status_dino == 'sit':
                 d.sit_anim(screen)
-            b.fly_anim(screen)
+            # b.fly_anim(screen)
+        if time % (70 + rand_time) == 0 and next_barier == 'cactus':
+            # TODO сделать нормальное время между появлениями кактусов(препятсвий)
+            Cactus(800, 226, cacti[randint(0, 4)], all_cacti)
+            time = time % 10
+            rand_time = randint(-10, 40)
+            # if score > 500:
+            #    choose = randint(1, 4)
+            #    if choose == 4:
+            #        next_barier = 'bird'
+            #    else:
+            #        next_barier = 'cactus'
 
         screen.fill('black')
 
         screen.blit(d.out, (d.x, d.y))
-        screen.blit(b.out, (b.x, b.y))
+        # screen.blit(b.out, (b.x, b.y))
+        d.collide_check(all_cacti)
+
+        all_cacti.update(road_v * road_speed)
+        for cactus in all_cacti:
+            if cactus.rect.x < -35:
+                cactus.kill()
+        all_cacti.draw(screen)
 
         screen.blit(cloud, (200, 100))
         screen.blit(moon, (400, 80))
@@ -169,8 +206,8 @@ if __name__ == '__main__':
             road_cord_x1 = 0
             road_cord_x2 = 2398
         else:
-            road_cord_x1 -= int(10 * road_v)
-            road_cord_x2 -= int(10 * road_v)
+            road_cord_x1 -= int(road_speed * road_v)
+            road_cord_x2 -= int(road_speed * road_v)
         if road_v < 1.7:
             road_v += 0.00016
 
@@ -178,14 +215,14 @@ if __name__ == '__main__':
             pygame.draw.circle(screen, (245, 109, 12), (fire_cor_x, fire_cor_y), 20)
             fire_cor_x += 10
         if fire_cor_x > 800:
-            fire_cor_x = 355
+            fire_cor_x = d.x + 89
             fire_status = False
 
         if water_status:
             pygame.draw.circle(screen, (0, 128, 255), (water_cor_x, water_cor_y), 20)
             water_cor_x += 10
         if water_cor_x > 800:
-            water_cor_x = 355
+            water_cor_x = d.x + 89
             water_status = False
 
         # отрисовка и изменение свойств объектов
