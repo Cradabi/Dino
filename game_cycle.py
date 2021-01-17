@@ -13,6 +13,8 @@ color = 'black'
 
 if __name__ == '__main__':
     pygame.init()
+    dino1 = pygame.image.load('imgs/dino1.png')
+    dino1.set_colorkey('white')
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
     road2 = pygame.image.load('imgs/road.png')
@@ -83,7 +85,7 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     t_d = 0
     t_b = 0
-    time = 0
+    time = -1
     d = Dino()
     b = Bird()
     status_dino = 'run'
@@ -94,11 +96,12 @@ if __name__ == '__main__':
     water_cor_x = d.x + 89
     water_cor_y = 230
     jump_status = 0
+    jump_time = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
     running = True
     road_v = 1.0
-    road_speed = 5
+    road_speed = 10
     score = 0
     num_s = ''
     score_t = 0
@@ -107,6 +110,8 @@ if __name__ == '__main__':
     rand_time = -30
     next_barier = 'cactus'
     score_str = str(score)
+    d_x = 100
+    d_y = 200
     while running:
 
         clock.tick(FPS)
@@ -138,7 +143,7 @@ if __name__ == '__main__':
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
                     d.y += 34
-                    d.sit_anim(screen)  # time = -1
+                    time = -1
                 elif event.key == 119:  # elif event.unicode == 'w':
                     if jump_status == 0:
                         jump_status = 1
@@ -146,15 +151,24 @@ if __name__ == '__main__':
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'run'
                     d.y -= 34
-                    d.run_anim(screen)  # time = -1
+                    time = -1
 
         time += 1
         if time % 10 == 0:
             screen.fill('black')
-            if status_dino == 'run':
+            if jump_status == 0 and status_dino == 'run':
                 d.run_anim(screen)
-            elif status_dino == 'sit':
+            elif jump_status == 0 and status_dino == 'sit':
                 d.sit_anim(screen)
+            elif jump_status != 0 and status_dino == 'sit':
+                if d_y <= 180:
+                    d_y += 20
+                    d.y = d_y
+                else:
+                    d_y = 200
+                    d.y = d_y
+                    jump_status = 0
+
             # b.fly_anim(screen)
         if time % (70 + rand_time) == 0 and next_barier == 'cactus':
             # TODO сделать нормальное время между появлениями кактусов(препятсвий)
@@ -169,6 +183,32 @@ if __name__ == '__main__':
             #        next_barier = 'cactus'
 
         screen.fill('black')
+
+        if jump_status == 1:
+            jump_time += 1
+            if jump_time % 15 != 0:
+                d_y -= 10
+                d.y = d_y
+                screen.blit(dino1, (d_x, d_y))
+            else:
+                jump_status = 2
+                jump_time = 0
+        elif jump_status == 2:
+            jump_time += 1
+            if jump_time % 3 != 0:
+                screen.blit(dino1, (d_x, d_y))
+            else:
+                jump_status = 3
+                jump_time = 0
+        elif jump_status == 3:
+            jump_time += 1
+            if jump_time % 15 != 0:
+                d_y += 10
+                d.y = d_y
+                screen.blit(dino1, (d_x, d_y))
+            else:
+                jump_status = 0
+                jump_time = 0
 
         screen.blit(d.out, (d.x, d.y))
         # screen.blit(b.out, (b.x, b.y))
