@@ -9,3 +9,28 @@ class Bird(pygame.sprite.Sprite):
         self.fly_img1.set_colorkey('white')
         self.fly_img2.set_colorkey('white')
         self.out_now_fly = 'img1'
+        self.x = x
+        self.y = y
+
+        self.image = self.fly_img1
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+    def update(self, speed, t):
+        if self.out_now_fly == 'img1' and t % 10 == 0:
+            self.image = self.fly_img1
+            # self.rect = self.image.get_rect()
+            # self.rect.x = self.x - speed
+            # self.rect.y = self.y
+            self.out_now_fly = 'img2'
+            # self.rect = self.rect.move(-speed, 12)
+        elif self.out_now_fly == 'img2' and t % 10 == 0:
+            self.image = self.fly_img2
+            # self.rect = self.image.get_rect()
+            # self.rect.x = self.x - speed
+            # self.rect.y = self.y
+            self.out_now_fly = 'img1'
+            # self.rect = self.rect.move(-speed, -12)
+        else:
+            self.rect = self.rect.move(-speed, 0)
