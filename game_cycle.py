@@ -47,6 +47,8 @@ if __name__ == '__main__':
     rerun_img.set_colorkey('white')
     game_over_img = pygame.image.load('imgs/game_over.png')
     game_over_img.set_colorkey('white')
+    HI_img = pygame.image.load('imgs/HI.png')
+    HI_img.set_colorkey('white')
     size = width, height = 800, 600
     screen = pygame.display.set_mode(size)
     screen.fill(color)
