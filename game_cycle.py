@@ -85,7 +85,6 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     t_d = 0
     t_b = 0
-    time = 0
     d = Dino()
     birds = pygame.sprite.Group()
     status_dino = 'run'
@@ -114,6 +113,7 @@ if __name__ == '__main__':
     d_y = 200
     d_x = 100
     jump_time = 0
+    time = -1
     while running:
 
         clock.tick(FPS)
@@ -145,7 +145,6 @@ if __name__ == '__main__':
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
                     d.y += 34
-                    d.sit_anim(screen)  # time = -1
                 elif event.key == 119:  # elif event.unicode == 'w':
                     if jump_status == 0:
                         jump_status = 1
@@ -153,7 +152,6 @@ if __name__ == '__main__':
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'run'
                     d.y -= 34
-                    d.run_anim(screen)  # time = -1
 
         time += 1
         if time % 10 == 0:
