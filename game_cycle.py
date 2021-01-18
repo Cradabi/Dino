@@ -74,6 +74,8 @@ if __name__ == '__main__':
     small_cactus4.set_colorkey('white')
     small_cactus5 = pygame.image.load('imgs/small_cactus5.png')
     small_cactus5.set_colorkey('white')
+    dino1 = pygame.image.load('imgs/dino1.png')
+    dino1.set_colorkey('white')
     cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5]
     all_cacti = pygame.sprite.Group()
 
@@ -109,6 +111,9 @@ if __name__ == '__main__':
     next_barier = 'cactus'
     last_cactus = True
     score_str = str(score)
+    d_y = 200
+    d_x = 100
+    jump_time = 0
     while running:
 
         clock.tick(FPS)
@@ -153,10 +158,44 @@ if __name__ == '__main__':
         time += 1
         if time % 10 == 0:
             screen.fill('black')
-            if status_dino == 'run':
+            if jump_status == 0 and status_dino == 'run':
                 d.run_anim(screen)
-            elif status_dino == 'sit':
+            elif jump_status == 0 and status_dino == 'sit':
                 d.sit_anim(screen)
+            elif jump_status != 0 and status_dino == 'sit':
+                if d_y <= 180:
+                    d_y += 20
+                    d.y = d_y
+                else:
+                    d_y = 200
+                    d.y = d_y
+                    jump_status = 0
+
+        if jump_status == 1:
+            jump_time += 1
+            if jump_time % 15 != 0:
+                d_y -= 10
+                d.y = d_y
+                screen.blit(dino1, (d_x, d_y))
+            else:
+                jump_status = 2
+                jump_time = 0
+        elif jump_status == 2:
+            jump_time += 1
+            if jump_time % 3 != 0:
+                screen.blit(dino1, (d_x, d_y))
+            else:
+                jump_status = 3
+                jump_time = 0
+        elif jump_status == 3:
+            jump_time += 1
+            if jump_time % 15 != 0:
+                d_y += 10
+                d.y = d_y
+                screen.blit(dino1, (d_x, d_y))
+            else:
+                jump_status = 0
+                jump_time = 0
             # b.fly_anim(screen)
         if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
                 next_barier == 'cactus' and not last_cactus):
