@@ -1,5 +1,4 @@
 # Анимация бегущего дино
-# комментарий
 
 import pygame
 from random import randint
