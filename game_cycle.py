@@ -273,14 +273,14 @@ if __name__ == '__main__':
             road_v += 0.00016
 
         if fire_status:
-            pygame.draw.circle(screen, (245, 109, 12), (fire_cor_x, fire_cor_y), 20)
+            d.fare_ball_anim(screen, fire_cor_x, fire_cor_y)
             fire_cor_x += 10
         if fire_cor_x > 800:
             fire_cor_x = d.x + 89
             fire_status = False
 
         if water_status:
-            pygame.draw.circle(screen, (0, 128, 255), (water_cor_x, water_cor_y), 20)
+            d.watter_ball_anim(screen, water_cor_x, water_cor_y)
             water_cor_x += 10
         if water_cor_x > 800:
             water_cor_x = d.x + 89
