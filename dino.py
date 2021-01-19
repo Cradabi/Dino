@@ -22,6 +22,11 @@ class Dino(pygame.sprite.Sprite):
         self.fire_img2.set_colorkey('white')
         self.out_now_fire = 'img1'
 
+        self.fare_ball_img = pygame.image.load('imgs/fare_ball1.jpg')
+        self.fare_ball_img.set_colorkey('black')
+        self.watter_ball_img = pygame.image.load('imgs/watter_ball1.jpg')
+        self.watter_ball_img.set_colorkey('black')
+
         self.out = self.run_img1
         self.x = 100
         self.y = 200
@@ -75,6 +80,26 @@ class Dino(pygame.sprite.Sprite):
         collide_sprite = pygame.sprite.spritecollideany(self, group)
         if isinstance(collide_sprite, spr_class):
             self.die()
+
+    def fare_ball_anim(self, screen, x, y):
+        self.fare_ball_sprites = pygame.sprite.Group()
+        self.fare_ball_sprite = pygame.sprite.Sprite()
+        self.fare_ball_sprite.image = self.fare_ball_img
+        self.fare_ball_sprite.rect = self.fare_ball_sprite.image.get_rect()
+        self.fare_ball_sprites.add(self.fare_ball_sprite)
+        self.fare_ball_sprite.rect.x = x
+        self.fare_ball_sprite.rect.y = y
+        self.fare_ball_sprites.draw(screen)
+
+    def watter_ball_anim(self, screen, x, y):
+        self.watter_ball_sprites = pygame.sprite.Group()
+        self.watter_ball_sprite = pygame.sprite.Sprite()
+        self.watter_ball_sprite.image = self.watter_ball_img
+        self.watter_ball_sprite.rect = self.watter_ball_sprite.image.get_rect()
+        self.watter_ball_sprites.add(self.watter_ball_sprite)
+        self.watter_ball_sprite.rect.x = x
+        self.watter_ball_sprite.rect.y = y
+        self.watter_ball_sprites.draw(screen)
 
     def die(self):  # TODO сделать нормальную смерть а не вот это
         quit()
