@@ -102,4 +102,5 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_sprites.draw(screen)
 
     def die(self):  # TODO сделать нормальную смерть а не вот это
-        quit()
+        # quit()
+        pass
