@@ -2,7 +2,7 @@ import pygame
 
 
 class Dino(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x=100, y=200):
         super().__init__()
         self.run_img1 = pygame.image.load('imgs/dino2.png')
         self.run_img2 = pygame.image.load('imgs/dino3.png')
@@ -28,8 +28,8 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_img.set_colorkey('black')
 
         self.out = self.run_img1
-        self.x = 100
-        self.y = 200
+        self.x = x
+        self.y = y
 
         self.rect = self.out.get_rect()
         self.rect.x = self.x - 15
@@ -44,7 +44,7 @@ class Dino(pygame.sprite.Sprite):
             self.out_now_run = 'img1'
         screen.blit(self.out, (self.x, self.y))
         self.rect = self.out.get_rect()
-        self.rect.x = self.x - 15
+        self.rect.x = self.x  # - 15
         self.rect.y = self.y
 
     def sit_anim(self, screen):
@@ -56,7 +56,7 @@ class Dino(pygame.sprite.Sprite):
             self.out_now_sit = 'img1'
         screen.blit(self.out, (self.x, self.y))
         self.rect = self.out.get_rect()
-        self.rect.x = self.x - 5
+        self.rect.x = self.x  # - 5
         self.rect.y = self.y
 
     def jump_anim(self, screen):
@@ -102,5 +102,11 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_sprites.draw(screen)
 
     def die(self):  # TODO сделать нормальную смерть а не вот это
-        # quit()
-        pass
+        quit()
+        # pass
+
+    def update(self, screen):
+        self.rect = self.out.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+        screen.blit(self.out, (self.x, self.y))
