@@ -1,4 +1,5 @@
 import pygame
+import sqlite3
 
 
 class Dino(pygame.sprite.Sprite):
@@ -34,6 +35,12 @@ class Dino(pygame.sprite.Sprite):
         self.rect = self.out.get_rect()
         self.rect.x = self.x - 15
         self.rect.y = self.y
+
+        self.con = sqlite3.connect('HI.db')
+        self.cur = self.con.cursor()
+        self.HI_s = self.cur.execute(
+            """Select HI From HI""").fetchall()
+        self.HI = int(self.HI_s[0][0])
 
     def run_anim(self, screen):
         if self.out_now_run == 'img1':
@@ -76,10 +83,10 @@ class Dino(pygame.sprite.Sprite):
             screen.fill('black')
             screen.blit(self.fire_img1, (self.x, self.y))
 
-    def collide_check(self, group, spr_class):
+    def collide_check(self, group, spr_class, score):
         collide_sprite = pygame.sprite.spritecollideany(self, group)
         if isinstance(collide_sprite, spr_class):
-            self.die()
+            self.die(score)
 
     def fare_ball_anim(self, screen, x, y):
         self.fare_ball_sprites = pygame.sprite.Group()
@@ -101,7 +108,12 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_sprite.rect.y = y
         self.watter_ball_sprites.draw(screen)
 
-    def die(self):  # TODO сделать нормальную смерть а не вот это
+    def die(self, score):  # TODO сделать нормальную смерть а не вот это
+        if score > self.HI:
+            self.HI_s = self.cur.execute(
+                """Update Hi Set HI = {} Where id = 0""".format(score)).fetchall()
+            print(score)
+        self.con.close()
         quit()
         # pass
 
