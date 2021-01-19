@@ -1,6 +1,5 @@
 # Анимация бегущего дино
 
-
 import pygame
 from random import randint
 from dino import Dino
@@ -83,9 +82,9 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     screen.fill(color)
     clock = pygame.time.Clock()
-    t_d = 0
-    t_b = 0
-    d = Dino()
+    d_y = 210
+    d_x = 100
+    d = Dino(d_x, d_y)
     birds = pygame.sprite.Group()
     status_dino = 'run'
     fire_status = False
@@ -110,8 +109,6 @@ if __name__ == '__main__':
     next_barier = 'cactus'
     last_cactus = True
     score_str = str(score)
-    d_y = 200
-    d_x = 100
     jump_time = 0
     time = -1
     while running:
@@ -144,14 +141,18 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
-                    d.y += 34
+                    d.y = d_y + 34  # d.y += 34
+                    if not jump_status:
+                        d.sit_anim(screen)
                 elif event.key == 119:  # elif event.unicode == 'w':
                     if jump_status == 0:
                         jump_status = 1
             if event.type == pygame.KEYUP:
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'run'
-                    d.y -= 34
+                    d.y = d_y  # d.y -= 34
+                    if not jump_status:
+                        d.run_anim(screen)
 
         time += 1
         if time % 10 == 0:
@@ -161,39 +162,43 @@ if __name__ == '__main__':
             elif jump_status == 0 and status_dino == 'sit':
                 d.sit_anim(screen)
             elif jump_status != 0 and status_dino == 'sit':
-                if d_y <= 180:
-                    d_y += 20
-                    d.y = d_y
+                if d.y <= 180:
+                    d.y += 20
                 else:
-                    d_y = 200
-                    d.y = d_y
+                    d.y = 200
                     jump_status = 0
 
         if jump_status == 1:
             jump_time += 1
             if jump_time % 15 != 0:
-                d_y -= 10
-                d.y = d_y
-                screen.blit(dino1, (d_x, d_y))
+                d.y -= 10
+                d.out = dino1
+                # screen.blit(dino1, (d_x, d_y))
             else:
                 jump_status = 2
                 jump_time = 0
         elif jump_status == 2:
             jump_time += 1
             if jump_time % 3 != 0:
-                screen.blit(dino1, (d_x, d_y))
+                d.out = dino1
+                # screen.blit(dino1, (d_x, d_y))
             else:
                 jump_status = 3
                 jump_time = 0
         elif jump_status == 3:
             jump_time += 1
             if jump_time % 15 != 0:
-                d_y += 10
-                d.y = d_y
-                screen.blit(dino1, (d_x, d_y))
+                d.y += 10
+                d.out = dino1
+                # screen.blit(dino1, (d_x, d_y))
             else:
                 jump_status = 0
                 jump_time = 0
+                if status_dino == 'run':
+                    d.run_anim(screen)
+                elif status_dino == 'sit':
+                    d.sit_anim(screen)
+
             # b.fly_anim(screen)
         if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
                 next_barier == 'cactus' and not last_cactus):
@@ -212,35 +217,37 @@ if __name__ == '__main__':
 
         screen.fill('black')
 
-        screen.blit(d.out, (d.x, d.y))
-        # screen.blit(b.out, (b.x, b.y))
+        # screen.blit(d.out, (d.x, d.y))
+        d.update(screen)
+
         d.collide_check(all_cacti, Cactus)
         d.collide_check(birds, Bird)
 
+        all_cacti.update(road_v * road_speed)
+        all_cacti.draw(screen)
         if now_barier == 'cactus':
-            all_cacti.update(road_v * road_speed)
             for cactus in all_cacti:
                 if cactus.rect.x < -34:  # только если маленький кактус
                     cactus.kill()
                     if score > 50:
-                        choose = randint(1, 4)
+                        choose = randint(1, 4)  # TODO похоже что это нагружает прогу, надо что то сделать
                         if choose == 4:
                             next_barier = 'bird'
                         else:
                             next_barier = 'cactus'
-            all_cacti.draw(screen)
+        birds.update(road_v * road_speed, time)
+        birds.draw(screen)
         if now_barier == 'bird':
-            birds.update(road_v * road_speed, time)
+
             for bird in birds:
                 if bird.rect.x < -94:
                     bird.kill()
             if not birds.spritedict:
-                choose = randint(1, 4)
+                choose = randint(1, 4)  # TODO похоже что это нагружает прогу, надо что то сделать
                 if choose == 4:
                     next_barier = 'bird'
                 else:
                     next_barier = 'cactus'
-            birds.draw(screen)
 
         screen.blit(cloud, (200, 100))
         screen.blit(moon, (400, 80))
