@@ -111,6 +111,15 @@ if __name__ == '__main__':
     score_str = str(score)
     jump_time = 0
     time = -1
+    con = sqlite3.connect('HI.db')
+    cur = con.cursor()
+    HI_s = cur.execute(
+        """Select HI From HI""").fetchall()
+    HI = int(HI_s[0][0])
+    HI_str = str(HI)
+    HI_t = 0
+    HI_coard_x = 530
+    HI_coard_y = 500
     while running:
 
         clock.tick(FPS)
@@ -220,8 +229,8 @@ if __name__ == '__main__':
         # screen.blit(d.out, (d.x, d.y))
         d.update(screen)
 
-        d.collide_check(all_cacti, Cactus)
-        d.collide_check(birds, Bird)
+        d.collide_check(all_cacti, Cactus, score)
+        d.collide_check(birds, Bird, score)
 
         all_cacti.update(road_v * road_speed)
         all_cacti.draw(screen)
@@ -263,6 +272,17 @@ if __name__ == '__main__':
         for i in range(len(score_out)):
             screen.blit(nums_dict[score_out[i]], (score_cord_x, score_cord_y))
             score_cord_x += 30
+
+        score_out = []
+        screen.blit(HI_img, (470, 500))
+        for i in range(1, len(HI_str) + 1):
+            score_out.insert(0, HI_str[len(HI_str) - i])
+        while len(score_out) != 5:
+            score_out.insert(0, '0')
+        HI_cord_x = 570
+        for i in range(len(score_out)):
+            screen.blit(nums_dict[score_out[i]], (HI_cord_x, HI_coard_y))
+            HI_cord_x += 30
 
         if score_t % 3 == 0:
             score += 1
