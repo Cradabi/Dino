@@ -113,7 +113,7 @@ class Dino(pygame.sprite.Sprite):
             self.HI_s = self.cur.execute(
                 """Update Hi Set HI = {} Where id = 0""".format(score)).fetchall()
             print(score)
-        self.con.close()
+        self.con.commit()
         quit()
         # pass
 
