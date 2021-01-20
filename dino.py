@@ -87,7 +87,9 @@ class Dino(pygame.sprite.Sprite):
     def collide_check(self, group, spr_class, score):
         collide_sprite = pygame.sprite.spritecollideany(self, group)
         if isinstance(collide_sprite, spr_class):
-            self.die(score)
+            # self.die(score)
+            return True
+        return False
 
     def fare_ball_anim(self, screen, x, y):
         self.fare_ball_sprites = pygame.sprite.Group()

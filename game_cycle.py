@@ -229,8 +229,10 @@ if __name__ == '__main__':
         # screen.blit(d.out, (d.x, d.y))
         d.update(screen)
 
-        d.collide_check(all_cacti, Cactus, score)
-        d.collide_check(birds, Bird, score)
+        q1 = d.collide_check(all_cacti, Cactus, score)
+        q2 = d.collide_check(birds, Bird, score)
+        if q1 or q2:
+            running = False
 
         all_cacti.update(road_v * road_speed)
         all_cacti.draw(screen)
@@ -319,5 +321,12 @@ if __name__ == '__main__':
 
         # обновление экрана
         pygame.display.flip()
+
+    run = True
+    while run:
+        for event in pygame.event.get():
+            # при закрытии окна
+            if event.type == pygame.QUIT:
+                run = False
 
     pygame.quit()
