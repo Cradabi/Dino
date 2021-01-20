@@ -1,6 +1,37 @@
 import pygame
 import sqlite3
 
+DINO_COLOR = (83, 83, 83)
+
+
+def check_color(spr1, spr2, screen):
+    spr1_sp_x = []
+    for i in range(spr1.rect.width):
+        spr1_sp_x.append(spr1.rect.x + i)
+    spr1_sp_y = []
+    for i in range(spr1.rect.height):
+        spr1_sp_y.append(spr1.rect.y + i)
+
+    spr2_sp_x = []
+    for i in range(spr2.rect.width):
+        spr2_sp_x.append(spr2.rect.x + i)
+    spr2_sp_y = []
+    for i in range(spr2.rect.height):
+        spr2_sp_y.append(spr2.rect.y + i)
+
+    same_x = list(set(spr1_sp_x) & set(spr2_sp_x))
+    same_y = list(set(spr1_sp_y) & set(spr2_sp_y))
+
+    for i in range(len(same_x)):
+        x = same_x[i]
+        for j in range(len(same_y)):
+            y = same_y[j]
+            color1 = spr1.out.get_at((x - spr1.rect.x, y - spr1.rect.y))[:3:]
+            color2 = spr2.image.get_at((x - spr2.rect.x, y - spr2.rect.y))[:3:]
+            if color1 == DINO_COLOR and color2 == DINO_COLOR:
+                return True
+    return False
+
 
 class Dino(pygame.sprite.Sprite):
     def __init__(self, x=100, y=200):
@@ -87,13 +118,6 @@ class Dino(pygame.sprite.Sprite):
             screen.fill('black')
             screen.blit(self.fire_img1, (self.x, self.y))
 
-    def collide_check(self, group, spr_class, score):
-        collide_sprite = pygame.sprite.spritecollideany(self, group)
-        if isinstance(collide_sprite, spr_class):
-            # self.die(score)
-            return True
-        return False
-
     def fare_ball_anim(self, screen, x, y):
         self.fare_ball_sprites = pygame.sprite.Group()
         self.fare_ball_sprite = pygame.sprite.Sprite()
@@ -114,14 +138,20 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_sprite.rect.y = y
         self.watter_ball_sprites.draw(screen)
 
-    def die(self, score):  # TODO сделать нормальную смерть а не вот это
+    def collide_check(self, group, spr_class, screen):
+        collide_sprite = pygame.sprite.spritecollideany(self, group)
+        if isinstance(collide_sprite, spr_class) and check_color(self, collide_sprite, screen):
+            # self.die(score)
+            return True
+        return False
+
+    def die(self, score):
         self.out = self.dino_dead
         if score > self.HI:
             self.HI_s = self.cur.execute(
                 """Update Hi Set HI = {} Where id = 0""".format(score)).fetchall()
             self.die_status = True
         self.con.commit()
-        # pass
 
     def update(self, screen):
         self.rect = self.out.get_rect()

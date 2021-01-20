@@ -8,6 +8,7 @@ from cactus import Cactus
 import sqlite3
 
 FPS = 60
+DINO_COLOR = (83, 83, 83)
 color = 'black'
 
 if __name__ == '__main__':
@@ -220,16 +221,19 @@ if __name__ == '__main__':
         elif (time % (70 + rand_time) == 0 and next_barier == 'bird' and last_cactus) or (
                 next_barier == 'bird' and not last_cactus):
             last_cactus = False
-            Bird(800, 150, birds)
+            Bird(800, 168, birds)
             now_barier = 'bird'
             next_barier = ''
 
         screen.fill('black')
 
-        q1 = d.collide_check(all_cacti, Cactus, score)
-        q2 = d.collide_check(birds, Bird, score)
+        q1 = d.collide_check(all_cacti, Cactus, screen)
+        q2 = d.collide_check(birds, Bird, screen)
         if q1 or q2:
             d.die(score)
+            if status_dino == 'sit':
+                d.x, d.y = d_x, d_y
+            road_v = 0
             running = False
 
         # screen.blit(d.out, (d.x, d.y))
@@ -325,6 +329,9 @@ if __name__ == '__main__':
 
     run = True
     while run:
+
+        clock.tick(FPS)
+
         for event in pygame.event.get():
             # при закрытии окна
             if event.type == pygame.QUIT:
