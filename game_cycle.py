@@ -75,6 +75,8 @@ if __name__ == '__main__':
     small_cactus5.set_colorkey('white')
     dino1 = pygame.image.load('imgs/dino1.png')
     dino1.set_colorkey('white')
+    dino_dead = pygame.image.load('imgs/dino_dead.png')
+    dino_dead.set_colorkey('white')
     cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5]
     all_cacti = pygame.sprite.Group()
 
@@ -226,13 +228,14 @@ if __name__ == '__main__':
 
         screen.fill('black')
 
-        # screen.blit(d.out, (d.x, d.y))
-        d.update(screen)
-
         q1 = d.collide_check(all_cacti, Cactus, score)
         q2 = d.collide_check(birds, Bird, score)
         if q1 or q2:
+            d.out = dino_dead
             running = False
+
+        # screen.blit(d.out, (d.x, d.y))
+        d.update(screen)
 
         all_cacti.update(road_v * road_speed)
         all_cacti.draw(screen)
