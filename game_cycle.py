@@ -90,10 +90,10 @@ if __name__ == '__main__':
     status_dino = 'run'
     fire_status = False
     fire_cor_x = d.x + 89
-    fire_cor_y = 230
+    fire_cor_y = 200
     water_status = False
     water_cor_x = d.x + 89
-    water_cor_y = 230
+    water_cor_y = 200
     jump_status = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
@@ -137,17 +137,17 @@ if __name__ == '__main__':
                 if event.button == 3:
                     water_status = True
                 if status_dino == 'sit':
-                    fire_cor_y = 264
+                    fire_cor_y = 234
                     fire_cor_x = d.x + 120
                 elif not fire_status:
                     fire_cor_x = d.x + 89
-                    fire_cor_y = 230
+                    fire_cor_y = 200
                 if status_dino == 'sit':
-                    water_cor_y = 264
+                    water_cor_y = 234
                     water_cor_x = d.x + 120
                 elif not water_status:
                     water_cor_x = d.x + 89
-                    water_cor_y = 230
+                    water_cor_y = 200
             if event.type == pygame.KEYDOWN:
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
