@@ -41,6 +41,7 @@ class Dino(pygame.sprite.Sprite):
         self.HI_s = self.cur.execute(
             """Select HI From HI""").fetchall()
         self.HI = int(self.HI_s[0][0])
+        self.die_status = False
 
     def run_anim(self, screen):
         if self.out_now_run == 'img1':
@@ -112,9 +113,8 @@ class Dino(pygame.sprite.Sprite):
         if score > self.HI:
             self.HI_s = self.cur.execute(
                 """Update Hi Set HI = {} Where id = 0""".format(score)).fetchall()
-            print(score)
+            self.die_status = True
         self.con.commit()
-        quit()
         # pass
 
     def update(self, screen):

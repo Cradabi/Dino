@@ -1,4 +1,5 @@
 import pygame
+from dino import Dino
 
 
 class Cactus(pygame.sprite.Sprite):
