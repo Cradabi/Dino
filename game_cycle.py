@@ -230,7 +230,6 @@ if __name__ == '__main__':
         q2 = d.collide_check(birds, Bird, score)
         if q1 or q2:
             d.die(score)
-            screen.blit(rerun_img, (300, 200))
             running = False
 
         # screen.blit(d.out, (d.x, d.y))
@@ -330,5 +329,9 @@ if __name__ == '__main__':
             # при закрытии окна
             if event.type == pygame.QUIT:
                 run = False
+
+        screen.blit(rerun_img, (300, 200))
+
+        pygame.display.flip()
 
     pygame.quit()
