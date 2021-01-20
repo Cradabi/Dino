@@ -178,36 +178,37 @@ if __name__ == '__main__':
                     d.y = 200
                     jump_status = 0
 
-        if jump_status == 1:
-            jump_time += 1
-            if jump_time % 15 != 0:
-                d.y -= 10
-                d.out = dino1
-                # screen.blit(dino1, (d_x, d_y))
-            else:
-                jump_status = 2
-                jump_time = 0
-        elif jump_status == 2:
-            jump_time += 1
-            if jump_time % 3 != 0:
-                d.out = dino1
-                # screen.blit(dino1, (d_x, d_y))
-            else:
-                jump_status = 3
-                jump_time = 0
-        elif jump_status == 3:
-            jump_time += 1
-            if jump_time % 15 != 0:
-                d.y += 10
-                d.out = dino1
-                # screen.blit(dino1, (d_x, d_y))
-            else:
-                jump_status = 0
-                jump_time = 0
-                if status_dino == 'run':
-                    d.run_anim(screen)
-                elif status_dino == 'sit':
-                    d.sit_anim(screen)
+        if running:
+            if jump_status == 1:
+                jump_time += 1
+                if jump_time % 15 != 0:
+                    d.y -= 10
+                    d.out = dino1
+                    # screen.blit(dino1, (d_x, d_y))
+                else:
+                    jump_status = 2
+                    jump_time = 0
+            elif jump_status == 2:
+                jump_time += 1
+                if jump_time % 3 != 0:
+                    d.out = dino1
+                    # screen.blit(dino1, (d_x, d_y))
+                else:
+                    jump_status = 3
+                    jump_time = 0
+            elif jump_status == 3:
+                jump_time += 1
+                if jump_time % 15 != 0:
+                    d.y += 10
+                    d.out = dino1
+                    # screen.blit(dino1, (d_x, d_y))
+                else:
+                    jump_status = 0
+                    jump_time = 0
+                    if status_dino == 'run':
+                        d.run_anim(screen)
+                    elif status_dino == 'sit':
+                        d.sit_anim(screen)
 
             # b.fly_anim(screen)
         if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
