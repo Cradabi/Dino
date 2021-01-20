@@ -337,6 +337,11 @@ if __name__ == '__main__':
             # при закрытии окна
             if event.type == pygame.QUIT:
                 run = False
+            # if event.type == pygame.MOUSEBUTTONDOWN:
+            # if event.button == 1 and d.die_status:
+            # if int(event.pos[0]) >= 300 and int(event.pos[0]) <= 444 and int(event.pos[1]) >= 200 and int(
+            # event.pos[1]) <= 328:
+            # game_cycle.show()
 
         screen.blit(rerun_img, (300, 200))
 

@@ -146,11 +146,11 @@ class Dino(pygame.sprite.Sprite):
         return False
 
     def die(self, score):
+        self.die_status = True
         self.out = self.dino_dead
         if score > self.HI:
             self.HI_s = self.cur.execute(
                 """Update Hi Set HI = {} Where id = 0""".format(score)).fetchall()
-            self.die_status = True
         self.con.commit()
 
     def update(self, screen):
