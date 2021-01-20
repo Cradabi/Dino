@@ -28,6 +28,9 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_img = pygame.image.load('imgs/watter_ball1.jpg')
         self.watter_ball_img.set_colorkey('black')
 
+        self.dino_dead = pygame.image.load('imgs/dino_dead.png')
+        self.dino_dead.set_colorkey('white')
+
         self.out = self.run_img1
         self.x = x
         self.y = y
@@ -112,6 +115,7 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_sprites.draw(screen)
 
     def die(self, score):  # TODO сделать нормальную смерть а не вот это
+        self.out = self.dino_dead
         if score > self.HI:
             self.HI_s = self.cur.execute(
                 """Update Hi Set HI = {} Where id = 0""".format(score)).fetchall()
