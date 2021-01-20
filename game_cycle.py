@@ -221,7 +221,7 @@ if __name__ == '__main__':
         elif (time % (70 + rand_time) == 0 and next_barier == 'bird' and last_cactus) or (
                 next_barier == 'bird' and not last_cactus):
             last_cactus = False
-            Bird(800, 168, birds)
+            Bird(800, 150, birds)
             now_barier = 'bird'
             next_barier = ''
 
