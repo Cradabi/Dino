@@ -16,6 +16,7 @@ class Bird(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, speed, t):
         if self.out_now_fly == 'img1' and t % 10 == 0:
