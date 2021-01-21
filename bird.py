@@ -1,22 +1,36 @@
 import pygame
 
 
-class Bird:
-    def __init__(self):
-        self.run_img1 = pygame.image.load('imgs/bird1.png')
-        self.run_img2 = pygame.image.load('imgs/bird2.png')
-        self.run_img1.set_colorkey('white')
-        self.run_img2.set_colorkey('white')
+class Bird(pygame.sprite.Sprite):
+    def __init__(self, x, y, *group):
+        super().__init__(*group)
+        self.fly_img1 = pygame.image.load('imgs/bird1.png')
+        self.fly_img2 = pygame.image.load('imgs/bird2.png')
+        self.fly_img1.set_colorkey('white')
+        self.fly_img2.set_colorkey('white')
         self.out_now_fly = 'img1'
-        self.out = self.run_img1
-        self.x = 450
-        self.y = 200
+        self.x = x
+        self.y = y
 
-    def fly_anim(self, screen):
-        if self.out_now_fly == 'img1':
-            self.out = self.run_img1
+        self.image = self.fly_img1
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+    def update(self, speed, t):
+        if self.out_now_fly == 'img1' and t % 10 == 0:
+            self.image = self.fly_img1
+            # self.rect = self.image.get_rect()
+            # self.rect.x = self.x - speed
+            # self.rect.y = self.y
             self.out_now_fly = 'img2'
-        elif self.out_now_fly == 'img2':
-            self.out = self.run_img2
+            # self.rect = self.rect.move(-speed, 12)
+        elif self.out_now_fly == 'img2' and t % 10 == 0:
+            self.image = self.fly_img2
+            # self.rect = self.image.get_rect()
+            # self.rect.x = self.x - speed
+            # self.rect.y = self.y
             self.out_now_fly = 'img1'
-        screen.blit(self.out, (self.x, self.y))
+            # self.rect = self.rect.move(-speed, -12)
+        else:
+            self.rect = self.rect.move(-speed, 0)
