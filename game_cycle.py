@@ -123,6 +123,7 @@ def origin_dino(screen):
         HI_coard_x = 530
         HI_coard_y = 500
         DINO_COLOR = (83, 83, 83)
+        fast_jump = 0
         while running:
 
             clock.tick(FPS)
@@ -183,8 +184,11 @@ def origin_dino(screen):
             if running:
                 if jump_status == 1:
                     jump_time += 1
-                    if jump_time % 15 != 0:
-                        d.y -= 10
+                    if jump_time % 20 != 0:
+                        if jump_time % 2 == 0:
+                            fast_jump += 1
+                        d.y -= 13
+                        d.y += fast_jump
                         d.out = dino1
                         # screen.blit(dino1, (d_x, d_y))
                     else:
@@ -192,7 +196,7 @@ def origin_dino(screen):
                         jump_time = 0
                 elif jump_status == 2:
                     jump_time += 1
-                    if jump_time % 3 != 0:
+                    if jump_time % 1 != 0:
                         d.out = dino1
                         # screen.blit(dino1, (d_x, d_y))
                     else:
@@ -200,13 +204,18 @@ def origin_dino(screen):
                         jump_time = 0
                 elif jump_status == 3:
                     jump_time += 1
-                    if jump_time % 15 != 0:
-                        d.y += 10
+                    if jump_time % 20 != 0 and d.y < 210:
+                        if jump_time % 2 == 0:
+                            fast_jump -= 1
+                        d.y += 13
+                        d.y -= fast_jump
                         d.out = dino1
                         # screen.blit(dino1, (d_x, d_y))
                     else:
                         jump_status = 0
                         jump_time = 0
+                        fast_jump = 0
+                        d.y = 210
                         if status_dino == 'run':
                             d.run_anim(screen)
                         elif status_dino == 'sit':
