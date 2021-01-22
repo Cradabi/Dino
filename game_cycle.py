@@ -134,22 +134,20 @@ def origin_dino(screen):
             if event.type == pygame.QUIT:
                 quit()  # running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
+                if event.button == 1 and not fire_status:
                     fire_status = True
-                if event.button == 3:
+                    fire_cor_x = d.x + 89
+                    fire_cor_y = d.y
+                if event.button == 3 and not water_status:
                     water_status = True
-                if status_dino == 'sit':
+                    water_cor_x = d.x + 89
+                    water_cor_y = d.y
+                if status_dino == 'sit' and not fire_status:
                     fire_cor_y = 234
                     fire_cor_x = d.x + 120
-                elif not fire_status:
-                    fire_cor_x = d.x + 89
-                    fire_cor_y = 200
-                if status_dino == 'sit':
+                if status_dino == 'sit' and not water_status:
                     water_cor_y = 234
                     water_cor_x = d.x + 120
-                elif not water_status:
-                    water_cor_x = d.x + 89
-                    water_cor_y = 200
             if event.type == pygame.KEYDOWN:
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
