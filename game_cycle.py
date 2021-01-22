@@ -186,7 +186,7 @@ def origin_dino(screen):
                 if jump_time % 20 != 0:
                     if jump_time % 2 == 0:
                         fast_jump += 1
-                    d.y -= 13
+                    d.y -= 14
                     d.y += fast_jump
                     d.image = dino1
                     # screen.blit(dino1, (d_x, d_y))
@@ -206,7 +206,7 @@ def origin_dino(screen):
                 if jump_time % 20 != 0 and d.y < 210:
                     if jump_time % 2 == 0:
                         fast_jump -= 1
-                    d.y += 13
+                    d.y += 14
                     d.y -= fast_jump
                     d.image = dino1
                     # screen.blit(dino1, (d_x, d_y))
