@@ -123,6 +123,7 @@ def origin_dino(screen):
     HI_coard_x = 530
     HI_coard_y = 500
     fast_jump = 0
+    bird_height = 2
     while running:
 
         clock.tick(FPS)
@@ -258,11 +259,23 @@ def origin_dino(screen):
                 next_barier == 'bird' and not last_cactus):
             # добавляет птицу; после птицы следующее препятсвие появляется только когда сама птица умирает
             last_cactus = False
-            Bird(800, 150, birds)
+            bird_height = randint(1, 3)
+            if bird_height == 1:
+                Bird(800, 90, birds)
+            elif bird_height == 2:
+                Bird(800, 150, birds)
+            elif bird_height == 3:
+                Bird(800, 210, birds)
             now_barier = 'bird'
             next_barier = ''
 
         screen.fill(color)
+
+        # статичные объекты:
+        screen.blit(cloud, (200, 100))
+        screen.blit(moon, (400, 80))
+        screen.blit(star, (500, 130))
+        screen.blit(night_sun, (30, 100))
 
         # Проверка столкновений дино с кактусами и птицами:
         q1 = d.collide_check(all_cacti)
@@ -305,12 +318,6 @@ def origin_dino(screen):
                     next_barier = 'bird'
                 else:
                     next_barier = 'cactus'
-
-        # статичные объекты:
-        screen.blit(cloud, (200, 100))
-        screen.blit(moon, (400, 80))
-        screen.blit(star, (500, 130))
-        screen.blit(night_sun, (30, 100))
 
         # преобразует текущий счет в поверхность и выводит ее:
         score_out = []
