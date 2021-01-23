@@ -123,8 +123,6 @@ def origin_dino(screen):
     HI_coard_x = 530
     HI_coard_y = 500
     fast_jump = 0
-
-    a = False
     while running:
 
         clock.tick(FPS)
@@ -135,7 +133,7 @@ def origin_dino(screen):
             # при закрытии окна
             if event.type == pygame.QUIT:
                 quit()  # running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
                 if event.button == 1 and not fire_status:
                     fire_status = True
                     fire_cor_x = d.x + 89
@@ -150,7 +148,7 @@ def origin_dino(screen):
                 if status_dino == 'sit' and not water_status:
                     water_cor_y = 234
                     water_cor_x = d.x + 120
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
                     if not jump_status:
@@ -182,8 +180,9 @@ def origin_dino(screen):
                 #    d.y = 200
                 #    jump_status = 0
 
+        # прыжок:
         if running:
-            if jump_status == 1:
+            if jump_status == 1:  # дино летит вверх
                 jump_time += 1
                 if jump_time % 20 != 0:
                     if jump_time % 2 == 0:
@@ -197,7 +196,7 @@ def origin_dino(screen):
                     jump_time = 0
                 if status_dino == 'sit':
                     jump_status = 4
-            elif jump_status == 2:
+            elif jump_status == 2:  # дино весит в воздухе
                 jump_time += 1
                 if jump_time % 1 != 0:
                     d.image = dino1
@@ -205,7 +204,7 @@ def origin_dino(screen):
                 else:
                     jump_status = 3
                     jump_time = 0
-            elif jump_status == 3:
+            elif jump_status == 3:  # дино просто опускается
                 jump_time += 1
                 if jump_time % 20 != 0 and d.y < 210:
                     d.y += 14
@@ -227,7 +226,7 @@ def origin_dino(screen):
                 if status_dino == 'sit':
                     jump_status = 4
 
-            elif jump_status == 4:
+            elif jump_status == 4:  # дино резко опускается т.к. была нажата клавиша вниз
                 jump_time += 2
                 if jump_time % 20 != 0 and d.y < 210:
                     d.y += 28
@@ -247,17 +246,17 @@ def origin_dino(screen):
                         d.sit_anim(screen)
                     d.sit_anim(screen)
 
-            # b.fly_anim(screen)
         if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
                 next_barier == 'cactus' and not last_cactus):
+            # добавляет кактус и определяет время через которе появится следующее препятсвие
             last_cactus = True
-            # TODO сделать нормальное время между появлениями кактусов(препятсвий)
             Cactus(800, 226, cacti[randint(0, 4)], all_cacti)
             now_barier = 'cactus'
             time = time % 10
-            rand_time = randint(-10, 40)
+            rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
         elif (time % (70 + rand_time) == 0 and next_barier == 'bird' and last_cactus) or (
                 next_barier == 'bird' and not last_cactus):
+            # добавляет птицу; после птицы следующее препятсвие появляется только когда сама птица умирает
             last_cactus = False
             Bird(800, 150, birds)
             now_barier = 'bird'
@@ -265,9 +264,10 @@ def origin_dino(screen):
 
         screen.fill(color)
 
-        q1 = d.collide_check(all_cacti, Cactus, screen)
-        q2 = d.collide_check(birds, Bird, screen)
-        if q1 or q2:
+        # Проверка столкновений дино с кактусами и птицами:
+        q1 = d.collide_check(all_cacti)
+        q2 = d.collide_check(birds)
+        if q1 or q2:  # смерть
             d.die(score)
             if status_dino == 'sit':
                 d.x, d.y = d_x, d_y
@@ -277,37 +277,42 @@ def origin_dino(screen):
         # screen.blit(d.image, (d.x, d.y))
         d.update(screen)
 
+        # кактусы:
         all_cacti.update(road_v * road_speed)
         all_cacti.draw(screen)
         if now_barier == 'cactus':
             for cactus in all_cacti:
                 if cactus.rect.x < -34:  # только если маленький кактус
-                    cactus.kill()
+                    cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
-                        choose = randint(1, 4)  # TODO похоже что это нагружает прогу, надо что то сделать
+                        choose = randint(1, 4)  # определяет какое препятсвие будет следующим
                         if choose == 4:
                             next_barier = 'bird'
                         else:
                             next_barier = 'cactus'
+
+        # птицы:
         birds.update(road_v * road_speed, time)
         birds.draw(screen)
         if now_barier == 'bird':
 
             for bird in birds:
                 if bird.rect.x < -94:
-                    bird.kill()
+                    bird.kill()  # удаляет спрайт, если он оказался за пределами экрана
             if not birds.spritedict:
-                choose = randint(1, 4)  # TODO похоже что это нагружает прогу, надо что то сделать
+                choose = randint(1, 4)  # определяет какое препятсвие будет следующим
                 if choose == 4:
                     next_barier = 'bird'
                 else:
                     next_barier = 'cactus'
 
+        # статичные объекты:
         screen.blit(cloud, (200, 100))
         screen.blit(moon, (400, 80))
         screen.blit(star, (500, 130))
         screen.blit(night_sun, (30, 100))
 
+        # преобразует текущий счет в поверхность и выводит ее:
         score_out = []
         for i in range(1, len(score_str) + 1):
             score_out.insert(0, score_str[len(score_str) - i])
@@ -318,6 +323,7 @@ def origin_dino(screen):
             screen.blit(nums_dict[score_out[i]], (score_cord_x, score_cord_y))
             score_cord_x += 30
 
+        # преобразует лучший счет в поверхность и выводит ее:
         score_out = []
         screen.blit(HI_img, (470, 500))
         for i in range(1, len(HI_str) + 1):
@@ -329,11 +335,13 @@ def origin_dino(screen):
             screen.blit(nums_dict[score_out[i]], (HI_coard_x, HI_coard_y))
             HI_coard_x += 30
 
+        # считает очки:
         if score_t % 3 == 0:
             score += 1
             score_str = str(score)
         score_t += 1
 
+        # двигает дорожку:
         screen.blit(road1, (road_cord_x1, 270))
         screen.blit(road2, (road_cord_x2, 270))
         if road_cord_x2 <= -1400:
@@ -345,6 +353,7 @@ def origin_dino(screen):
         if road_v < 1.7:
             road_v += 0.00016
 
+        # полет огенного шара:
         if fire_status:
             d.fare_ball_anim(screen, fire_cor_x, fire_cor_y)
             fire_cor_x += 10
@@ -352,6 +361,7 @@ def origin_dino(screen):
             fire_cor_x = d.x + 89
             fire_status = False
 
+        # полет водяного шара:
         if water_status:
             d.watter_ball_anim(screen, water_cor_x, water_cor_y)
             water_cor_x += 10

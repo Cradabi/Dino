@@ -11,5 +11,5 @@ class Cactus(pygame.sprite.Sprite):
         self.rect.y = y
         self.mask = pygame.mask.from_surface(self.image)
 
-    def update(self, speed):
+    def update(self, speed):  # двигает кактус
         self.rect = self.rect.move(-speed, 0)
