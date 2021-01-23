@@ -123,6 +123,8 @@ def origin_dino(screen):
     HI_coard_x = 530
     HI_coard_y = 500
     fast_jump = 0
+
+    a = False
     while running:
 
         clock.tick(FPS)
@@ -151,10 +153,11 @@ def origin_dino(screen):
             if event.type == pygame.KEYDOWN:
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
-                    d.y = d_y + 34  # d.y += 34
+                    if not jump_status:
+                        d.y = d_y + 34  # d.y += 34
                     if not jump_status:
                         d.sit_anim(screen)
-                elif event.key == 119:  # elif event.unicode == 'w':
+                elif event.key == 119 and status_dino != 'sit':  # elif event.unicode == 'w':
                     if jump_status == 0:
                         jump_status = 1
             if event.type == pygame.KEYUP:
@@ -166,17 +169,18 @@ def origin_dino(screen):
 
         time += 1
         if time % 10 == 0:
-            screen.fill('black')
+            screen.fill(color)
             if jump_status == 0 and status_dino == 'run':
                 d.run_anim(screen)
             elif jump_status == 0 and status_dino == 'sit':
                 d.sit_anim(screen)
             elif jump_status != 0 and status_dino == 'sit':
-                if d.y <= 180:
-                    d.y += 20
-                else:
-                    d.y = 200
-                    jump_status = 0
+                pass
+                # if d.y <= 180:
+                #    d.y += 20
+                # else:
+                #    d.y = 200
+                #    jump_status = 0
 
         if running:
             if jump_status == 1:
@@ -191,6 +195,8 @@ def origin_dino(screen):
                 else:
                     jump_status = 2
                     jump_time = 0
+                if status_dino == 'sit':
+                    jump_status = 4
             elif jump_status == 2:
                 jump_time += 1
                 if jump_time % 1 != 0:
@@ -202,21 +208,44 @@ def origin_dino(screen):
             elif jump_status == 3:
                 jump_time += 1
                 if jump_time % 20 != 0 and d.y < 210:
-                    if jump_time % 2 == 0:
-                        fast_jump -= 1
                     d.y += 14
                     d.y -= fast_jump
+                    if jump_time % 2 == 0:
+                        fast_jump -= 1
                     d.image = dino1
                     # screen.blit(dino1, (d_x, d_y))
                 else:
                     jump_status = 0
                     jump_time = 0
                     fast_jump = 0
-                    d.y = 210
+                    # d.y = 210
                     if status_dino == 'run':
                         d.run_anim(screen)
                     elif status_dino == 'sit':
                         d.sit_anim(screen)
+
+                if status_dino == 'sit':
+                    jump_status = 4
+
+            elif jump_status == 4:
+                jump_time += 2
+                if jump_time % 20 != 0 and d.y < 210:
+                    d.y += 28
+                    d.y -= fast_jump
+                    if jump_time % 2 == 0:
+                        fast_jump -= 2
+                    d.image = dino1
+                    # screen.blit(dino1, (d_x, d_y))
+                else:
+                    jump_status = 0
+                    jump_time = 0
+                    fast_jump = 0
+                    if status_dino == 'run':
+                        d.run_anim(screen)
+                    elif status_dino == 'sit':
+                        d.y = d_y + 34
+                        d.sit_anim(screen)
+                    d.sit_anim(screen)
 
             # b.fly_anim(screen)
         if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
@@ -234,7 +263,7 @@ def origin_dino(screen):
             now_barier = 'bird'
             next_barier = ''
 
-        screen.fill('black')
+        screen.fill(color)
 
         q1 = d.collide_check(all_cacti, Cactus, screen)
         q2 = d.collide_check(birds, Bird, screen)
