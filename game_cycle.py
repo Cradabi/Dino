@@ -273,7 +273,7 @@ def origin_dino(screen, color, score, HI):
                 next_barier = ''
         else:
             stop_status = True
-            if stop_t % 30 == 0:
+            if stop_t % 50 == 0:
                 cut_scen()
             else:
                 stop_t += 1
