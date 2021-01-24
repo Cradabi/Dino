@@ -13,7 +13,7 @@ color = 'white'
 size = width, height = 800, 600
 screen = pygame.display.set_mode(size)
 screen.fill(color)
-score = 0
+score = 1500
 con = sqlite3.connect('HI.db')
 cur = con.cursor()
 HI_s = cur.execute(
@@ -250,7 +250,7 @@ def origin_dino(screen, color, score, HI):
                         d.sit_anim(screen)
                     d.sit_anim(screen)
 
-        if score != 2000:
+        if score < 2000:
             if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
                     next_barier == 'cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
@@ -272,7 +272,7 @@ def origin_dino(screen, color, score, HI):
                     Bird(800, 210, birds)
                 now_barier = 'bird'
                 next_barier = ''
-        else:
+        elif not all_cacti.spritedict and not birds.spritedict:  # проверка остались ли еще препятсвия
             stop_status = True
             if stop_t % 50 == 0:
                 cut_scen(screen, color, score, HI, road_cord_x1)
