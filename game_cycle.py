@@ -9,13 +9,19 @@ import sqlite3
 
 FPS = 60
 DINO_COLOR = (83, 83, 83)
-color = 'black'
+color = 'white'
 size = width, height = 800, 600
 screen = pygame.display.set_mode(size)
 screen.fill(color)
+score = 0
+con = sqlite3.connect('HI.db')
+cur = con.cursor()
+HI_s = cur.execute(
+    """Select HI From HI""").fetchall()
+HI = int(HI_s[0][0])
 
 
-def origin_dino(screen):
+def origin_dino(screen, color, score, HI):
     pygame.init()
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
@@ -101,7 +107,6 @@ def origin_dino(screen):
     running = True
     road_v = 1.0
     road_speed = 10
-    score = 0
     num_s = ''
     score_t = 0
     score_cord_x = 570
@@ -113,11 +118,6 @@ def origin_dino(screen):
     score_str = str(score)
     jump_time = 0
     time = -1
-    con = sqlite3.connect('HI.db')
-    cur = con.cursor()
-    HI_s = cur.execute(
-        """Select HI From HI""").fetchall()
-    HI = int(HI_s[0][0])
     HI_str = str(HI)
     HI_t = 0
     HI_coard_x = 530
@@ -357,7 +357,7 @@ def origin_dino(screen):
         else:
             road_cord_x1 -= int(road_speed * road_v)
             road_cord_x2 -= int(road_speed * road_v)
-        if road_v < 1.7:
+        if road_v < 1.9:
             road_v += 0.00016
 
         # полет огенного шара:
@@ -375,6 +375,11 @@ def origin_dino(screen):
         if water_cor_x > 800:
             water_cor_x = d.x + 89
             water_status = False
+
+        if score == 1000:
+            color = 'black'
+        elif score == 1600:
+            color = 'white'
 
         # отрисовка и изменение свойств объектов
         # ...
@@ -395,7 +400,7 @@ def origin_dino(screen):
                 if event.button == 1 and d.die_status:
                     if int(event.pos[0]) >= 300 and int(event.pos[0]) <= 444 and int(event.pos[1]) >= 200 and int(
                             event.pos[1]) <= 328:
-                        origin_dino(screen)
+                        origin_dino(screen, color, score, HI)
 
         screen.blit(rerun_img, (300, 200))
 
@@ -403,6 +408,6 @@ def origin_dino(screen):
 
 
 if __name__ == '__main__':
-    origin_dino(screen)
+    origin_dino(screen, color, score, HI)
 
     pygame.quit()

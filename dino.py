@@ -49,6 +49,7 @@ class Dino(pygame.sprite.Sprite):
             """Select HI From HI""").fetchall()
         self.HI = int(self.HI_s[0][0])
         self.die_status = False
+        self.color = 'white'
 
     def run_anim(self, screen):  # меняет ноги у бегущего прямо дино и выводит дино
         if self.image == self.sit_img1:
@@ -91,7 +92,7 @@ class Dino(pygame.sprite.Sprite):
         while k > 0:
             k -= 1
             self.y -= 5
-            screen.fill('black')
+            screen.fill(self.color)
             screen.blit(self.fire_img1, (self.x, self.y))
         k = 5
         while k > 0:
