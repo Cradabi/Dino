@@ -22,6 +22,7 @@ HI = int(HI_s[0][0])
 
 
 def origin_dino(screen, color, score, HI):
+    color = 'white'
     pygame.init()
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
@@ -159,7 +160,7 @@ def origin_dino(screen, color, score, HI):
                     if not jump_status:
                         d.sit_anim(screen)
                 elif event.key == 119 and status_dino != 'sit':  # elif event.unicode == 'w':
-                    if jump_status == 0:
+                    if jump_status == 0 and stop_status == False:
                         jump_status = 1
             if event.type == pygame.KEYUP:
                 if event.key == 115:  # if event.unicode == 's':
@@ -274,7 +275,7 @@ def origin_dino(screen, color, score, HI):
         else:
             stop_status = True
             if stop_t % 50 == 0:
-                cut_scen()
+                cut_scen(screen, color, score, HI, road_cord_x1)
             else:
                 stop_t += 1
 
@@ -417,9 +418,33 @@ def origin_dino(screen, color, score, HI):
         pygame.display.flip()
 
 
-def cut_scen():
-    print(1)
-    pygame.quit()
+def cut_scen(screen, color, score, HI, road_cord_x1):
+    mag_left = pygame.image.load('imgs/water_magic_left.png')
+    mag_right = pygame.image.load('imgs/water_magic_right.png')
+    dino1 = pygame.image.load('imgs/dino1.png')
+    dino1.set_colorkey('white')
+    road1 = pygame.image.load('imgs/road.png')
+    road1.set_colorkey('white')
+    dialog_left = pygame.image.load('imgs/dialog_left.png')
+    dialog_right = pygame.image.load('imgs/dialog_right.png')
+    d = Dino(100, 200)
+    running = True
+    mag_cord_x = 800
+    mag_cord_y = 184
+    t = 1
+    while running:
+        for event in pygame.event.get():
+            # при закрытии окна
+            if event.type == pygame.QUIT:
+                quit()  # running = False
+        screen.fill(color)
+        screen.blit(dino1, (d.x, d.y))
+        screen.blit(road1, (0, 270))
+        if t / 1000 != 0:
+            t += 1
+            mag_cord_x -= 1
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+        pygame.display.flip()
 
 
 if __name__ == '__main__':
