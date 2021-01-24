@@ -109,6 +109,8 @@ def origin_dino(screen, color, score, HI):
     road_speed = 10
     num_s = ''
     score_t = 0
+    stop_status = False
+    stop_t = 1
     score_cord_x = 570
     score_cord_y = 50
     rand_time = -30
@@ -247,27 +249,34 @@ def origin_dino(screen, color, score, HI):
                         d.sit_anim(screen)
                     d.sit_anim(screen)
 
-        if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
-                next_barier == 'cactus' and not last_cactus):
-            # добавляет кактус и определяет время через которе появится следующее препятсвие
-            last_cactus = True
-            Cactus(800, 226, cacti[randint(0, 4)], all_cacti)
-            now_barier = 'cactus'
-            time = time % 10
-            rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
-        elif (time % (70 + rand_time) == 0 and next_barier == 'bird' and last_cactus) or (
-                next_barier == 'bird' and not last_cactus):
-            # добавляет птицу; после птицы следующее препятсвие появляется только когда сама птица умирает
-            last_cactus = False
-            bird_height = randint(1, 3)
-            if bird_height == 1:
-                Bird(800, 90, birds)
-            elif bird_height == 2:
-                Bird(800, 150, birds)
-            elif bird_height == 3:
-                Bird(800, 210, birds)
-            now_barier = 'bird'
-            next_barier = ''
+        if score != 2000:
+            if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
+                    next_barier == 'cactus' and not last_cactus):
+                # добавляет кактус и определяет время через которе появится следующее препятсвие
+                last_cactus = True
+                Cactus(800, 226, cacti[randint(0, 4)], all_cacti)
+                now_barier = 'cactus'
+                time = time % 10
+                rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
+            elif (time % (70 + rand_time) == 0 and next_barier == 'bird' and last_cactus) or (
+                    next_barier == 'bird' and not last_cactus):
+                # добавляет птицу; после птицы следующее препятсвие появляется только когда сама птица умирает
+                last_cactus = False
+                bird_height = randint(1, 3)
+                if bird_height == 1:
+                    Bird(800, 90, birds)
+                elif bird_height == 2:
+                    Bird(800, 150, birds)
+                elif bird_height == 3:
+                    Bird(800, 210, birds)
+                now_barier = 'bird'
+                next_barier = ''
+        else:
+            stop_status = True
+            if stop_t % 30 == 0:
+                cut_scen()
+            else:
+                stop_t += 1
 
         screen.fill(color)
 
@@ -343,7 +352,7 @@ def origin_dino(screen, color, score, HI):
             HI_coard_x += 30
 
         # считает очки:
-        if score_t % 3 == 0:
+        if score_t % 3 == 0 and stop_status == False:
             score += 1
             score_str = str(score)
         score_t += 1
@@ -400,11 +409,17 @@ def origin_dino(screen, color, score, HI):
                 if event.button == 1 and d.die_status:
                     if int(event.pos[0]) >= 300 and int(event.pos[0]) <= 444 and int(event.pos[1]) >= 200 and int(
                             event.pos[1]) <= 328:
+                        score = 0
                         origin_dino(screen, color, score, HI)
 
         screen.blit(rerun_img, (300, 200))
 
         pygame.display.flip()
+
+
+def cut_scen():
+    print(1)
+    pygame.quit()
 
 
 if __name__ == '__main__':
