@@ -419,6 +419,8 @@ def origin_dino(screen, color, score, HI):
 
 
 def cut_scen(screen, color, score, HI, road_cord_x1):
+    clock = pygame.time.Clock()
+
     mag_left = pygame.image.load('imgs/water_magic_left.png')
     mag_right = pygame.image.load('imgs/water_magic_right.png')
     dino1 = pygame.image.load('imgs/dino1.png')
@@ -434,6 +436,9 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
     t = 1
     t_c = 1
     while running:
+
+        clock.tick(FPS)
+
         for event in pygame.event.get():
             # при закрытии окна
             if event.type == pygame.QUIT:
@@ -442,8 +447,9 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
         screen.blit(dino1, (d.x, d.y))
         screen.blit(road1, (0, 270))
         if t / 200 != 1:
+            t += 1
             mag_cord_x -= 1
-            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+        screen.blit(mag_left, (mag_cord_x, mag_cord_y))
         pygame.display.flip()
 
 
