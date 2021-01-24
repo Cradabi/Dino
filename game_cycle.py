@@ -432,6 +432,7 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
     mag_cord_x = 800
     mag_cord_y = 184
     t = 1
+    t_c = 1
     while running:
         for event in pygame.event.get():
             # при закрытии окна
@@ -440,8 +441,7 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
         screen.fill(color)
         screen.blit(dino1, (d.x, d.y))
         screen.blit(road1, (0, 270))
-        if t / 1000 != 0:
-            t += 1
+        if t / 200 != 1:
             mag_cord_x -= 1
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
         pygame.display.flip()
