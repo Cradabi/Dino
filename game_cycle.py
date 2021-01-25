@@ -292,7 +292,7 @@ def origin_dino(screen, color, score, HI):
         elif not all_cacti.spritedict and not birds.spritedict:  # проверка остались ли еще препятсвия
             stop_status = True
             if stop_t % 50 == 0:
-                cut_scen(screen, color, score, HI, road_cord_x1)
+                cut_scen_1(screen, color, score, HI, road_cord_x1)
             else:
                 stop_t += 1
 
@@ -510,9 +510,43 @@ def origin_dino(screen, color, score, HI):
         pygame.display.flip()
 
 
-def cut_scen(screen, color, score, HI, road_cord_x1):
+def cut_scen_1(screen, color, score, HI, road_cord_x1):
     clock = pygame.time.Clock()
 
+    num_0 = pygame.image.load('imgs/0.png')
+    num_0.set_colorkey('white')
+    num_1 = pygame.image.load('imgs/1.png')
+    num_1.set_colorkey('white')
+    num_2 = pygame.image.load('imgs/2.png')
+    num_2.set_colorkey('white')
+    num_3 = pygame.image.load('imgs/3.png')
+    num_3.set_colorkey('white')
+    num_4 = pygame.image.load('imgs/4.png')
+    num_4.set_colorkey('white')
+    num_5 = pygame.image.load('imgs/5.png')
+    num_5.set_colorkey('white')
+    num_6 = pygame.image.load('imgs/6.png')
+    num_6.set_colorkey('white')
+    num_7 = pygame.image.load('imgs/7.png')
+    num_7.set_colorkey('white')
+    num_8 = pygame.image.load('imgs/8.png')
+    num_8.set_colorkey('white')
+    num_9 = pygame.image.load('imgs/9.png')
+    num_9.set_colorkey('white')
+    nums_dict = {
+        '0': num_0,
+        '1': num_1,
+        '2': num_2,
+        '3': num_3,
+        '4': num_4,
+        '5': num_5,
+        '6': num_6,
+        '7': num_7,
+        '8': num_8,
+        '9': num_9
+    }
+    HI_img = pygame.image.load('imgs/HI.png')
+    HI_img.set_colorkey('white')
     mag_left = pygame.image.load('imgs/water_magic_left.png')
     mag_right = pygame.image.load('imgs/water_magic_right.png')
     dino1 = pygame.image.load('imgs/dino1.png')
@@ -613,7 +647,30 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
             screen.blit(mag_right, (mag_cord_x, mag_cord_y))
         elif t >= 1430:
             running = False
-            origin_dino(screen.color, score, HI)
+            origin_dino(screen, color, score, HI)
+            
+        score_out = []
+        for i in range(1, len(score_str) + 1):
+            score_out.insert(0, score_str[len(score_str) - i])
+        while len(score_out) != 5:
+            score_out.insert(0, '0')
+        score_cord_x = 970
+        for i in range(len(score_out)):
+            screen.blit(nums_dict[score_out[i]], (score_cord_x, score_cord_y))
+            score_cord_x += 30
+
+        # преобразует лучший счет в поверхность и выводит ее:
+        score_out = []
+        HI_coard_y = 500
+        screen.blit(HI_img, (870, 500))
+        for i in range(1, len(HI_str) + 1):
+            score_out.insert(0, HI_str[len(HI_str) - i])
+        while len(score_out) != 5:
+            score_out.insert(0, '0')
+        HI_coard_x = 970
+        for i in range(len(score_out)):
+            screen.blit(nums_dict[score_out[i]], (HI_coard_x, HI_coard_y))
+            HI_coard_x += 30
         pygame.display.flip()
 
 
