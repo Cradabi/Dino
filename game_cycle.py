@@ -275,7 +275,7 @@ def origin_dino(screen, color, score, HI):
                     next_barier == 'fare_cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
-                Cactus(WIDTH, 135, cacti[5], all_cacti, fare_cacti)
+                Cactus(WIDTH, 135, cacti[5], fare_cacti)
 
                 now_barier = 'fare_cactus'
                 time = time % 10
@@ -284,7 +284,7 @@ def origin_dino(screen, color, score, HI):
                     next_barier == 'watter_cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
-                Cactus(WIDTH, 135, cacti[6], all_cacti, watter_cacti)
+                Cactus(WIDTH, 135, cacti[6], watter_cacti)
 
                 now_barier = 'watter_cactus'
                 time = time % 10
@@ -307,7 +307,9 @@ def origin_dino(screen, color, score, HI):
         # Проверка столкновений дино с кактусами и птицами:
         q1 = d.collide_check(all_cacti)
         q2 = d.collide_check(birds)
-        if q1 or q2:  # смерть
+        q3 = d.collide_check(fare_cacti)
+        q4 = d.collide_check(watter_cacti)
+        if q1 or q2 or q3 or q4:  # смерть
             d.die(score)
             if status_dino == 'sit':
                 d.x, d.y = d_x, d_y
@@ -322,7 +324,7 @@ def origin_dino(screen, color, score, HI):
         all_cacti.draw(screen)
         if now_barier == 'cactus':
             for cactus in all_cacti:
-                if cactus.rect.x < -34:  # только если маленький кактус
+                if cactus.rect.x < -1 * cactus.rect.width:  # только если маленький кактус
                     cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
                         choose = randint(1, 6)  # определяет какое препятсвие будет следующим
@@ -335,9 +337,11 @@ def origin_dino(screen, color, score, HI):
                         else:
                             next_barier = 'cactus'
 
+        fare_cacti.update(road_v * road_speed)
+        fare_cacti.draw(screen)
         if now_barier == 'fare_cactus':
-            for cactus in all_cacti:
-                if cactus.rect.x < -68:  # только если маленький кактус
+            for cactus in fare_cacti:
+                if cactus.rect.x < -1 * cactus.rect.width:  # только если маленький кактус
                     cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
                         choose = randint(1, 6)  # определяет какое препятсвие будет следующим
@@ -350,9 +354,11 @@ def origin_dino(screen, color, score, HI):
                         else:
                             next_barier = 'cactus'
 
+        watter_cacti.update(road_v * road_speed)
+        watter_cacti.draw(screen)
         if now_barier == 'watter_cactus':
-            for cactus in all_cacti:
-                if cactus.rect.x < -68:  # только если маленький кактус
+            for cactus in watter_cacti:
+                if cactus.rect.x < -1 * cactus.rect.width:  # только если маленький кактус
                     cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
                         choose = randint(1, 6)  # определяет какое препятсвие будет следующим
@@ -444,11 +450,29 @@ def origin_dino(screen, color, score, HI):
         if fire_status:
             fare = pygame.sprite.groupcollide(d.fare_ball_sprites, fare_cacti, True, True)
             if fare:
+                choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                if choose == 4:
+                    next_barier = 'bird'
+                elif choose == 5:
+                    next_barier = 'fare_cactus'
+                elif choose == 6:
+                    next_barier = 'watter_cactus'
+                else:
+                    next_barier = 'cactus'
                 fire_status = False
 
         if water_status:
             watter = pygame.sprite.groupcollide(d.watter_ball_sprites, watter_cacti, True, True)
             if watter:
+                choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                if choose == 4:
+                    next_barier = 'bird'
+                elif choose == 5:
+                    next_barier = 'fare_cactus'
+                elif choose == 6:
+                    next_barier = 'watter_cactus'
+                else:
+                    next_barier = 'cactus'
                 water_status = False
 
         if score == 1000:
