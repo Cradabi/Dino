@@ -36,40 +36,41 @@ pygame.mouse.set_cursor(*pygame.cursors.tri_left)
 screen.fill('black')
 
 # главный цикл
-while True:
+if __name__ == '__main__':
+    while True:
 
-    # задержка
-    clock.tick(FPS)
+        # задержка
+        clock.tick(FPS)
 
-    # цикл обработки событий
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            quit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
+        # цикл обработки событий
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    quit()
 
-    # --------
-    # изменение объектов и многое др.
-    # --------
-    screen.fill('black')
+        # --------
+        # изменение объектов и многое др.
+        # --------
+        screen.fill('black')
 
-    text1 = f1.render('Начать игру', True, 'white')
-    screen.blit(text1, (100, 150))
-    text2 = f1.render('Настройки', True, 'white')
-    screen.blit(text2, (110, 300))
+        text1 = f1.render('Начать игру', True, 'white')
+        screen.blit(text1, (100, 150))
+        text2 = f1.render('Настройки', True, 'white')
+        screen.blit(text2, (110, 300))
 
-    # t += 1
+        # t += 1
 
-    pressed = pygame.mouse.get_pressed()
-    if pressed[0]:  # обработка нажатий левой кнопки мыши
-        x1, y1 = pygame.mouse.get_pos()
-        if 90 <= x1 <= 360 and 140 <= y1 <= 210:
-            pygame.mouse.set_visible(True)
-            origin_dino(screen, color, score, HI)  # запуск игры
-        elif 100 <= x1 <= 350 and 290 <= y1 <= 360:
-            pygame.mouse.set_visible(True)
-            sets(screen)
+        pressed = pygame.mouse.get_pressed()
+        if pressed[0]:  # обработка нажатий левой кнопки мыши
+            x1, y1 = pygame.mouse.get_pos()
+            if 90 <= x1 <= 360 and 140 <= y1 <= 210:
+                pygame.mouse.set_visible(True)
+                origin_dino(screen, color, score, HI)  # запуск игры
+            elif 100 <= x1 <= 350 and 290 <= y1 <= 360:
+                pygame.mouse.set_visible(True)
+                sets(screen)
 
-    # обновление экрана
-    pygame.display.update()
+        # обновление экрана
+        pygame.display.update()

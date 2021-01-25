@@ -78,10 +78,16 @@ def origin_dino(screen, color, score, HI):
     small_cactus4.set_colorkey('white')
     small_cactus5 = pygame.image.load('imgs/small_cactus5.png')
     small_cactus5.set_colorkey('white')
+    fare_cactus = pygame.image.load('imgs/fare_cactus.jpg')
+    fare_cactus.set_colorkey('white')
+    watter_cactus = pygame.image.load('imgs/watter_cactus.jpg')
+    watter_cactus.set_colorkey('white')
     dino1 = pygame.image.load('imgs/dino1.png')
     dino1.set_colorkey('white')
-    cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5]
+    cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5, fare_cactus, watter_cactus]
     all_cacti = pygame.sprite.Group()
+    fare_cacti = pygame.sprite.Group()
+    watter_cacti = pygame.sprite.Group()
 
     clock = pygame.time.Clock()
     d_y = 210
@@ -265,6 +271,24 @@ def origin_dino(screen, color, score, HI):
                     Bird(WIDTH, 210, birds)
                 now_barier = 'bird'
                 next_barier = ''
+            elif (time % (70 + rand_time) == 0 and next_barier == 'fare_cactus' and last_cactus) or (
+                    next_barier == 'fare_cactus' and not last_cactus):
+                # добавляет кактус и определяет время через которе появится следующее препятсвие
+                last_cactus = True
+                Cactus(WIDTH, 135, cacti[5], all_cacti, fare_cacti)
+
+                now_barier = 'fare_cactus'
+                time = time % 10
+                rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
+            elif (time % (70 + rand_time) == 0 and next_barier == 'watter_cactus' and last_cactus) or (
+                    next_barier == 'watter_cactus' and not last_cactus):
+                # добавляет кактус и определяет время через которе появится следующее препятсвие
+                last_cactus = True
+                Cactus(WIDTH, 135, cacti[6], all_cacti, watter_cacti)
+
+                now_barier = 'watter_cactus'
+                time = time % 10
+                rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
         elif not all_cacti.spritedict and not birds.spritedict:  # проверка остались ли еще препятсвия
             stop_status = True
             if stop_t % 50 == 0:
@@ -301,9 +325,43 @@ def origin_dino(screen, color, score, HI):
                 if cactus.rect.x < -34:  # только если маленький кактус
                     cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
-                        choose = randint(1, 4)  # определяет какое препятсвие будет следующим
+                        choose = randint(1, 6)  # определяет какое препятсвие будет следующим
                         if choose == 4:
                             next_barier = 'bird'
+                        elif choose == 5:
+                            next_barier = 'fare_cactus'
+                        elif choose == 6:
+                            next_barier = 'watter_cactus'
+                        else:
+                            next_barier = 'cactus'
+
+        if now_barier == 'fare_cactus':
+            for cactus in all_cacti:
+                if cactus.rect.x < -68:  # только если маленький кактус
+                    cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
+                    if score > 50:
+                        choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                        if choose == 4:
+                            next_barier = 'bird'
+                        elif choose == 5:
+                            next_barier = 'fare_cactus'
+                        elif choose == 6:
+                            next_barier = 'watter_cactus'
+                        else:
+                            next_barier = 'cactus'
+
+        if now_barier == 'watter_cactus':
+            for cactus in all_cacti:
+                if cactus.rect.x < -68:  # только если маленький кактус
+                    cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
+                    if score > 50:
+                        choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                        if choose == 4:
+                            next_barier = 'bird'
+                        elif choose == 5:
+                            next_barier = 'fare_cactus'
+                        elif choose == 6:
+                            next_barier = 'watter_cactus'
                         else:
                             next_barier = 'cactus'
 
@@ -316,9 +374,13 @@ def origin_dino(screen, color, score, HI):
                 if bird.rect.x < -94:
                     bird.kill()  # удаляет спрайт, если он оказался за пределами экрана
             if not birds.spritedict:
-                choose = randint(1, 4)  # определяет какое препятсвие будет следующим
+                choose = randint(1, 6)  # определяет какое препятсвие будет следующим
                 if choose == 4:
                     next_barier = 'bird'
+                elif choose == 5:
+                    next_barier = 'fare_cactus'
+                elif choose == 6:
+                    next_barier = 'watter_cactus'
                 else:
                     next_barier = 'cactus'
 
@@ -378,6 +440,17 @@ def origin_dino(screen, color, score, HI):
         if water_cor_x > WIDTH:
             water_cor_x = d.x + 89
             water_status = False
+
+        if fire_status:
+            fare = pygame.sprite.groupcollide(d.fare_ball_sprites, fare_cacti, True, True)
+            if fare:
+                fire_status = False
+
+        if water_status:
+            watter = pygame.sprite.groupcollide(d.watter_ball_sprites, watter_cacti, True, True)
+            if watter:
+                water_status = False
+
 
         if score == 1000:
             color = 'black'
