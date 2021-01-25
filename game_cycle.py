@@ -451,7 +451,6 @@ def origin_dino(screen, color, score, HI):
             if watter:
                 water_status = False
 
-
         if score == 1000:
             color = 'black'
         elif score == 1600:
@@ -520,19 +519,77 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
             # t += 1
             mag_cord_x -= 1
         screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-        if t > 200 and t < 240:
+        if t > 200 and t < 300:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (550, 400))
-            f2 = pygame.font.SysFont('arial', 18)
+            f2 = pygame.font.SysFont('arial', 14)
             text = f2.render("Привет, Дино", False, (0, 0, 0))
-            screen.blit(text, (570, 420))
+            screen.blit(text, (555, 405))
             # t += 1
-        elif t >= 240 and t < 280:
-            screen.blit(dialog_right, (100, 400))
-            f2 = pygame.font.SysFont('arial', 18)
-            text = f2.render("Привет, Дино", False, (0, 0, 0))
-            screen.blit(text, (120, 420))
+        elif t >= 300 and t < 400:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_left, (100, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("Здравствуйте, кто вы? И откуда вы знаете мое имя?", False, (0, 0, 0))
+            screen.blit(text, (105, 405))
             # t += 1
-
+        elif t >= 400 and t < 500:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_right, (550, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("Я маг воды, и знаю тебя, потому что ты наша последняя надежда?", False, (0, 0, 0))
+            screen.blit(text, (555, 405))
+        elif t >= 500 and t < 600:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_left, (100, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("Надежда на что? Чем я могу вам помочь?", False, (0, 0, 0))
+            screen.blit(text, (105, 405))
+        elif t >= 600 and t < 700:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_right, (550, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("На наш город напало огромное чудовище, которое захватило наш райский островок", False,
+                             (0, 0, 0))
+            screen.blit(text, (555, 405))
+        elif t >= 700 and t < 800:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_right, (550, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("Он выгнал нас, и мы надеялись, что ты сможешь победить его.", False, (0, 0, 0))
+            screen.blit(text, (555, 405))
+        elif t >= 800 and t < 900:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_left, (100, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("Как я смогу победить его, если ты не смог этого?", False, (0, 0, 0))
+            screen.blit(text, (105, 405))
+        elif t >= 900 and t < 1000:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_right, (550, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("Я помогу тебе. Сим. Салабим.", False, (0, 0, 0))
+            screen.blit(text, (555, 405))
+        elif t >= 1000 and t < 1100:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_right, (550, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("Теперь ты можешь извергать водяные шары. Они тебе помогут в битве с чудовищем.", False,
+                             (0, 0, 0))
+            screen.blit(text, (555, 405))
+        elif t >= 1100 and t < 1200:
+            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+            screen.blit(dialog_left, (100, 400))
+            f2 = pygame.font.SysFont('arial', 14)
+            text = f2.render("Спасибо. Я помогу вам", False, (0, 0, 0))
+            screen.blit(text, (105, 405))
+        elif t >= 1200 and t < 1430:
+            # t += 1
+            mag_cord_x += 1
+            screen.blit(mag_right, (mag_cord_x, mag_cord_y))
+        elif t >= 1430:
+            running = False
+            origin_dino(screen.color, score, HI)
         pygame.display.flip()
 
 
