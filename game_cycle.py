@@ -7,6 +7,8 @@ from bird import Bird
 from cactus import Cactus
 import sqlite3
 
+pygame.font.init()
+
 FPS = 60
 DINO_COLOR = (83, 83, 83)
 color = 'white'
@@ -450,6 +452,19 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
             t += 1
             mag_cord_x -= 1
         screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+        if t > 200 and t < 240:
+            screen.blit(dialog_right, (550, 400))
+            f2 = pygame.font.SysFont('arial', 18)
+            text = f2.render("Привет, Дино", False, (0, 0, 0))
+            screen.blit(text, (570, 420))
+            t += 1
+        elif t >= 240 and t < 280:
+            screen.blit(dialog_right, (100, 400))
+            f2 = pygame.font.SysFont('arial', 18)
+            text = f2.render("Привет, Дино", False, (0, 0, 0))
+            screen.blit(text, (120, 420))
+            t += 1
+
         pygame.display.flip()
 
 
