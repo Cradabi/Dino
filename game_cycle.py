@@ -10,21 +10,12 @@ import sqlite3
 pygame.font.init()
 
 FPS = 60
-DINO_COLOR = (83, 83, 83)
-color = 'white'
-size = width, height = 800, 600
-screen = pygame.display.set_mode(size)
-screen.fill(color)
-score = 0
-con = sqlite3.connect('HI.db')
-cur = con.cursor()
-HI_s = cur.execute(
-    """Select HI From HI""").fetchall()
-HI = int(HI_s[0][0])
+WIDTH = 1200
+HEIGHT = 800
 
 
 def origin_dino(screen, color, score, HI):
-    color = 'white'
+    # color = 'white'
     pygame.init()
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
@@ -110,11 +101,10 @@ def origin_dino(screen, color, score, HI):
     running = True
     road_v = 1.0
     road_speed = 10
-    num_s = ''
+    # num_s = ''
     score_t = 0
     stop_status = False
     stop_t = 1
-    score_cord_x = 570
     score_cord_y = 50
     rand_time = -30
     now_barier = 'cactus'
@@ -125,7 +115,6 @@ def origin_dino(screen, color, score, HI):
     time = -1
     HI_str = str(HI)
     HI_t = 0
-    HI_coard_x = 530
     HI_coard_y = 500
     fast_jump = 0
     bird_height = 2
@@ -155,14 +144,16 @@ def origin_dino(screen, color, score, HI):
                     water_cor_y = 234
                     water_cor_x = d.x + 120
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                if event.key == 115:  # if event.unicode == 's':
+                if event.key == pygame.K_ESCAPE:
+                    quit()
+                elif event.key == 115:  # if event.unicode == 's':
                     status_dino = 'sit'
                     if not jump_status:
                         d.y = d_y + 34  # d.y += 34
                     if not jump_status:
                         d.sit_anim(screen)
                 elif event.key == 119 and status_dino != 'sit':  # elif event.unicode == 'w':
-                    if jump_status == 0 and stop_status == False:
+                    if jump_status == 0 and not stop_status:
                         jump_status = 1
             if event.type == pygame.KEYUP:
                 if event.key == 115:  # if event.unicode == 's':
@@ -257,7 +248,7 @@ def origin_dino(screen, color, score, HI):
                     next_barier == 'cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
-                Cactus(800, 226, cacti[randint(0, 4)], all_cacti)
+                Cactus(WIDTH, 226, cacti[randint(0, 4)], all_cacti)
                 now_barier = 'cactus'
                 time = time % 10
                 rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
@@ -267,11 +258,11 @@ def origin_dino(screen, color, score, HI):
                 last_cactus = False
                 bird_height = randint(1, 3)
                 if bird_height == 1:
-                    Bird(800, 90, birds)
+                    Bird(WIDTH, 90, birds)
                 elif bird_height == 2:
-                    Bird(800, 150, birds)
+                    Bird(WIDTH, 150, birds)
                 elif bird_height == 3:
-                    Bird(800, 210, birds)
+                    Bird(WIDTH, 210, birds)
                 now_barier = 'bird'
                 next_barier = ''
         elif not all_cacti.spritedict and not birds.spritedict:  # проверка остались ли еще препятсвия
@@ -337,19 +328,19 @@ def origin_dino(screen, color, score, HI):
             score_out.insert(0, score_str[len(score_str) - i])
         while len(score_out) != 5:
             score_out.insert(0, '0')
-        score_cord_x = 570
+        score_cord_x = 970
         for i in range(len(score_out)):
             screen.blit(nums_dict[score_out[i]], (score_cord_x, score_cord_y))
             score_cord_x += 30
 
         # преобразует лучший счет в поверхность и выводит ее:
         score_out = []
-        screen.blit(HI_img, (470, 500))
+        screen.blit(HI_img, (870, 500))
         for i in range(1, len(HI_str) + 1):
             score_out.insert(0, HI_str[len(HI_str) - i])
         while len(score_out) != 5:
             score_out.insert(0, '0')
-        HI_coard_x = 570
+        HI_coard_x = 970
         for i in range(len(score_out)):
             screen.blit(nums_dict[score_out[i]], (HI_coard_x, HI_coard_y))
             HI_coard_x += 30
@@ -376,7 +367,7 @@ def origin_dino(screen, color, score, HI):
         if fire_status:
             d.fare_ball_anim(screen, fire_cor_x, fire_cor_y)
             fire_cor_x += 10
-        if fire_cor_x > 800:
+        if fire_cor_x > WIDTH:
             fire_cor_x = d.x + 89
             fire_status = False
 
@@ -384,7 +375,7 @@ def origin_dino(screen, color, score, HI):
         if water_status:
             d.watter_ball_anim(screen, water_cor_x, water_cor_y)
             water_cor_x += 10
-        if water_cor_x > 800:
+        if water_cor_x > WIDTH:
             water_cor_x = d.x + 89
             water_status = False
 
@@ -414,6 +405,9 @@ def origin_dino(screen, color, score, HI):
                             event.pos[1]) <= 328:
                         score = 0
                         origin_dino(screen, color, score, HI)
+            if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
+                if event.key == pygame.K_ESCAPE:
+                    quit()
 
         screen.blit(rerun_img, (300, 200))
 
@@ -433,7 +427,7 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
     dialog_right = pygame.image.load('imgs/dialog_right.png')
     d = Dino(100, 200)
     running = True
-    mag_cord_x = 800
+    mag_cord_x = WIDTH
     mag_cord_y = 184
     t = 1
     t_c = 1
