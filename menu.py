@@ -2,6 +2,7 @@
 
 
 from game_cycle import origin_dino
+from settings import sets
 import string
 import pygame
 import os
@@ -13,6 +14,7 @@ FPS = 60
 WIDTH = 1200
 HEIGHT = 800
 DINO_COLOR = (83, 83, 83)
+
 color = 'white'
 size = width, height = WIDTH, HEIGHT
 screen = pygame.display.set_mode(size)
@@ -40,11 +42,11 @@ while True:
     clock.tick(FPS)
 
     # цикл обработки событий
-    for i in pygame.event.get():
-        if i.type == pygame.QUIT:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
             quit()
-        if i.type == pygame.KEYDOWN:
-            if i.key == pygame.K_ESCAPE:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
                 quit()
 
     # --------
@@ -57,16 +59,17 @@ while True:
     text2 = f1.render('Настройки', True, 'white')
     screen.blit(text2, (110, 300))
 
-    t += 1
+    # t += 1
 
     pressed = pygame.mouse.get_pressed()
     if pressed[0]:  # обработка нажатий левой кнопки мыши
         x1, y1 = pygame.mouse.get_pos()
-        if 190 <= x1 <= 500 and 190 <= y1 <= 260:
+        if 90 <= x1 <= 360 and 140 <= y1 <= 210:
             pygame.mouse.set_visible(True)
             origin_dino(screen, color, score, HI)  # запуск игры
-        elif 200 <= x1 <= 480 and 340 <= y1 <= 410:
+        elif 100 <= x1 <= 350 and 290 <= y1 <= 360:
             pygame.mouse.set_visible(True)
+            sets(screen)
 
     # обновление экрана
     pygame.display.update()
