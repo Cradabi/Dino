@@ -569,6 +569,12 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1):
             # при закрытии окна
             if event.type == pygame.QUIT:
                 quit()  # running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
+                if event.button == 1:
+                    if t > 200 and t < 1200:
+                        t_c = t // 100
+                        t_c += 1
+                        t = t_c * 100
         screen.fill(color)
         screen.blit(dino1, (d.x, d.y))
         screen.blit(road1, (0, 270))
@@ -733,6 +739,12 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1):
             # при закрытии окна
             if event.type == pygame.QUIT:
                 quit()  # running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
+                if event.button == 1:
+                    if t > 200 and t < 900:
+                        t_c = t // 100
+                        t_c += 1
+                        t = t_c * 100
         screen.fill(color)
         screen.blit(dino1, (d.x, d.y))
         screen.blit(road1, (0, 270))
