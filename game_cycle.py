@@ -15,7 +15,7 @@ color = 'white'
 size = width, height = 800, 600
 screen = pygame.display.set_mode(size)
 screen.fill(color)
-score = 0
+score = 1900
 con = sqlite3.connect('HI.db')
 cur = con.cursor()
 HI_s = cur.execute(
@@ -448,8 +448,9 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
         screen.fill(color)
         screen.blit(dino1, (d.x, d.y))
         screen.blit(road1, (0, 270))
-        if t / 200 != 1:
-            t += 1
+        t += 1
+        if t < 200:
+            # t += 1
             mag_cord_x -= 1
         screen.blit(mag_left, (mag_cord_x, mag_cord_y))
         if t > 200 and t < 240:
@@ -457,13 +458,13 @@ def cut_scen(screen, color, score, HI, road_cord_x1):
             f2 = pygame.font.SysFont('arial', 18)
             text = f2.render("Привет, Дино", False, (0, 0, 0))
             screen.blit(text, (570, 420))
-            t += 1
+            # t += 1
         elif t >= 240 and t < 280:
             screen.blit(dialog_right, (100, 400))
             f2 = pygame.font.SysFont('arial', 18)
             text = f2.render("Привет, Дино", False, (0, 0, 0))
             screen.blit(text, (120, 420))
-            t += 1
+            # t += 1
 
         pygame.display.flip()
 
