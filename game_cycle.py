@@ -14,7 +14,7 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def origin_dino(screen, color, score, HI, birthday_code):
+def origin_dino(screen, color, score, HI, birthday_code, language):
     color_must = color
     color_rgb = 255
     pygame.init()

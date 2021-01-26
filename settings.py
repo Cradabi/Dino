@@ -6,7 +6,7 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def sets(screen, score):
+def sets(screen, score, language):
     clock = pygame.time.Clock()
 
     back_surf = pygame.Surface((WIDTH, HEIGHT))
@@ -38,6 +38,18 @@ def sets(screen, score):
     text1_y = 120
     text1_print = False
     text1_surf = f1.render(text1, True, 'black')
+
+    f2 = pygame.font.Font(None, 40)
+    text_lang1 = 'Язык'
+    text_lang1_surf = f2.render(text_lang1, True, 'black')
+    text_lang_rus = 'Русский'
+    text_lang_eng = 'English'
+    if language == 'rus':
+        text_lang_rus_surf = f2.render(text_lang_rus, True, 'blue')
+        text_lang_eng_surf = f2.render(text_lang_eng, True, 'black')
+    elif language == 'eng':
+        text_lang_rus_surf = f2.render(text_lang_rus, True, 'black')
+        text_lang_eng_surf = f2.render(text_lang_eng, True, 'blue')
 
     running = True
     while running:
@@ -107,11 +119,31 @@ def sets(screen, score):
                 text1_surf = f1.render(text1, True, 'black')
                 text1_print = True
                 sleep(0.3)
+            elif 265 <= x1 <= 385 and 235 <= y1 <= 270:
+                language = 'rus'
+                text_lang1 = 'Язык'
+                text_lang1_surf = f2.render(text_lang1, True, 'black')
+                text1_print = False
+            elif 265 <= x1 <= 380 and 275 <= y1 <= 310:
+                language = 'eng'
+                text_lang1 = 'Language'
+                text_lang1_surf = f2.render(text_lang1, True, 'black')
+                text1_print = False
 
         screen.blit(surf, (200, 25))
         pygame.draw.rect(screen, button_color, (875, 75, 100, 32))
         if text1_print:
             screen.blit(text1_surf, (text1_x, text1_y))
+
+        if language == 'rus':
+            text_lang_rus_surf = f2.render(text_lang_rus, True, 'blue')
+            text_lang_eng_surf = f2.render(text_lang_eng, True, 'black')
+        elif language == 'eng':
+            text_lang_rus_surf = f2.render(text_lang_rus, True, 'black')
+            text_lang_eng_surf = f2.render(text_lang_eng, True, 'blue')
+        screen.blit(text_lang1_surf, (270, 200))
+        screen.blit(text_lang_rus_surf, (270, 240))
+        screen.blit(text_lang_eng_surf, (270, 280))
 
         # Render the current text.
         txt_surface = font.render(text, True, color)
@@ -126,4 +158,4 @@ def sets(screen, score):
         # обновление экрана
         pygame.display.update()
 
-    return birth_day_code, score
+    return birth_day_code, score, language

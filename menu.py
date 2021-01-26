@@ -32,6 +32,7 @@ f2 = pygame.font.Font(None, 18)
 t = 0
 birthday_code = False
 pygame.mouse.set_cursor(*pygame.cursors.tri_left)
+language = 'rus'
 
 # если надо до цикла отобразить объекты на экране
 screen.fill('black')
@@ -68,10 +69,10 @@ if __name__ == '__main__':
             x1, y1 = pygame.mouse.get_pos()
             if 90 <= x1 <= 360 and 140 <= y1 <= 210:
                 pygame.mouse.set_visible(True)
-                origin_dino(screen, color, score, HI, birthday_code)  # запуск игры
+                origin_dino(screen, color, score, HI, birthday_code, language)  # запуск игры
             elif 100 <= x1 <= 350 and 290 <= y1 <= 360:
                 pygame.mouse.set_visible(True)
-                birthday_code, score = sets(screen, score)  # настройки
+                birthday_code, score, language = sets(screen, score, language)  # настройки
 
         # обновление экрана
         pygame.display.update()
