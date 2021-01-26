@@ -89,6 +89,8 @@ def sets(screen, score):
                 elif ' '.join(text.lower().split()[:2:]) == 'set score' and len(text.lower().split()) == 3:
                     # комманда, устанавливающая введенное значение для score
                     try:
+                        if int(text.lower().split()[2]) < 0:
+                            raise Exception
                         score = int(text.lower().split()[2])
                         text = ''
                         text1 = 'код успесшно активирован'
