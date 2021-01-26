@@ -1,11 +1,12 @@
 import pygame
+from time import sleep
 
 FPS = 60
 WIDTH = 1200
 HEIGHT = 800
 
 
-def sets(screen):
+def sets(screen, score):
     clock = pygame.time.Clock()
 
     back_surf = pygame.Surface((WIDTH, HEIGHT))
@@ -62,9 +63,9 @@ def sets(screen):
                 color = color_active if active else color_inactive
             if event.type == pygame.KEYDOWN:
                 if active:
-                    if event.key == pygame.K_RETURN:
-                        return text
-                    elif event.key == pygame.K_BACKSPACE:
+                    # if event.key == pygame.K_RETURN:
+                    #    return text
+                    if event.key == pygame.K_BACKSPACE:
                         text = text[:-1]
                     else:
                         text += event.unicode
@@ -78,18 +79,32 @@ def sets(screen):
         pressed = pygame.mouse.get_pressed()
         if pressed[0]:  # обработка нажатий левой кнопки мыши
             x1, y1 = pygame.mouse.get_pos()
-            if 875 <= x1 <= 975 and 75 <= y1 <= 107:
-                if text.lower() == 'dino birth day':
+            if 875 <= x1 <= 975 and 75 <= y1 <= 107:  # проверка на коды
+                if text.lower() == 'dino birthday':  # код для внешнего вида дино
+                    text = ''
                     text1 = 'код успесшно активирован'
                     text1_x = 450
                     text1_y = 120
                     birth_day_code = True
+                elif ' '.join(text.lower().split()[:2:]) == 'set score' and len(text.lower().split()) == 3:
+                    # комманда, устанавливающая введенное значение для score
+                    try:
+                        score = int(text.lower().split()[2])
+                        text = ''
+                        text1 = 'код успесшно активирован'
+                        text1_x = 450
+                        text1_y = 120
+                    except Exception:
+                        text1 = 'код не найден'
+                        text1_x = 510
+                        text1_y = 120
                 else:
                     text1 = 'код не найден'
                     text1_x = 510
                     text1_y = 120
                 text1_surf = f1.render(text1, True, 'black')
                 text1_print = True
+                sleep(0.3)
 
         screen.blit(surf, (200, 25))
         pygame.draw.rect(screen, button_color, (875, 75, 100, 32))
@@ -109,4 +124,4 @@ def sets(screen):
         # обновление экрана
         pygame.display.update()
 
-    return birth_day_code
+    return birth_day_code, score

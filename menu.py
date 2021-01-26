@@ -15,7 +15,7 @@ WIDTH = 1200
 HEIGHT = 800
 DINO_COLOR = (83, 83, 83)
 
-color = 'white'
+color = (255, 255, 255)
 size = width, height = WIDTH, HEIGHT
 screen = pygame.display.set_mode(size)
 screen.fill(color)
@@ -30,6 +30,7 @@ f1 = pygame.font.Font(None, 60)
 f1.set_italic(True)
 f2 = pygame.font.Font(None, 18)
 t = 0
+birthday_code = False
 pygame.mouse.set_cursor(*pygame.cursors.tri_left)
 
 # если надо до цикла отобразить объекты на экране
@@ -67,10 +68,10 @@ if __name__ == '__main__':
             x1, y1 = pygame.mouse.get_pos()
             if 90 <= x1 <= 360 and 140 <= y1 <= 210:
                 pygame.mouse.set_visible(True)
-                origin_dino(screen, color, score, HI)  # запуск игры
+                origin_dino(screen, color, score, HI, birthday_code)  # запуск игры
             elif 100 <= x1 <= 350 and 290 <= y1 <= 360:
                 pygame.mouse.set_visible(True)
-                sets(screen)
+                birthday_code, score = sets(screen, score)  # настройки
 
         # обновление экрана
         pygame.display.update()

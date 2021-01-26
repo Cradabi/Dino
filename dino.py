@@ -5,16 +5,27 @@ DINO_COLOR = (83, 83, 83)
 
 
 class Dino(pygame.sprite.Sprite):
-    def __init__(self, x=100, y=200):
+    def __init__(self, x=100, y=200, birthday_code=False):
         super().__init__()
-        self.run_img1 = pygame.image.load('imgs/dino2.png')
-        self.run_img2 = pygame.image.load('imgs/dino3.png')
+        self.birthday = birthday_code
+
+        if self.birthday:
+            self.run_img1 = pygame.image.load('imgs/dino_bd_2.png')
+            self.run_img2 = pygame.image.load('imgs/dino_bd_3.png')
+            self.sit_img1 = pygame.image.load('imgs/dino_bd_sit1.png')
+            self.sit_img2 = pygame.image.load('imgs/dino_bd_sit2.png')
+            self.dino_dead = pygame.image.load('imgs/dino_bd_dead.png')
+        else:
+            self.run_img1 = pygame.image.load('imgs/dino2.png')
+            self.run_img2 = pygame.image.load('imgs/dino3.png')
+            self.sit_img1 = pygame.image.load('imgs/dino_sit1.png')
+            self.sit_img2 = pygame.image.load('imgs/dino_sit2.png')
+            self.dino_dead = pygame.image.load('imgs/dino_dead.png')
+
         self.run_img1.set_colorkey('white')
         self.run_img2.set_colorkey('white')
         self.out_now_run = 'img1'
 
-        self.sit_img1 = pygame.image.load('imgs/dino_sit1.png')
-        self.sit_img2 = pygame.image.load('imgs/dino_sit2.png')
         self.sit_img1.set_colorkey('white')
         self.sit_img2.set_colorkey('white')
         self.out_now_sit = 'img1'
@@ -30,7 +41,6 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_img = pygame.image.load('imgs/watter_ball1.jpg')
         self.watter_ball_img.set_colorkey('black')
 
-        self.dino_dead = pygame.image.load('imgs/dino_dead.png')
         self.dino_dead.set_colorkey('white')
 
         self.image = self.run_img1

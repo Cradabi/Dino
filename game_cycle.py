@@ -14,8 +14,9 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def origin_dino(screen, color, score, HI):
-    # color = 'white'
+def origin_dino(screen, color, score, HI, birthday_code):
+    color_must = color
+    color_rgb = 255
     pygame.init()
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
@@ -82,17 +83,22 @@ def origin_dino(screen, color, score, HI):
     fare_cactus.set_colorkey('white')
     watter_cactus = pygame.image.load('imgs/watter_cactus.jpg')
     watter_cactus.set_colorkey('white')
-    dino1 = pygame.image.load('imgs/dino1.png')
-    dino1.set_colorkey('white')
     cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5, fare_cactus, watter_cactus]
     all_cacti = pygame.sprite.Group()
     fare_cacti = pygame.sprite.Group()
     watter_cacti = pygame.sprite.Group()
 
     clock = pygame.time.Clock()
-    d_y = 210
-    d_x = 100
-    d = Dino(d_x, d_y)
+    if birthday_code:
+        dino1 = pygame.image.load('imgs/dino_bd_1.png')
+        d_y = 178
+        d_x = 100
+    else:
+        d_y = 210
+        d_x = 100
+        dino1 = pygame.image.load('imgs/dino1.png')
+    dino1.set_colorkey('white')
+    d = Dino(d_x, d_y, birthday_code)
     birds = pygame.sprite.Group()
     status_dino = 'run'
     fire_status = False
@@ -245,7 +251,11 @@ def origin_dino(screen, color, score, HI):
                     if status_dino == 'run':
                         d.run_anim(screen)
                     elif status_dino == 'sit':
-                        d.y = d_y + 34
+                        if birthday_code:
+                            d.y = d_y + 40
+                        else:
+                            d.y = d_y + 34
+
                         d.sit_anim(screen)
                     d.sit_anim(screen)
 
@@ -266,7 +276,10 @@ def origin_dino(screen, color, score, HI):
                 if bird_height == 1:
                     Bird(WIDTH, 90, birds)
                 elif bird_height == 2:
-                    Bird(WIDTH, 150, birds)
+                    if birthday_code:
+                        Bird(WIDTH, 120, birds)
+                    else:
+                        Bird(WIDTH, 150, birds)
                 elif bird_height == 3:
                     Bird(WIDTH, 210, birds)
                 now_barier = 'bird'
@@ -289,10 +302,11 @@ def origin_dino(screen, color, score, HI):
                 now_barier = 'watter_cactus'
                 time = time % 10
                 rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
-        elif not all_cacti.spritedict and not birds.spritedict:  # проверка остались ли еще препятсвия
+        elif not all_cacti.spritedict and not birds.spritedict \
+                and not fare_cacti.spritedict and not watter_cacti.spritedict:  # проверка остались ли еще препятсвия
             stop_status = True
             if stop_t % 50 == 0:
-                cut_scen_1(screen, color, score, HI, road_cord_x1)
+                cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code)
             else:
                 stop_t += 1
 
@@ -319,12 +333,26 @@ def origin_dino(screen, color, score, HI):
         # screen.blit(d.image, (d.x, d.y))
         d.update(screen)
 
+        if score > 2000:
+            for cactus in all_cacti:
+                if cactus.rect.x <= -1 * cactus.rect.width:  # только если маленький кактус
+                    cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
+            for cactus in fare_cacti:
+                if cactus.rect.x < -1 * cactus.rect.width:  # только если маленький кактус
+                    cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
+            for cactus in watter_cacti:
+                if cactus.rect.x < -1 * cactus.rect.width:  # только если маленький кактус
+                    cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
+            for bird in birds:
+                if bird.rect.x < -94:
+                    bird.kill()  # удаляет спрайт, если он оказался за пределами экрана
+
         # кактусы:
         all_cacti.update(road_v * road_speed)
         all_cacti.draw(screen)
         if now_barier == 'cactus':
             for cactus in all_cacti:
-                if cactus.rect.x < -1 * cactus.rect.width:  # только если маленький кактус
+                if cactus.rect.x <= -1 * cactus.rect.width:  # только если маленький кактус
                     cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
                         choose = randint(1, 6)  # определяет какое препятсвие будет следующим
@@ -475,10 +503,18 @@ def origin_dino(screen, color, score, HI):
                     next_barier = 'cactus'
                 water_status = False
 
+        if color != color_must:
+            if color_must == (255, 255, 255):
+                color_rgb += 5
+                color = (color_rgb, color_rgb, color_rgb)
+            elif color_must == (0, 0, 0):
+                color_rgb -= 5
+                color = (color_rgb, color_rgb, color_rgb)
+
         if score == 1000:
-            color = 'black'
+            color_must = (0, 0, 0)
         elif score == 1600:
-            color = 'white'
+            color_must = (255, 255, 255)
 
         # отрисовка и изменение свойств объектов
         # ...
@@ -500,7 +536,8 @@ def origin_dino(screen, color, score, HI):
                     if int(event.pos[0]) >= 300 and int(event.pos[0]) <= 444 and int(event.pos[1]) >= 200 and int(
                             event.pos[1]) <= 328:
                         score = 0
-                        origin_dino(screen, color, score, HI)
+                        color = (255, 255, 255)
+                        origin_dino(screen, color, score, HI, birthday_code)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     quit()
@@ -510,7 +547,7 @@ def origin_dino(screen, color, score, HI):
         pygame.display.flip()
 
 
-def cut_scen_1(screen, color, score, HI, road_cord_x1):
+def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code):
     clock = pygame.time.Clock()
 
     num_0 = pygame.image.load('imgs/0.png')
@@ -549,18 +586,30 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1):
     HI_img.set_colorkey('white')
     mag_left = pygame.image.load('imgs/water_magic_left.png')
     mag_right = pygame.image.load('imgs/water_magic_right.png')
-    dino1 = pygame.image.load('imgs/dino1.png')
-    dino1.set_colorkey('white')
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
     dialog_left = pygame.image.load('imgs/dialog_left.png')
     dialog_right = pygame.image.load('imgs/dialog_right.png')
-    d = Dino(100, 200)
+    if birthday_code:
+        dino1 = pygame.image.load('imgs/dino_bd_1.png')
+        d_y = 178
+        d_x = 100
+    else:
+        d_y = 210
+        d_x = 100
+        dino1 = pygame.image.load('imgs/dino1.png')
+    dino1.set_colorkey('white')
+    d = Dino(d_x, d_y)
     running = True
     mag_cord_x = WIDTH
     mag_cord_y = 184
     t = 1
     t_c = 1
+    score_str = str(score)
+    score_cord_y = 50
+    HI_str = str(HI)
+    HI_t = 0
+    HI_coard_y = 500
     while running:
 
         clock.tick(FPS)
@@ -653,7 +702,7 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1):
             screen.blit(mag_right, (mag_cord_x, mag_cord_y))
         elif t >= 1430:
             running = False
-            origin_dino(screen, color, score, HI)
+            origin_dino(screen, color, score, HI, birthday_code)
 
         score_out = []
         for i in range(1, len(score_str) + 1):
@@ -680,7 +729,7 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1):
         pygame.display.flip()
 
 
-def cut_scen_2(screen, color, score, HI, road_cord_x1):
+def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code):
     clock = pygame.time.Clock()
 
     num_0 = pygame.image.load('imgs/0.png')
@@ -719,18 +768,30 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1):
     HI_img.set_colorkey('white')
     mag_left = pygame.image.load('imgs/fire_magic_left.png')
     mag_right = pygame.image.load('imgs/fire_magic_right.png')
-    dino1 = pygame.image.load('imgs/dino1.png')
-    dino1.set_colorkey('white')
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
     dialog_left = pygame.image.load('imgs/dialog_left.png')
     dialog_right = pygame.image.load('imgs/dialog_right.png')
-    d = Dino(100, 200)
+    if birthday_code:
+        dino1 = pygame.image.load('imgs/dino_bd_1.png')
+        d_y = 178
+        d_x = 100
+    else:
+        d_y = 210
+        d_x = 100
+        dino1 = pygame.image.load('imgs/dino1.png')
+    dino1.set_colorkey('white')
+    d = Dino(d_x, d_y)
     running = True
     mag_cord_x = WIDTH
     mag_cord_y = 184
     t = 1
     t_c = 1
+    score_str = str(score)
+    score_cord_y = 50
+    HI_str = str(HI)
+    HI_t = 0
+    HI_coard_y = 500
     while running:
 
         clock.tick(FPS)
@@ -805,7 +866,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1):
             screen.blit(mag_right, (mag_cord_x, mag_cord_y))
         elif t >= 1130:
             running = False
-            origin_dino(screen, color, score, HI)
+            origin_dino(screen, color, score, HI, birthday_code)
 
         score_out = []
         for i in range(1, len(score_str) + 1):
@@ -833,6 +894,6 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1):
 
 
 if __name__ == '__main__':
-    origin_dino(screen, color, score, HI)
+    origin_dino(screen, color, score, HI, birthday_code)
 
     pygame.quit()
