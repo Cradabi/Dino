@@ -167,6 +167,20 @@ def origin_dino(screen, color, score, HI, birthday_code):
                 elif event.key == 119 and status_dino != 'sit':  # elif event.unicode == 'w':
                     if jump_status == 0 and not stop_status:
                         jump_status = 1
+                elif event.key == 97 and not fire_status:
+                    fire_status = True
+                    fire_cor_x = d.x + 89
+                    fire_cor_y = d.y
+                    if status_dino == 'sit':
+                        fire_cor_y = 234
+                        fire_cor_x = d.x + 120
+                elif event.key == 100 and not water_status:
+                    water_status = True
+                    water_cor_x = d.x + 89
+                    water_cor_y = d.y
+                    if status_dino == 'sit':
+                        water_cor_y = 234
+                        water_cor_x = d.x + 120
             if event.type == pygame.KEYUP:
                 if event.key == 115:  # if event.unicode == 's':
                     status_dino = 'run'
