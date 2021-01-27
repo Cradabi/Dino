@@ -5,6 +5,8 @@ FPS = 60
 WIDTH = 1200
 HEIGHT = 800
 
+BLACK = (0, 0, 0)
+
 
 def sets(screen, score, language, keys):
     clock = pygame.time.Clock()
@@ -42,7 +44,7 @@ def sets(screen, score, language, keys):
     text1_x = 510
     text1_y = 120
     text1_print = False
-    text1_surf = f1.render(text1, True, 'black')
+    text1_surf = f1.render(text1, True, BLACK)
 
     f2 = pygame.font.Font(None, 40)
     text_lang1 = 'Язык'
@@ -50,13 +52,13 @@ def sets(screen, score, language, keys):
     text_lang_eng = 'English'
     if language == 'rus':
         text_lang_rus_surf = f2.render(text_lang_rus, True, 'blue')
-        text_lang_eng_surf = f2.render(text_lang_eng, True, 'black')
+        text_lang_eng_surf = f2.render(text_lang_eng, True, BLACK)
         text_lang1 = 'Язык'
     elif language == 'eng':
-        text_lang_rus_surf = f2.render(text_lang_rus, True, 'black')
+        text_lang_rus_surf = f2.render(text_lang_rus, True, BLACK)
         text_lang_eng_surf = f2.render(text_lang_eng, True, 'blue')
         text_lang1 = 'Language'
-    text_lang1_surf = f2.render(text_lang1, True, 'black')
+    text_lang1_surf = f2.render(text_lang1, True, BLACK)
 
     control_settings = False
     control_text1 = 'Управление'
@@ -77,10 +79,10 @@ def sets(screen, score, language, keys):
         control_text1_y = 170
         control_text1_w = 125
         control_text1_h = 35
-    control_text1_surf = f3.render(control_text1, True, 'black')
+    control_text1_surf = f3.render(control_text1, True, BLACK)
 
     f4 = pygame.font.Font(None, 60)
-    control_text2_surf = f4.render(control_text1, True, 'black')
+    control_text2_surf = f4.render(control_text1, True, BLACK)
     control_text_upkey = 'Прыжок'
     control_text_downkey = 'Присядка'
     control_text_blueballkey = 'Стрельба водяным шаром'
@@ -116,10 +118,10 @@ def sets(screen, score, language, keys):
     control_downkey = chr(down_key)
     control_blueballkey = chr(blue_ball_key)
     control_redballkey = chr(red_ball_key)
-    control_upkey_surf = f2.render(control_upkey, True, 'black')
-    control_downkey_surf = f2.render(control_downkey, True, 'black')
-    control_blueballkey_surf = f2.render(control_blueballkey, True, 'black')
-    control_redballkey_surf = f2.render(control_redballkey, True, 'black')
+    control_upkey_surf = f2.render(control_upkey, True, BLACK)
+    control_downkey_surf = f2.render(control_downkey, True, BLACK)
+    control_blueballkey_surf = f2.render(control_blueballkey, True, BLACK)
+    control_redballkey_surf = f2.render(control_redballkey, True, BLACK)
 
     upkey_choose = False
     downkey_choose = False
@@ -127,10 +129,10 @@ def sets(screen, score, language, keys):
     redballkey_choose = False
     key_choose = False
 
-    control_text_upkey_surf = f2.render(control_text_upkey, True, 'black')
-    control_text_downkey_surf = f2.render(control_text_downkey, True, 'black')
-    control_text_blueballkey_surf = f2.render(control_text_blueballkey, True, 'black')
-    control_text_redballkey_surf = f2.render(control_text_redballkey, True, 'black')
+    control_text_upkey_surf = f2.render(control_text_upkey, True, BLACK)
+    control_text_downkey_surf = f2.render(control_text_downkey, True, BLACK)
+    control_text_blueballkey_surf = f2.render(control_text_blueballkey, True, BLACK)
+    control_text_redballkey_surf = f2.render(control_text_redballkey, True, BLACK)
 
     choose_box = False
     choose_box_x = 0
@@ -147,7 +149,7 @@ def sets(screen, score, language, keys):
         warning_text = 'Error'
         warning_text_x = 560
         warning_text_y = 550
-    warning_text_surf = f2.render(warning_text, True, 'black')
+    warning_text_surf = f2.render(warning_text, True, BLACK)
     warning = False
 
     running = True
@@ -178,25 +180,25 @@ def sets(screen, score, language, keys):
                             control_text1_y = 170
                             control_text1_w = 125
                             control_text1_h = 35
-                        control_text1_surf = f3.render(control_text1, True, 'black')
+                        control_text1_surf = f3.render(control_text1, True, BLACK)
                 elif key_choose:
                     try:
                         if upkey_choose:
                             up_key = event.key
                             control_upkey = chr(up_key)
-                            control_upkey_surf = f2.render(control_upkey, True, 'black')
+                            control_upkey_surf = f2.render(control_upkey, True, BLACK)
                         elif downkey_choose:
                             down_key = event.key
                             control_downkey = chr(down_key)
-                            control_downkey_surf = f2.render(control_downkey, True, 'black')
+                            control_downkey_surf = f2.render(control_downkey, True, BLACK)
                         elif blueballkey_choose:
                             blue_ball_key = event.key
                             control_blueballkey = chr(blue_ball_key)
-                            control_blueballkey_surf = f2.render(control_blueballkey, True, 'black')
+                            control_blueballkey_surf = f2.render(control_blueballkey, True, BLACK)
                         elif redballkey_choose:
                             red_ball_key = event.key
                             control_redballkey = chr(red_ball_key)
-                            control_redballkey_surf = f2.render(control_redballkey, True, 'black')
+                            control_redballkey_surf = f2.render(control_redballkey, True, BLACK)
                         warning = False
                     except Exception:
                         warning = True
@@ -263,17 +265,17 @@ def sets(screen, score, language, keys):
                         text1 = 'код не найден'
                         text1_x = 510
                         text1_y = 120
-                    text1_surf = f1.render(text1, True, 'black')
+                    text1_surf = f1.render(text1, True, BLACK)
                     text1_print = True
                     sleep(0.3)
                 elif 265 <= x1 <= 385 and 235 <= y1 <= 270:
                     language = 'rus'
                     text_lang1 = 'Язык'
-                    text_lang1_surf = f2.render(text_lang1, True, 'black')
+                    text_lang1_surf = f2.render(text_lang1, True, BLACK)
                     text1_print = False
 
                     control_text1 = 'Управление'
-                    control_text1_surf = f3.render(control_text1, True, 'black')
+                    control_text1_surf = f3.render(control_text1, True, BLACK)
                     control_text1_x = 490
                     control_text1_y = 170
                     control_text1_w = 200
@@ -281,11 +283,11 @@ def sets(screen, score, language, keys):
                 elif 265 <= x1 <= 380 and 275 <= y1 <= 310:
                     language = 'eng'
                     text_lang1 = 'Language'
-                    text_lang1_surf = f2.render(text_lang1, True, 'black')
+                    text_lang1_surf = f2.render(text_lang1, True, BLACK)
                     text1_print = False
 
                     control_text1 = 'Control'
-                    control_text1_surf = f3.render(control_text1, True, 'black')
+                    control_text1_surf = f3.render(control_text1, True, BLACK)
                     control_text1_x = 530
                     control_text1_y = 170
                     control_text1_w = 125
@@ -321,12 +323,12 @@ def sets(screen, score, language, keys):
 
                     warning = False
 
-                    control_text_upkey_surf = f2.render(control_text_upkey, True, 'black')
-                    control_text_downkey_surf = f2.render(control_text_downkey, True, 'black')
-                    control_text_blueballkey_surf = f2.render(control_text_blueballkey, True, 'black')
-                    control_text_redballkey_surf = f2.render(control_text_redballkey, True, 'black')
-                    control_text2_surf = f4.render(control_text1, True, 'black')
-                    warning_text_surf = f2.render(warning_text, True, 'black')
+                    control_text_upkey_surf = f2.render(control_text_upkey, True, BLACK)
+                    control_text_downkey_surf = f2.render(control_text_downkey, True, BLACK)
+                    control_text_blueballkey_surf = f2.render(control_text_blueballkey, True, BLACK)
+                    control_text_redballkey_surf = f2.render(control_text_redballkey, True, BLACK)
+                    control_text2_surf = f4.render(control_text1, True, BLACK)
+                    warning_text_surf = f2.render(warning_text, True, BLACK)
 
             pygame.draw.rect(screen, button_color, (875, 75, 100, 32))
             if text1_print:
@@ -336,9 +338,9 @@ def sets(screen, score, language, keys):
 
             if language == 'rus':
                 text_lang_rus_surf = f2.render(text_lang_rus, True, 'blue')
-                text_lang_eng_surf = f2.render(text_lang_eng, True, 'black')
+                text_lang_eng_surf = f2.render(text_lang_eng, True, BLACK)
             elif language == 'eng':
-                text_lang_rus_surf = f2.render(text_lang_rus, True, 'black')
+                text_lang_rus_surf = f2.render(text_lang_rus, True, BLACK)
                 text_lang_eng_surf = f2.render(text_lang_eng, True, 'blue')
             screen.blit(text_lang1_surf, (270, 200))
             screen.blit(text_lang_rus_surf, (270, 240))
