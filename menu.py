@@ -33,6 +33,7 @@ t = 0
 birthday_code = False
 pygame.mouse.set_cursor(*pygame.cursors.tri_left)
 language = 'rus'
+keys = [119, 115, 100, 97]  # 1-вверх, 2-вниз, 3-синий шар, 4-красный шар
 
 # если надо до цикла отобразить объекты на экране
 screen.fill('black')
@@ -69,10 +70,10 @@ if __name__ == '__main__':
             x1, y1 = pygame.mouse.get_pos()
             if 90 <= x1 <= 360 and 140 <= y1 <= 210:
                 pygame.mouse.set_visible(True)
-                origin_dino(screen, color, score, HI, birthday_code, language)  # запуск игры
+                origin_dino(screen, color, score, HI, birthday_code, language, keys)  # запуск игры
             elif 100 <= x1 <= 350 and 290 <= y1 <= 360:
                 pygame.mouse.set_visible(True)
-                birthday_code, score, language = sets(screen, score, language)  # настройки
+                birthday_code, score, language, keys = sets(screen, score, language, keys)  # настройки
 
         # обновление экрана
         pygame.display.update()

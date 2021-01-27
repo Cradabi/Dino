@@ -14,7 +14,12 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def origin_dino(screen, color, score, HI, birthday_code, language):
+def origin_dino(screen, color, score, HI, birthday_code, language, keys):
+    up_key = keys[0]
+    down_key = keys[1]
+    blue_ball_key = keys[2]
+    red_ball_key = keys[3]
+
     color_must = color
     color_rgb = 255
     pygame.init()
@@ -158,23 +163,23 @@ def origin_dino(screen, color, score, HI, birthday_code, language):
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     quit()
-                elif event.key == 115:  # if event.unicode == 's':
+                elif event.key == down_key:  # if event.unicode == 's':
                     status_dino = 'sit'
                     if not jump_status:
                         d.y = d_y + 34  # d.y += 34
                     if not jump_status:
                         d.sit_anim(screen)
-                elif event.key == 119 and status_dino != 'sit':  # elif event.unicode == 'w':
+                elif event.key == up_key and status_dino != 'sit':  # elif event.unicode == 'w':
                     if jump_status == 0 and not stop_status:
                         jump_status = 1
-                elif event.key == 97 and not fire_status:
+                elif event.key == red_ball_key and not fire_status:
                     fire_status = True
                     fire_cor_x = d.x + 89
                     fire_cor_y = d.y
                     if status_dino == 'sit':
                         fire_cor_y = 234
                         fire_cor_x = d.x + 120
-                elif event.key == 100 and not water_status:
+                elif event.key == blue_ball_key and not water_status:
                     water_status = True
                     water_cor_x = d.x + 89
                     water_cor_y = d.y
@@ -182,7 +187,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language):
                         water_cor_y = 234
                         water_cor_x = d.x + 120
             if event.type == pygame.KEYUP:
-                if event.key == 115:  # if event.unicode == 's':
+                if event.key == down_key:  # if event.unicode == 's':
                     status_dino = 'run'
                     d.y = d_y  # d.y -= 34
                     if not jump_status:
