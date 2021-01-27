@@ -325,7 +325,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
                 and not fare_cacti.spritedict and not watter_cacti.spritedict:  # проверка остались ли еще препятсвия
             stop_status = True
             if stop_t % 50 == 0:
-                cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language)
+                cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys)
             else:
                 stop_t += 1
 
@@ -556,7 +556,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
                             event.pos[1]) <= 328:
                         score = 0
                         color = (255, 255, 255)
-                        origin_dino(screen, color, score, HI, birthday_code)
+                        origin_dino(screen, color, score, HI, birthday_code, language, keys)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     quit()
@@ -566,7 +566,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
         pygame.display.flip()
 
 
-def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language):
+def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys):
     clock = pygame.time.Clock()
 
     num_0 = pygame.image.load('imgs/0.png')
@@ -861,7 +861,7 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language):
             screen.blit(mag_right, (mag_cord_x, mag_cord_y))
         elif t >= 1430:
             running = False
-            origin_dino(screen, color, score, HI, birthday_code, language)
+            origin_dino(screen, color, score, HI, birthday_code, language, keys)
 
         score_out = []
         for i in range(1, len(score_str) + 1):
@@ -888,7 +888,7 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language):
         pygame.display.flip()
 
 
-def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language):
+def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys):
     clock = pygame.time.Clock()
 
     num_0 = pygame.image.load('imgs/0.png')
@@ -1118,7 +1118,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language):
             screen.blit(mag_right, (mag_cord_x, mag_cord_y))
         elif t >= 1130:
             running = False
-            origin_dino(screen, color, score, HI, birthday_code, language)
+            origin_dino(screen, color, score, HI, birthday_code, language, keys)
 
         score_out = []
         for i in range(1, len(score_str) + 1):
@@ -1146,6 +1146,6 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language):
 
 
 if __name__ == '__main__':
-    origin_dino(screen, color, score, HI, birthday_code, language)
+    origin_dino(screen, color, score, HI, birthday_code, language, keys)
 
     pygame.quit()
