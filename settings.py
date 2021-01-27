@@ -84,7 +84,7 @@ def sets(screen, score, language, keys):
     control_text_upkey = 'Прыжок'
     control_text_downkey = 'Присядка'
     control_text_blueballkey = 'Стрельба водяным шаром'
-    control_text_redballkey = 'Стрельба водяным шаром'
+    control_text_redballkey = 'Стрельба огненным шаром'
     control_text_upkey_x = 250
     control_text_upkey_y = 150
     control_text_downkey_x = 250
@@ -301,7 +301,7 @@ def sets(screen, score, language, keys):
                         control_text_upkey = 'Прыжок'
                         control_text_downkey = 'Присядка'
                         control_text_blueballkey = 'Стрельба водяным шаром'
-                        control_text_redballkey = 'Стрельба водяным шаром'
+                        control_text_redballkey = 'Стрельба огненным шаром'
 
                         warning_text = 'Произошла ошибка'
                         warning_text_x = 470
