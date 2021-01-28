@@ -36,10 +36,14 @@ class Dino(pygame.sprite.Sprite):
         self.fire_img2.set_colorkey('white')
         self.out_now_fire = 'img1'
 
-        self.fare_ball_img = pygame.image.load('imgs/fare_ball1.jpg')
-        self.fare_ball_img.set_colorkey('black')
-        self.watter_ball_img = pygame.image.load('imgs/watter_ball1.jpg')
-        self.watter_ball_img.set_colorkey('black')
+        self.fare_ball_img = pygame.image.load('imgs/fare_ball2.png')
+        self.fare_ball_img.set_colorkey('white')
+        self.fare_ball_black_img = pygame.image.load('imgs/fare_ball1.jpg')
+        self.fare_ball_black_img.set_colorkey('black')
+        self.watter_ball_img = pygame.image.load('imgs/watter_ball.jpg')
+        self.watter_ball_img.set_colorkey('white')
+        self.watter_ball_black_img = pygame.image.load('imgs/watter_ball1.jpg')
+        self.watter_ball_black_img.set_colorkey('black')
 
         self.dino_dead.set_colorkey('white')
 
@@ -114,20 +118,26 @@ class Dino(pygame.sprite.Sprite):
             screen.fill('black')
             screen.blit(self.fire_img1, (self.x, self.y))
 
-    def fare_ball_anim(self, screen, x, y):
+    def fare_ball_anim(self, screen, x, y, color):
         self.fare_ball_sprites = pygame.sprite.Group()
         self.fare_ball_sprite = pygame.sprite.Sprite()
-        self.fare_ball_sprite.image = self.fare_ball_img
+        if color == (255, 255, 255):
+            self.fare_ball_sprite.image = self.fare_ball_img
+        elif color == (0, 0, 0):
+            self.fare_ball_sprite.image = self.fare_ball_black_img
         self.fare_ball_sprite.rect = self.fare_ball_sprite.image.get_rect()
         self.fare_ball_sprites.add(self.fare_ball_sprite)
         self.fare_ball_sprite.rect.x = x
         self.fare_ball_sprite.rect.y = y
         self.fare_ball_sprites.draw(screen)
 
-    def watter_ball_anim(self, screen, x, y):
+    def watter_ball_anim(self, screen, x, y, color):
         self.watter_ball_sprites = pygame.sprite.Group()
         self.watter_ball_sprite = pygame.sprite.Sprite()
-        self.watter_ball_sprite.image = self.watter_ball_img
+        if color == (255, 255, 255):
+            self.watter_ball_sprite.image = self.watter_ball_img
+        elif color == (0, 0, 0):
+            self.watter_ball_sprite.image = self.watter_ball_black_img
         self.watter_ball_sprite.rect = self.watter_ball_sprite.image.get_rect()
         self.watter_ball_sprites.add(self.watter_ball_sprite)
         self.watter_ball_sprite.rect.x = x

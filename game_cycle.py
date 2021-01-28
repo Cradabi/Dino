@@ -86,9 +86,14 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
     small_cactus5.set_colorkey('white')
     fare_cactus = pygame.image.load('imgs/fare_cactus.jpg')
     fare_cactus.set_colorkey('white')
+    fare_cactus_black = pygame.image.load('imgs/fare_cactus1.jpg')
+    fare_cactus_black.set_colorkey('black')
     watter_cactus = pygame.image.load('imgs/watter_cactus.jpg')
     watter_cactus.set_colorkey('white')
-    cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5, fare_cactus, watter_cactus]
+    watter_cactus_black = pygame.image.load('imgs/watter_cactus1.jpg')
+    watter_cactus_black.set_colorkey('black')
+    cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5, fare_cactus, watter_cactus,
+             fare_cactus_black, watter_cactus_black]
     all_cacti = pygame.sprite.Group()
     fare_cacti = pygame.sprite.Group()
     watter_cacti = pygame.sprite.Group()
@@ -307,7 +312,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
                     next_barier == 'fare_cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
-                Cactus(WIDTH, 135, cacti[5], fare_cacti)
+                if color_must == (255, 255, 255):
+                    Cactus(WIDTH, 135, cacti[5], fare_cacti)
+                elif color_must == (0, 0, 0):
+                    Cactus(WIDTH, 135, cacti[7], fare_cacti)
 
                 now_barier = 'fare_cactus'
                 time = time % 10
@@ -316,7 +324,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
                     next_barier == 'watter_cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
-                Cactus(WIDTH, 135, cacti[6], watter_cacti)
+                if color_must == (255, 255, 255):
+                    Cactus(WIDTH, 135, cacti[6], watter_cacti)
+                elif color_must == (0, 0, 0):
+                    Cactus(WIDTH, 135, cacti[8], watter_cacti)
 
                 now_barier = 'watter_cactus'
                 time = time % 10
@@ -480,7 +491,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
 
         # полет огенного шара:
         if fire_status:
-            d.fare_ball_anim(screen, fire_cor_x, fire_cor_y)
+            d.fare_ball_anim(screen, fire_cor_x, fire_cor_y, color_must)
             fire_cor_x += 10
         if fire_cor_x > WIDTH:
             fire_cor_x = d.x + 89
@@ -488,7 +499,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
 
         # полет водяного шара:
         if water_status:
-            d.watter_ball_anim(screen, water_cor_x, water_cor_y)
+            d.watter_ball_anim(screen, water_cor_x, water_cor_y, color_must)
             water_cor_x += 10
         if water_cor_x > WIDTH:
             water_cor_x = d.x + 89
