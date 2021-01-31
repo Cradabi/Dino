@@ -152,6 +152,11 @@ def sets(screen, score, language, keys):
     warning_text_surf = f2.render(warning_text, True, BLACK)
     warning = False
 
+    cursor_x = 255
+    cursor_y = 80
+    cursor_w = 15
+    cursor_h = 23
+
     running = True
     while running:
 
@@ -243,9 +248,14 @@ def sets(screen, score, language, keys):
                 if 875 <= x1 <= 975 and 75 <= y1 <= 107:  # проверка на коды
                     if text.lower() == 'dino birthday':  # код для внешнего вида дино
                         text = ''
-                        text1 = 'код успесшно активирован'
-                        text1_x = 450
-                        text1_y = 120
+                        if language == 'rus':
+                            text1 = 'код успесшно активирован'
+                            text1_x = 450
+                            text1_y = 120
+                        else:
+                            text1 = 'code has been activated'
+                            text1_x = 465
+                            text1_y = 120
                         birth_day_code = True
                     elif ' '.join(text.lower().split()[:2:]) == 'set score' and len(text.lower().split()) == 3:
                         # комманда, устанавливающая введенное значение для score
@@ -254,17 +264,32 @@ def sets(screen, score, language, keys):
                                 raise Exception
                             score = int(text.lower().split()[2])
                             text = ''
-                            text1 = 'код успесшно активирован'
-                            text1_x = 450
-                            text1_y = 120
+                            if language == 'rus':
+                                text1 = 'код успесшно активирован'
+                                text1_x = 450
+                                text1_y = 120
+                            else:
+                                text1 = 'code has been activated'
+                                text1_x = 465
+                                text1_y = 120
                         except Exception:
+                            if language == 'rus':
+                                text1 = 'код не найден'
+                                text1_x = 510
+                                text1_y = 120
+                            else:
+                                text1 = 'code not found'
+                                text1_x = 515
+                                text1_y = 120
+                    else:
+                        if language == 'rus':
                             text1 = 'код не найден'
                             text1_x = 510
                             text1_y = 120
-                    else:
-                        text1 = 'код не найден'
-                        text1_x = 510
-                        text1_y = 120
+                        else:
+                            text1 = 'code not found'
+                            text1_x = 515
+                            text1_y = 120
                     text1_surf = f1.render(text1, True, BLACK)
                     text1_print = True
                     sleep(0.3)
@@ -355,6 +380,10 @@ def sets(screen, score, language, keys):
             screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
             # Blit the input_box rect.
             pygame.draw.rect(screen, color, input_box, 2)
+
+            if active:
+                pygame.draw.rect(screen, 'black', (cursor_x + txt_surface.get_width(), cursor_y, cursor_w, cursor_h))
+
         else:
             # pygame.draw.rect(screen, 'grey', (900, 450, 25, 25))
             if choose_box:
