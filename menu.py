@@ -30,6 +30,9 @@ f1 = pygame.font.Font(None, 60)
 f1.set_italic(True)
 f2 = pygame.font.Font(None, 18)
 t = 0
+water_number = 30
+fire_number = 30
+money = 100
 birthday_code = False
 pygame.mouse.set_cursor(*pygame.cursors.tri_left)
 language = 'rus'
@@ -70,7 +73,8 @@ if __name__ == '__main__':
             x1, y1 = pygame.mouse.get_pos()
             if 90 <= x1 <= 360 and 140 <= y1 <= 210:
                 pygame.mouse.set_visible(True)
-                origin_dino(screen, color, score, HI, birthday_code, language, keys)  # запуск игры
+                origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number,
+                            fire_number, money)  # запуск игры
             elif 100 <= x1 <= 350 and 290 <= y1 <= 360:
                 pygame.mouse.set_visible(True)
                 birthday_code, score, language, keys = sets(screen, score, language, keys)  # настройки

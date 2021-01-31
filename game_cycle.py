@@ -7,6 +7,7 @@ from bird import Bird
 from cactus import Cactus
 from scene1 import cut_scen_1
 from scene2 import cut_scen_2
+from scene3 import cut_scen_3
 import sqlite3
 
 pygame.font.init()
@@ -16,7 +17,8 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def origin_dino(screen, color, score, HI, birthday_code, language, keys):
+
+def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money):
     up_key = keys[0]
     down_key = keys[1]
     blue_ball_key = keys[2]
@@ -145,6 +147,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
         was_scene_2 = False
     else:
         was_scene_2 = True
+    if score <= 6000:
+        was_scene_3 = False
+    else:
+        was_scene_3 = True
 
     while running:
 
@@ -336,11 +342,18 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
             if stop_t % 50 == 0:
                 if not was_scene_1:
                     was_scene_1 = True
-                    cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys)
+                    cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
+                               fire_number, money)
                     stop_status = False
                 elif not was_scene_2 and was_scene_1:
                     was_scene_2 = True
-                    cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys)
+                    cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
+                               fire_number, money)
+                    stop_status = False
+                elif not was_scene_3 and was_scene_1 and was_scene_2:
+                    was_scene_3 = True
+                    cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
+                               fire_number, money)
                     stop_status = False
             else:
                 stop_t += 1
@@ -485,7 +498,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
         # двигает дорожку:
         screen.blit(road1, (road_cord_x1, 270))
         screen.blit(road2, (road_cord_x2, 270))
-        if road_cord_x2 <= -1400:
+        if road_cord_x2 <= -800:
             road_cord_x1 = 0
             road_cord_x2 = 2398
         else:
@@ -555,6 +568,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
             stop_status = True
         elif score > 4000 and not was_scene_2:
             stop_status = True
+        elif score > 6000 and not was_scene_3:
+            stop_status = True
 
         # отрисовка и изменение свойств объектов
         # ...
@@ -577,7 +592,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys):
                             event.pos[1]) <= 328:
                         score = 0
                         color = (255, 255, 255)
-                        origin_dino(screen, color, score, HI, birthday_code, language, keys)
+                        origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     quit()
