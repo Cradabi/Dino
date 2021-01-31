@@ -18,7 +18,7 @@ class Bird(pygame.sprite.Sprite):
         self.rect.y = self.y
         self.mask = pygame.mask.from_surface(self.image)
 
-    def update(self, speed, t):
+    def update(self, speed, t):  # обновляет(меняет картинки) и двигает птицу
         if self.out_now_fly == 'img1' and t % 10 == 0:
             self.image = self.fly_img1
             # self.rect = self.image.get_rect()

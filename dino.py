@@ -5,16 +5,27 @@ DINO_COLOR = (83, 83, 83)
 
 
 class Dino(pygame.sprite.Sprite):
-    def __init__(self, x=100, y=200):
+    def __init__(self, x=100, y=200, birthday_code=False):
         super().__init__()
-        self.run_img1 = pygame.image.load('imgs/dino2.png')
-        self.run_img2 = pygame.image.load('imgs/dino3.png')
+        self.birthday = birthday_code
+
+        if self.birthday:
+            self.run_img1 = pygame.image.load('imgs/dino_bd_2.png')
+            self.run_img2 = pygame.image.load('imgs/dino_bd_3.png')
+            self.sit_img1 = pygame.image.load('imgs/dino_bd_sit1.png')
+            self.sit_img2 = pygame.image.load('imgs/dino_bd_sit2.png')
+            self.dino_dead = pygame.image.load('imgs/dino_bd_dead.png')
+        else:
+            self.run_img1 = pygame.image.load('imgs/dino2.png')
+            self.run_img2 = pygame.image.load('imgs/dino3.png')
+            self.sit_img1 = pygame.image.load('imgs/dino_sit1.png')
+            self.sit_img2 = pygame.image.load('imgs/dino_sit2.png')
+            self.dino_dead = pygame.image.load('imgs/dino_dead.png')
+
         self.run_img1.set_colorkey('white')
         self.run_img2.set_colorkey('white')
         self.out_now_run = 'img1'
 
-        self.sit_img1 = pygame.image.load('imgs/dino_sit1.png')
-        self.sit_img2 = pygame.image.load('imgs/dino_sit2.png')
         self.sit_img1.set_colorkey('white')
         self.sit_img2.set_colorkey('white')
         self.out_now_sit = 'img1'
@@ -25,12 +36,15 @@ class Dino(pygame.sprite.Sprite):
         self.fire_img2.set_colorkey('white')
         self.out_now_fire = 'img1'
 
-        self.fare_ball_img = pygame.image.load('imgs/fare_ball1.jpg')
-        self.fare_ball_img.set_colorkey('black')
-        self.watter_ball_img = pygame.image.load('imgs/watter_ball1.jpg')
-        self.watter_ball_img.set_colorkey('black')
+        self.fare_ball_img = pygame.image.load('imgs/fare_ball2.png')
+        self.fare_ball_img.set_colorkey('white')
+        # self.fare_ball_black_img = pygame.image.load('imgs/fare_ball1.jpg')
+        # self.fare_ball_black_img.set_colorkey('black')
+        # self.watter_ball_img = pygame.image.load('imgs/watter_ball.jpg')
+        # self.watter_ball_img.set_colorkey('white')
+        self.watter_ball_img = pygame.image.load('imgs/watter_ball.png')
+        self.watter_ball_img.set_colorkey('white')
 
-        self.dino_dead = pygame.image.load('imgs/dino_dead.png')
         self.dino_dead.set_colorkey('white')
 
         self.image = self.run_img1
@@ -49,8 +63,9 @@ class Dino(pygame.sprite.Sprite):
             """Select HI From HI""").fetchall()
         self.HI = int(self.HI_s[0][0])
         self.die_status = False
+        self.color = 'white'
 
-    def run_anim(self, screen):
+    def run_anim(self, screen):  # меняет ноги у бегущего прямо дино и выводит дино
         if self.image == self.sit_img1:
             self.image = self.run_img2
             self.out_now_run = 'img1'
@@ -68,7 +83,7 @@ class Dino(pygame.sprite.Sprite):
         self.rect.x = self.x  # - 15
         self.rect.y = self.y
 
-    def sit_anim(self, screen):
+    def sit_anim(self, screen):  # меняет ноги у бегущего вприсядку дино и выводит дино
         if self.image == self.run_img1:
             self.image = self.sit_img2
             self.out_now_sit = 'img1'
@@ -86,12 +101,12 @@ class Dino(pygame.sprite.Sprite):
         self.rect.x = self.x  # - 5
         self.rect.y = self.y
 
-    def jump_anim(self, screen):
+    def jump_anim(self, screen):  # ненужная функция, надо либо удалить, либо переписать
         k = 20
         while k > 0:
             k -= 1
             self.y -= 5
-            screen.fill('black')
+            screen.fill(self.color)
             screen.blit(self.fire_img1, (self.x, self.y))
         k = 5
         while k > 0:
@@ -103,7 +118,7 @@ class Dino(pygame.sprite.Sprite):
             screen.fill('black')
             screen.blit(self.fire_img1, (self.x, self.y))
 
-    def fare_ball_anim(self, screen, x, y):
+    def fare_ball_anim(self, screen, x, y, color):
         self.fare_ball_sprites = pygame.sprite.Group()
         self.fare_ball_sprite = pygame.sprite.Sprite()
         self.fare_ball_sprite.image = self.fare_ball_img
@@ -113,7 +128,7 @@ class Dino(pygame.sprite.Sprite):
         self.fare_ball_sprite.rect.y = y
         self.fare_ball_sprites.draw(screen)
 
-    def watter_ball_anim(self, screen, x, y):
+    def watter_ball_anim(self, screen, x, y, color):
         self.watter_ball_sprites = pygame.sprite.Group()
         self.watter_ball_sprite = pygame.sprite.Sprite()
         self.watter_ball_sprite.image = self.watter_ball_img
@@ -123,14 +138,16 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_sprite.rect.y = y
         self.watter_ball_sprites.draw(screen)
 
-    def collide_check(self, group, spr_class, screen):
+    def collide_check(self, group):
+        # проверяет столкнулся ли дино с данной группой
+        # возвращает True если есть столкновение
         collide_sprite = pygame.sprite.spritecollideany(self, group)
         if collide_sprite:
             if pygame.sprite.collide_mask(self, collide_sprite):
                 return True
         return False
 
-    def die(self, score):
+    def die(self, score):  # фиксирует смерть и записывает рекорды в sql таблицу
         self.die_status = True
         self.image = self.dino_dead
         if score > self.HI:
@@ -138,7 +155,7 @@ class Dino(pygame.sprite.Sprite):
                 """Update Hi Set HI = {} Where id = 0""".format(score)).fetchall()
         self.con.commit()
 
-    def update(self, screen):
+    def update(self, screen):  # обновляет и выводит дино
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
