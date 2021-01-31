@@ -101,6 +101,17 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                         t_c = t // 100
                         t_c += 1
                         t = t_c * 100
+                if event.unicode == 'E':
+                    if t >= 600 and t < 750:
+                        if money >= 50:
+                            money -= 50
+                            fire_number += 30
+                            print(1)
+                    elif t >= 750 and t < 900:
+                        if money >= 50:
+                            money -= 50
+                            fire_number += 30
+                            print(1)
         screen.fill(color)
         screen.blit(dino1, (d.x, d.y))
         screen.blit(road1, (0, 270))
@@ -206,13 +217,6 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render('нажав на "E".', False,
                                  (0, 0, 0))
                 screen.blit(text, (930, 410))
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                        if event.unicode == "E":
-                            if money >= 50:
-                                fire_number += 30
-                                money -= 50
-                                print(1)
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("You can buy 30", False,
@@ -226,13 +230,6 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render('by pressing "E".', False,
                                  (0, 0, 0))
                 screen.blit(text, (930, 410))
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                        if event.unicode == "E":
-                            if money >= 50:
-                                fire_number += 30
-                                money -= 50
-                                print(1)
         elif t >= 750 and t < 900:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 300))
@@ -249,13 +246,6 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render('нажав на "E".', False,
                                  (0, 0, 0))
                 screen.blit(text, (930, 410))
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                        if event.unicode == "E":
-                            if money >= 50:
-                                fire_number += 30
-                                money -= 50
-                                print(1)
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("You can buy 30", False,
@@ -269,13 +259,6 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render('moneys by pressing "E".', False,
                                  (0, 0, 0))
                 screen.blit(text, (930, 410))
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                        if event.unicode == "E":
-                            if money >= 50:
-                                water_number += 30
-                                money -= 50
-                                print(1)
         elif t >= 900 and t < 1000:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 300))
