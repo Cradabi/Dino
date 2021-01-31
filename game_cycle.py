@@ -592,7 +592,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             event.pos[1]) <= 328:
                         score = 0
                         color = (255, 255, 255)
-                        origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number)
+                        origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number,
+                                    money)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     quit()
