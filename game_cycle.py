@@ -98,6 +98,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     fare_cacti = pygame.sprite.Group()
     watter_cacti = pygame.sprite.Group()
 
+    jump_sound = pygame.mixer.Sound('sounds/dino_jump_sound.mp3')
+    score_1000_sound = pygame.mixer.Sound('sounds/dino_1000_sound.mp3')
+    die_sound = pygame.mixer.Sound('sounds/dino_die_sound.mp3')
+
     clock = pygame.time.Clock()
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
@@ -198,6 +202,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 elif event.key == up_key and status_dino != 'sit':  # elif event.unicode == 'w':
                     if jump_status == 0:  # and not stop_status:
                         jump_status = 1
+                        jump_sound.play()
                 elif event.key == red_ball_key and not fire_status:
                     fire_status = True
                     fire_cor_x = d.x + 89
@@ -391,6 +396,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         q3 = d.collide_check(fare_cacti)
         q4 = d.collide_check(watter_cacti)
         if q1 or q2 or q3 or q4:  # смерть
+            die_sound.play()
             d.die(score)
             if status_dino == 'sit':
                 d.x, d.y = d_x, d_y
@@ -595,6 +601,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             color_must = (0, 0, 0)
         elif score == 1600:
             color_must = (255, 255, 255)
+
+        if score % 1000 == 0 and score:
+            score_1000_sound.play()
 
         if score > 2000 and not was_scene_1:
             stop_status = True
