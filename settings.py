@@ -47,8 +47,6 @@ def sets(screen, score, language, keys):
     text1_surf = f1.render(text1, True, BLACK)
 
     f2 = pygame.font.Font(None, 40)
-    text_lang_rus_surf = f2.render(text_lang_rus, True, 'blue')
-    text_lang_eng_surf = f2.render(text_lang_eng, True, BLACK)
     text_lang1 = 'Язык'
     text_lang_rus = 'Русский'
     text_lang_eng = 'English'
