@@ -11,6 +11,8 @@ BLACK = (0, 0, 0)
 def sets(screen, score, language, keys):
     clock = pygame.time.Clock()
 
+    time = 0
+
     up_key = keys[0]
     down_key = keys[1]
     blue_ball_key = keys[2]
@@ -156,6 +158,7 @@ def sets(screen, score, language, keys):
     cursor_y = 80
     cursor_w = 15
     cursor_h = 23
+    cursor_active = False
 
     running = True
     while running:
@@ -232,6 +235,8 @@ def sets(screen, score, language, keys):
                         text = text[:-1]
                     else:
                         text += event.unicode
+
+        time += 1
 
         screen.blit(surf, (200, 25))
 
@@ -381,8 +386,11 @@ def sets(screen, score, language, keys):
             # Blit the input_box rect.
             pygame.draw.rect(screen, color, input_box, 2)
 
-            if active:
+            if active and cursor_active:
                 pygame.draw.rect(screen, 'black', (cursor_x + txt_surface.get_width(), cursor_y, cursor_w, cursor_h))
+
+            if time % 20 == 0:
+                cursor_active = not cursor_active
 
         else:
             # pygame.draw.rect(screen, 'grey', (900, 450, 25, 25))
