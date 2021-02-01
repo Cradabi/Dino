@@ -5,9 +5,11 @@ from random import randint
 from dino import Dino
 from bird import Bird
 from cactus import Cactus
+from boss import Boss
 from scene1 import cut_scen_1
 from scene2 import cut_scen_2
 from scene3 import cut_scen_3
+from scene4 import cut_scen_4
 import sqlite3
 
 pygame.font.init()
@@ -15,7 +17,6 @@ pygame.font.init()
 FPS = 60
 WIDTH = 1200
 HEIGHT = 800
-
 
 
 def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money):
@@ -151,7 +152,15 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         was_scene_3 = False
     else:
         was_scene_3 = True
+    if score <= 8000:
+        was_scene_4 = False
+        boss_fight = False
+    else:
+        was_scene_4 = True
+        boss_fight = True
 
+    b = Boss(600, 166)
+    boss_group = pygame.sprite.GroupSingle(b)
     while running:
 
         clock.tick(FPS)
@@ -345,16 +354,26 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
                                fire_number, money)
                     stop_status = False
+                    road_v = 1.0
                 elif not was_scene_2 and was_scene_1:
                     was_scene_2 = True
                     cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
                                fire_number, money)
                     stop_status = False
+                    road_v = 1.0
                 elif not was_scene_3 and was_scene_1 and was_scene_2:
                     was_scene_3 = True
                     cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
                                fire_number, money)
                     stop_status = False
+                    road_v = 1.0
+                elif not was_scene_4 and was_scene_1 and was_scene_2 and was_scene_3:
+                    was_scene_4 = True
+                    cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
+                               fire_number, money)
+                    stop_status = False
+                    road_v = 1.0
+                    boss_fight = True
             else:
                 stop_t += 1
 
@@ -412,6 +431,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             next_barier = 'watter_cactus'
                         else:
                             next_barier = 'cactus'
+                if boss_fight:
+                    if b.rect.x + b.rect.w < cactus.rect.x <= b.rect.w + 40 + int(road_v * 10) + b.rect.x:
+                        b.jump_status = 1
 
         fare_cacti.update(road_v * road_speed)
         fare_cacti.draw(screen)
@@ -455,6 +477,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             for bird in birds:
                 if bird.rect.x < -94:
                     bird.kill()  # удаляет спрайт, если он оказался за пределами экрана
+                if b.rect.x + b.rect.w < bird.rect.x <= b.rect.w + 40 + int(
+                        road_v * 10) + b.rect.x and bird.rect.y == 210:
+                    b.jump_status = 1
             if not birds.spritedict:
                 choose = randint(1, 6)  # определяет какое препятсвие будет следующим
                 if choose == 4:
@@ -506,6 +531,13 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             road_cord_x2 -= int(road_speed * road_v)
         if road_v < 1.9:
             road_v += 0.00016
+
+        if boss_fight:
+            boss_group.update()
+            boss_group.draw(screen)
+            bq1 = b.collide_check(all_cacti)
+            if bq1:
+                quit()
 
         # полет огенного шара:
         if fire_status:
@@ -569,6 +601,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         elif score > 4000 and not was_scene_2:
             stop_status = True
         elif score > 6000 and not was_scene_3:
+            stop_status = True
+        elif score > 8000 and not was_scene_4:
             stop_status = True
 
         # отрисовка и изменение свойств объектов
