@@ -91,6 +91,9 @@ class Boss(pygame.sprite.Sprite):
                 return True
         return False
 
+    def die(self):  # TODO сделать смерть
+        quit()
+
     def update(self):
         if self.jump_status != 0:
             self.jump()

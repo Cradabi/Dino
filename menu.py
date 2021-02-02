@@ -30,8 +30,8 @@ f1 = pygame.font.Font(None, 60)
 f1.set_italic(True)
 f2 = pygame.font.Font(None, 18)
 t = 0
-water_number = 30
-fire_number = 30
+water_number = 0
+fire_number = 5
 money = 100
 birthday_code = False
 pygame.mouse.set_cursor(*pygame.cursors.tri_left)

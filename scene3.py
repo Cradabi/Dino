@@ -101,7 +101,7 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                         t_c = t // 100
                         t_c += 1
                         t = t_c * 100
-                if event.unicode == 'E':
+                if event.unicode == 'e':
                     if t >= 600 and t < 750:
                         if money >= 50:
                             money -= 50
