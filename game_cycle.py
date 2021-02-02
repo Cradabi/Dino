@@ -132,6 +132,28 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     water_status = False
     water_cor_x = d.x + 89
     water_cor_y = 200 + 200
+    moon_x = 400
+    star_x1 = 300
+    star_x2 = 150
+    star_x3 = 900
+    star_x4 = 450
+    star_x5 = 271
+    star_x6 = 800
+    star_x7 = 615
+    star_x8 = 361
+    star_x9 = 18
+    star_x10 = 501
+    sun_x = 30
+    cloud_x1 = 400
+    cloud_x2 = 900
+    cloud_x3 = 11
+    cloud_x4 = 315
+    cloud_x5 = 101
+    cloud_x6 = 212
+    cloud_x7 = 957
+    cloud_x8 = 512
+    cloud_x9 = 845
+    cloud_x10 = 678
     jump_status = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
@@ -417,11 +439,96 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
         # статичные объекты:
         if color == (0, 0, 0):
-            screen.blit(moon, (400, 80))
-            screen.blit(star, (500, 130))
+            screen.blit(moon, (moon_x, 80))
+            screen.blit(star, (star_x1, 125))
+            screen.blit(star, (star_x2, 150))
+            screen.blit(star, (star_x3, 140))
+            screen.blit(star, (star_x4, 110))
+            screen.blit(star, (star_x5, 140))
+            screen.blit(star, (star_x6, 137))
+            screen.blit(star, (star_x7, 135))
+            screen.blit(star, (star_x8, 133))
+            screen.blit(star, (star_x9, 122))
+            screen.blit(star, (star_x10, 147))
         else:
-            screen.blit(cloud, (200, 100))
-            screen.blit(night_sun, (30, 100))
+            screen.blit(cloud, (cloud_x1, 123))
+            screen.blit(cloud, (cloud_x2, 200))
+            screen.blit(cloud, (cloud_x3, 216))
+            screen.blit(cloud, (cloud_x4, 147))
+            screen.blit(cloud, (cloud_x5, 111))
+            screen.blit(cloud, (cloud_x6, 50))
+            screen.blit(cloud, (cloud_x7, 91))
+            screen.blit(cloud, (cloud_x8, 131))
+            screen.blit(cloud, (cloud_x9, 115))
+            screen.blit(cloud, (cloud_x10, 100))
+            screen.blit(night_sun, (sun_x, 100))
+
+        moon_x -= 1
+        star_x1 -= 1
+        star_x2 -= 1
+        star_x3 -= 1
+        star_x4 -= 1
+        star_x5 -= 1
+        star_x6 -= 1
+        star_x7 -= 1
+        star_x8 -= 1
+        star_x9 -= 1
+        star_x10 -= 1
+        cloud_x1 -= 1
+        cloud_x2 -= 1
+        cloud_x3 -= 1
+        cloud_x4 -= 1
+        cloud_x5 -= 1
+        cloud_x6 -= 1
+        cloud_x7 -= 1
+        cloud_x8 -= 1
+        cloud_x9 -= 1
+        cloud_x10 -= 1
+        sun_x -= 1
+        if star_x1 <= -40:
+            star_x1 = 1200
+        if star_x2 <= -40:
+            star_x2 = 1200
+        if star_x3 <= -40:
+            star_x3 = 1200
+        if star_x4 <= -40:
+            star_x4 = 1200
+        if star_x5 <= -40:
+            star_x5 = 1200
+        if star_x6 <= -40:
+            star_x6 = 1200
+        if star_x7 <= -40:
+            star_x7 = 1200
+        if star_x8 <= -40:
+            star_x8 = 1200
+        if star_x9 <= -40:
+            star_x9 = 1200
+        if star_x10 <= -40:
+            star_x10 = 1200
+        if sun_x <= - 100:
+            sun_x = 1200
+        if cloud_x1 <= - 115:
+            cloud_x1 = 1200
+        if cloud_x2 <= - 115:
+            cloud_x2 = 1200
+        if cloud_x3 <= - 115:
+            cloud_x3 = 1200
+        if cloud_x4 <= - 115:
+            cloud_x4 = 1200
+        if cloud_x5 <= - 115:
+            cloud_x5 = 1200
+        if cloud_x6 <= - 115:
+            cloud_x6 = 1200
+        if cloud_x7 <= - 115:
+            cloud_x7 = 1200
+        if cloud_x8 <= - 115:
+            cloud_x8 = 1200
+        if cloud_x9 <= - 115:
+            cloud_x9 = 1200
+        if cloud_x10 <= - 115:
+            cloud_x10 = 1200
+
+
 
         # Проверка столкновений дино с кактусами и птицами:
         q1 = d.collide_check(all_cacti)
