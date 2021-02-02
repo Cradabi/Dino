@@ -5,6 +5,7 @@ from random import randint
 from dino import Dino
 from bird import Bird
 from cactus import Cactus
+from coin import Coin
 from boss import Boss
 from scene1 import cut_scen_1
 from scene2 import cut_scen_2
@@ -95,6 +96,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     watter_cactus.set_colorkey('white')
     cacti = [small_cactus1, small_cactus2, small_cactus3, small_cactus4, small_cactus5, fare_cactus, watter_cactus]
     all_cacti = pygame.sprite.Group()
+    all_coin = pygame.sprite.Group()
     fare_cacti = pygame.sprite.Group()
     watter_cacti = pygame.sprite.Group()
 
@@ -108,11 +110,14 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     small_fire_img = pygame.image.load('imgs/fare_ball2.png')
     small_fire_img = pygame.transform.scale(small_fire_img, (25, 15))
     small_fire_img.set_colorkey('white')
+    coin_img = pygame.image.load('imgs/coin.png')
+    coin_img = pygame.transform.scale(coin_img, (30, 40))
+    coin_img.set_colorkey('white')
     fire_x = 35
     fire_y = 10
     water_x = 35
     water_y = 30
-
+    coin_status = 0
     clock = pygame.time.Clock()
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
@@ -387,8 +392,17 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 now_barier = 'watter_cactus'
                 time = time % 10
                 rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
+            elif (time % (70 + rand_time) == 0 and next_barier == 'coin' and last_cactus) or (
+                    next_barier == 'coin' and not last_cactus):
+                # добавляет кактус и определяет время через которе появится следующее препятсвие
+                last_cactus = True
+                Coin(WIDTH, 350, coin_img, all_coin)
+                now_barier = 'cactus'
+                time = time % 10
+                rand_time = randint(-10, 40)
+                coin_status = 1
         elif not all_cacti.spritedict and not birds.spritedict \
-                and not fare_cacti.spritedict and not watter_cacti.spritedict:  # проверка остались ли еще препятсвия
+                and not fare_cacti.spritedict and not watter_cacti.spritedict and not all_coin:  # проверка остались ли еще препятсвия
             stop_status = True
             if stop_t % 50 == 0:
                 if not was_scene_1:
@@ -528,13 +542,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         if cloud_x10 <= - 115:
             cloud_x10 = 1200
 
-
-
         # Проверка столкновений дино с кактусами и птицами:
         q1 = d.collide_check(all_cacti)
         q2 = d.collide_check(birds)
         q3 = d.collide_check(fare_cacti)
         q4 = d.collide_check(watter_cacti)
+        q5 = d.collide_check(all_coin)
         if q1 or q2 or q3 or q4:  # смерть
             die_sound.play()
             d.die(score)
@@ -542,6 +555,11 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 d.x, d.y = d_x, d_y
             road_v = 0
             running = False
+        elif q5:
+            money += 10
+            for coin in all_coin:
+                coin.kill()
+                print(money)
 
         # screen.blit(d.image, (d.x, d.y))
         d.update(screen)
@@ -559,6 +577,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             for bird in birds:
                 if bird.rect.x < -94:
                     bird.kill()  # удаляет спрайт, если он оказался за пределами экрана
+            for coin in all_coin:
+                if coin.rect.x < -30:
+                    coin.kill()
 
         # кактусы:
         all_cacti.update(road_v * road_speed)
@@ -569,7 +590,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
                         if not boss_fight:
-                            choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                            choose = randint(1, 7)  # определяет какое препятсвие будет следующим
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
@@ -582,6 +603,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
+                            elif choose == 7:
+                                next_barier = 'coin'
                             else:
                                 next_barier = 'cactus'
                         else:
@@ -688,6 +711,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         next_barier = 'bird'
                     else:
                         next_barier = 'cactus'
+
+        all_coin.update(road_v * road_speed)
+        all_coin.draw(screen)
 
         # преобразует текущий счет в поверхность и выводит ее:
         score_out = []
