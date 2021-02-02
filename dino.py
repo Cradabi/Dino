@@ -5,8 +5,8 @@ DINO_COLOR = (83, 83, 83)
 
 
 class Dino(pygame.sprite.Sprite):
-    def __init__(self, x=100, y=200, birthday_code=False):
-        super().__init__()
+    def __init__(self, x=100, y=200, birthday_code=False, *group):
+        super().__init__(*group)
         self.birthday = birthday_code
 
         if self.birthday:
