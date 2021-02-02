@@ -31,8 +31,8 @@ f1.set_italic(True)
 f2 = pygame.font.Font(None, 18)
 t = 0
 water_number = 0
-fire_number = 5
-money = 100
+fire_number = 0
+money = 0
 birthday_code = False
 pygame.mouse.set_cursor(*pygame.cursors.tri_left)
 language = 'rus'
