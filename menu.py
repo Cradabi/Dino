@@ -19,7 +19,7 @@ color = (255, 255, 255)
 size = width, height = WIDTH, HEIGHT
 screen = pygame.display.set_mode(size)
 screen.fill(color)
-score = 0
+score = 1990
 con = sqlite3.connect('HI.db')
 cur = con.cursor()
 HI_s = cur.execute(

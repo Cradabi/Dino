@@ -116,10 +116,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     clock = pygame.time.Clock()
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
-        d_y = 178
+        d_y = 178 + 200
         d_x = 100
     else:
-        d_y = 210
+        d_y = 210 + 200
         d_x = 100
         dino1 = pygame.image.load('imgs/dino1.png')
     dino1.set_colorkey('white')
@@ -128,10 +128,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     status_dino = 'run'
     fire_status = False
     fire_cor_x = d.x + 89
-    fire_cor_y = 200
+    fire_cor_y = 200 + 200
     water_status = False
     water_cor_x = d.x + 89
-    water_cor_y = 200
+    water_cor_y = 200 + 200
     jump_status = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
@@ -152,7 +152,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     time = -1
     HI_str = str(HI)
     HI_t = 0
-    HI_coard_y = 500
+    HI_coard_y = 500 + 200
     fast_jump = 0
     bird_height = 2
     if score <= 2000:
@@ -174,7 +174,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         was_scene_4 = True
         boss_fight = True
 
-    b = Boss(600, 166)
+    b = Boss(600, 366)
     boss_group = pygame.sprite.GroupSingle(b)
     while running:
 
@@ -280,7 +280,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     jump_time = 0
             elif jump_status == 3:  # дино просто опускается
                 jump_time += 1
-                if jump_time % 20 != 0 and d.y < 210:
+                if jump_time % 20 != 0 and d.y < 410:
                     d.y += 14
                     d.y -= fast_jump
                     if jump_time % 2 == 0:
@@ -302,7 +302,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
             elif jump_status == 4:  # дино резко опускается т.к. была нажата клавиша вниз
                 jump_time += 2
-                if jump_time % 20 != 0 and d.y < 210:
+                if jump_time % 20 != 0 and d.y < 410:
                     d.y += 28
                     d.y -= fast_jump
                     if jump_time % 2 == 0:
@@ -329,7 +329,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     next_barier == 'cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
-                Cactus(WIDTH, 226, cacti[randint(0, 4)], all_cacti)
+                Cactus(WIDTH, 426, cacti[randint(0, 4)], all_cacti)
                 now_barier = 'cactus'
                 time = time % 10
                 rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
@@ -339,21 +339,21 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 last_cactus = False
                 bird_height = randint(1, 3)
                 if bird_height == 1:
-                    Bird(WIDTH, 90, birds)
+                    Bird(WIDTH, 290, birds)
                 elif bird_height == 2:
                     if birthday_code:
-                        Bird(WIDTH, 120, birds)
+                        Bird(WIDTH, 320, birds)
                     else:
-                        Bird(WIDTH, 150, birds)
+                        Bird(WIDTH, 350, birds)
                 elif bird_height == 3:
-                    Bird(WIDTH, 210, birds)
+                    Bird(WIDTH, 410, birds)
                 now_barier = 'bird'
                 next_barier = ''
             elif (time % (70 + rand_time) == 0 and next_barier == 'fare_cactus' and last_cactus) or (
                     next_barier == 'fare_cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
-                Cactus(WIDTH, 135, cacti[5], fare_cacti)
+                Cactus(WIDTH, 335, cacti[5], fare_cacti)
                 now_barier = 'fare_cactus'
                 time = time % 10
                 rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
@@ -361,7 +361,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     next_barier == 'watter_cactus' and not last_cactus):
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
-                Cactus(WIDTH, 135, cacti[6], watter_cacti)
+                Cactus(WIDTH, 335, cacti[6], watter_cacti)
                 now_barier = 'watter_cactus'
                 time = time % 10
                 rand_time = randint(-10, 40)  # TODO сделать нормальное время между появлениями кактусов(препятсвий)
@@ -556,7 +556,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 if bird.rect.x < -94:
                     bird.kill()  # удаляет спрайт, если он оказался за пределами экрана
                 if b.rect.x + b.rect.w < bird.rect.x <= b.rect.w + 40 + int(
-                        road_v * 10) + b.rect.x and bird.rect.y == 210:
+                        road_v * 10) + b.rect.x and bird.rect.y == 410:
                     b.jump_status = 1
             if not birds.spritedict:
                 if not boss_fight:
@@ -595,7 +595,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
         # преобразует лучший счет в поверхность и выводит ее:
         score_out = []
-        screen.blit(HI_img, (870, 500))
+        screen.blit(HI_img, (870, 700))
         for i in range(1, len(HI_str) + 1):
             score_out.insert(0, HI_str[len(HI_str) - i])
         while len(score_out) != 5:
@@ -612,8 +612,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         score_t += 1
 
         # двигает дорожку:
-        screen.blit(road1, (road_cord_x1, 279))
-        screen.blit(road2, (road_cord_x2, 279))
+        screen.blit(road1, (road_cord_x1, 475))
+        screen.blit(road2, (road_cord_x2, 475))
         if road_cord_x2 <= 0:
             road_cord_x1 = 0
             road_cord_x2 = 2398
