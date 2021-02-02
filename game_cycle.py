@@ -610,9 +610,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         score_t += 1
 
         # двигает дорожку:
-        screen.blit(road1, (road_cord_x1, 270))
-        screen.blit(road2, (road_cord_x2, 270))
-        if road_cord_x2 <= -800:
+        screen.blit(road1, (road_cord_x1, 279))
+        screen.blit(road2, (road_cord_x2, 279))
+        if road_cord_x2 <= 0:
             road_cord_x1 = 0
             road_cord_x2 = 2398
         else:
