@@ -416,10 +416,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         screen.fill(color)
 
         # статичные объекты:
-        screen.blit(cloud, (200, 100))
-        screen.blit(moon, (400, 80))
-        screen.blit(star, (500, 130))
-        screen.blit(night_sun, (30, 100))
+        if color == (0, 0, 0):
+            screen.blit(moon, (400, 80))
+            screen.blit(star, (500, 130))
+        else:
+            screen.blit(cloud, (200, 100))
+            screen.blit(night_sun, (30, 100))
 
         # Проверка столкновений дино с кактусами и птицами:
         q1 = d.collide_check(all_cacti)
