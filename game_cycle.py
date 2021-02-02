@@ -397,10 +397,11 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
                 Coin(WIDTH, 350, coin_img, all_coin)
-                now_barier = 'cactus'
+                now_barier = 'coin'
                 time = time % 10
                 rand_time = randint(-10, 40)
                 coin_status = 1
+                next_barier = 'cactus'
         elif not all_cacti.spritedict and not birds.spritedict \
                 and not fare_cacti.spritedict and not watter_cacti.spritedict and not all_coin:  # проверка остались ли еще препятсвия
             stop_status = True
@@ -560,7 +561,6 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             for coin in all_coin:
                 coin.kill()
                 print(money)
-
         # screen.blit(d.image, (d.x, d.y))
         d.update(screen)
 
