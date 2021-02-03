@@ -828,19 +828,19 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             water_status = False
 
         if fire_status:
-            fare = pygame.sprite.groupcollide(d.fare_ball_sprites, fare_cacti, True, True)
+            fare = pygame.sprite.groupcollide(d.fare_ball_sprites, watter_cacti, True, True)
             if fare:
                 if not boss_fight:
                     choose = randint(1, 6)  # определяет какое препятсвие будет следующим
                     if choose == 4:
                         next_barier = 'bird'
                     elif choose == 5:
-                        if fire_number != 0:
+                        if water_number != 0:
                             next_barier = 'fare_cactus'
                         else:
                             next_barier = 'cactus'
                     elif choose == 6:
-                        if water_number != 0:
+                        if fire_number != 0:
                             next_barier = 'watter_cactus'
                         else:
                             next_barier = 'cactus'
@@ -855,7 +855,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 fire_status = False
 
         if water_status:
-            watter = pygame.sprite.groupcollide(d.watter_ball_sprites, watter_cacti, True, True)
+            watter = pygame.sprite.groupcollide(d.watter_ball_sprites, fare_cacti, True, True)
             if watter:
                 if not boss_fight:
                     choose = randint(1, 6)  # определяет какое препятсвие будет следующим
