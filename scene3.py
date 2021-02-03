@@ -61,24 +61,24 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
     dialog_right.set_colorkey('white')
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
-        d_y = 178
+        d_y = 378
         d_x = 100
     else:
-        d_y = 210
+        d_y = 310
         d_x = 100
         dino1 = pygame.image.load('imgs/dino1.png')
     dino1.set_colorkey('white')
     d = Dino(d_x, d_y)
     running = True
     mag_cord_x = WIDTH
-    mag_cord_y = 184
+    mag_cord_y = 384
     t = 1
     t_c = 1
     score_str = str(score)
     score_cord_y = 50
     HI_str = str(HI)
     HI_t = 0
-    HI_coard_y = 500
+    HI_coard_y = 700
     while running:
 
         clock.tick(FPS)
@@ -101,12 +101,21 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                         t_c = t // 100
                         t_c += 1
                         t = t_c * 100
+                if event.unicode == 'e':
+                    if t >= 600 and t < 750:
+                        if money >= 50:
+                            money -= 50
+                            fire_number += 30
+                            print(1)
+                    elif t >= 750 and t < 900:
+                        if money >= 50:
+                            money -= 50
+                            fire_number += 30
+                            print(1)
         screen.fill(color)
-        screen.blit(dino1, (d.x, d.y))
-        screen.blit(road1, (0, 270))
+        screen.blit(dino1, (d.x, d.y + 95))
+        screen.blit(road1, (0, 470))
         screen.blit(cloud, (200, 100))
-        screen.blit(moon, (400, 80))
-        screen.blit(star, (500, 130))
         screen.blit(night_sun, (30, 100))
         t += 1
         if t < 200:
@@ -115,184 +124,156 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
         screen.blit(mag_left, (mag_cord_x, mag_cord_y))
         if t > 200 and t < 300:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-            screen.blit(dialog_right, (900, 300))
+            screen.blit(dialog_right, (900, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Привет, Дино.", False, (0, 0, 0))
-                screen.blit(text, (930, 370))
+                screen.blit(text, (930, 570))
                 # t += 1
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Hi, Dino.", False, (0, 0, 0))
-                screen.blit(text, (930, 370))
+                screen.blit(text, (930, 570))
         elif t >= 300 and t < 400:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-            screen.blit(dialog_left, (10, 300))
+            screen.blit(dialog_left, (10, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Здравствуйте.", False, (0, 0, 0))
-                screen.blit(text, (40, 370))
+                screen.blit(text, (40, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Кто вы?", False, (0, 0, 0))
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Hello.", False, (0, 0, 0))
-                screen.blit(text, (40, 370))
+                screen.blit(text, (40, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Who are you?", False, (0, 0, 0))
             # t += 1
         elif t >= 400 and t < 500:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-            screen.blit(dialog_right, (900, 300))
+            screen.blit(dialog_right, (900, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Я торговец.", False, (0, 0, 0))
-                screen.blit(text, (930, 370))
+                screen.blit(text, (930, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("У меня есть", False, (0, 0, 0))
-                screen.blit(text, (930, 390))
+                screen.blit(text, (930, 590))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("зелья, которые смогут", False, (0, 0, 0))
-                screen.blit(text, (930, 410))
+                screen.blit(text, (930, 610))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("увеличить количество", False, (0, 0, 0))
-                screen.blit(text, (930, 430))
+                screen.blit(text, (930, 630))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("огня и воды.", False, (0, 0, 0))
-                screen.blit(text, (930, 450))
+                screen.blit(text, (930, 650))
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("I am a merchant.", False, (0, 0, 0))
-                screen.blit(text, (930, 370))
+                screen.blit(text, (930, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("I have portions", False, (0, 0, 0))
-                screen.blit(text, (930, 390))
+                screen.blit(text, (930, 590))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("that will increase", False, (0, 0, 0))
-                screen.blit(text, (930, 410))
+                screen.blit(text, (930, 610))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("the amount of", False, (0, 0, 0))
-                screen.blit(text, (930, 430))
+                screen.blit(text, (930, 630))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("fire and water", False, (0, 0, 0))
-                screen.blit(text, (930, 450))
+                screen.blit(text, (930, 650))
         elif t >= 500 and t < 600:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-            screen.blit(dialog_left, (10, 300))
+            screen.blit(dialog_left, (10, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Можешь рассказать", False, (0, 0, 0))
-                screen.blit(text, (40, 370))
+                screen.blit(text, (40, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("подробнеее?", False, (0, 0, 0))
-                screen.blit(text, (40, 390))
+                screen.blit(text, (40, 590))
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Can you tell more?", False, (0, 0, 0))
-                screen.blit(text, (40, 390))
+                screen.blit(text, (40, 590))
         elif t >= 600 and t < 750:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-            screen.blit(dialog_right, (900, 300))
+            screen.blit(dialog_right, (900, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Ты можешь купить 30", False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 370))
+                screen.blit(text, (930, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("огней за 50 денег,", False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 390))
+                screen.blit(text, (930, 590))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render('нажав на "E".', False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 410))
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                        if event.unicode == "E":
-                            if money >= 50:
-                                fire_number += 30
-                                money -= 50
-                                print(1)
+                screen.blit(text, (930, 610))
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("You can buy 30", False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 370))
+                screen.blit(text, (930, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("fires for 50 moneys", False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 390))
+                screen.blit(text, (930, 590))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render('by pressing "E".', False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 410))
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                        if event.unicode == "E":
-                            if money >= 50:
-                                fire_number += 30
-                                money -= 50
-                                print(1)
+                screen.blit(text, (930, 610))
         elif t >= 750 and t < 900:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-            screen.blit(dialog_right, (900, 300))
+            screen.blit(dialog_right, (900, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Ты можешь купить 30", False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 370))
+                screen.blit(text, (930, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("зарядов воды за 50 денег,", False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 390))
+                screen.blit(text, (930, 590))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render('нажав на "E".', False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 410))
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                        if event.unicode == "E":
-                            if money >= 50:
-                                fire_number += 30
-                                money -= 50
-                                print(1)
+                screen.blit(text, (930, 610))
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("You can buy 30", False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 370))
+                screen.blit(text, (930, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("waterballs for 50", False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 390))
+                screen.blit(text, (930, 590))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render('moneys by pressing "E".', False,
                                  (0, 0, 0))
-                screen.blit(text, (930, 410))
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                        if event.unicode == "E":
-                            if money >= 50:
-                                water_number += 30
-                                money -= 50
-                                print(1)
+                screen.blit(text, (930, 610))
         elif t >= 900 and t < 1000:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-            screen.blit(dialog_left, (10, 300))
+            screen.blit(dialog_left, (10, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Я помогу вам.", False, (0, 0, 0))
-                screen.blit(text, (40, 370))
+                screen.blit(text, (40, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("До свидания.", False, (0, 0, 0))
-                screen.blit(text, (40, 390))
+                screen.blit(text, (40, 590))
             elif language == 'eng':
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Thanks. I will try.", False, (0, 0, 0))
-                screen.blit(text, (40, 370))
+                screen.blit(text, (40, 570))
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("to help. Goodbye.", False, (0, 0, 0))
-                screen.blit(text, (40, 390))
+                screen.blit(text, (40, 590))
         elif t >= 1000 and t < 1230:
             # t += 1
             mag_cord_x += 1
@@ -313,8 +294,8 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
 
         # преобразует лучший счет в поверхность и выводит ее:
         score_out = []
-        HI_coard_y = 500
-        screen.blit(HI_img, (870, 500))
+        HI_coard_y = 700
+        screen.blit(HI_img, (870, 700))
         for i in range(1, len(HI_str) + 1):
             score_out.insert(0, HI_str[len(HI_str) - i])
         while len(score_out) != 5:

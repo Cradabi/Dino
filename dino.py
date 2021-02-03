@@ -65,6 +65,11 @@ class Dino(pygame.sprite.Sprite):
         self.die_status = False
         self.color = 'white'
 
+        self.fare_ball_sprites = pygame.sprite.Group()
+        self.fare_ball_sprite = pygame.sprite.Sprite()
+        self.watter_ball_sprites = pygame.sprite.Group()
+        self.watter_ball_sprite = pygame.sprite.Sprite()
+
     def run_anim(self, screen):  # меняет ноги у бегущего прямо дино и выводит дино
         if self.image == self.sit_img1:
             self.image = self.run_img2
@@ -119,8 +124,6 @@ class Dino(pygame.sprite.Sprite):
             screen.blit(self.fire_img1, (self.x, self.y))
 
     def fare_ball_anim(self, screen, x, y, color):
-        self.fare_ball_sprites = pygame.sprite.Group()
-        self.fare_ball_sprite = pygame.sprite.Sprite()
         self.fare_ball_sprite.image = self.fare_ball_img
         self.fare_ball_sprite.rect = self.fare_ball_sprite.image.get_rect()
         self.fare_ball_sprites.add(self.fare_ball_sprite)
@@ -129,8 +132,6 @@ class Dino(pygame.sprite.Sprite):
         self.fare_ball_sprites.draw(screen)
 
     def watter_ball_anim(self, screen, x, y, color):
-        self.watter_ball_sprites = pygame.sprite.Group()
-        self.watter_ball_sprite = pygame.sprite.Sprite()
         self.watter_ball_sprite.image = self.watter_ball_img
         self.watter_ball_sprite.rect = self.watter_ball_sprite.image.get_rect()
         self.watter_ball_sprites.add(self.watter_ball_sprite)

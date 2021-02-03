@@ -11,6 +11,8 @@ BLACK = (0, 0, 0)
 def sets(screen, score, language, keys):
     clock = pygame.time.Clock()
 
+    time = 0
+
     up_key = keys[0]
     down_key = keys[1]
     blue_ball_key = keys[2]
@@ -156,6 +158,7 @@ def sets(screen, score, language, keys):
     cursor_y = 80
     cursor_w = 15
     cursor_h = 23
+    cursor_active = False
 
     running = True
     while running:
@@ -186,6 +189,54 @@ def sets(screen, score, language, keys):
                             control_text1_w = 125
                             control_text1_h = 35
                         control_text1_surf = f3.render(control_text1, True, BLACK)
+                if event.key == pygame.K_RETURN:
+                    if text.lower() == 'dino birthday':  # код для внешнего вида дино
+                        text = ''
+                        if language == 'rus':
+                            text1 = 'код успесшно активирован'
+                            text1_x = 450
+                            text1_y = 120
+                        else:
+                            text1 = 'code has been activated'
+                            text1_x = 465
+                            text1_y = 120
+                        birth_day_code = True
+                    elif ' '.join(text.lower().split()[:2:]) == 'set score' and len(text.lower().split()) == 3:
+                        # комманда, устанавливающая введенное значение для score
+                        try:
+                            if int(text.lower().split()[2]) < 0:
+                                raise Exception
+                            score = int(text.lower().split()[2])
+                            text = ''
+                            if language == 'rus':
+                                text1 = 'код успесшно активирован'
+                                text1_x = 450
+                                text1_y = 120
+                            else:
+                                text1 = 'code has been activated'
+                                text1_x = 465
+                                text1_y = 120
+                        except Exception:
+                            if language == 'rus':
+                                text1 = 'код не найден'
+                                text1_x = 510
+                                text1_y = 120
+                            else:
+                                text1 = 'code not found'
+                                text1_x = 515
+                                text1_y = 120
+                    else:
+                        if language == 'rus':
+                            text1 = 'код не найден'
+                            text1_x = 510
+                            text1_y = 120
+                        else:
+                            text1 = 'code not found'
+                            text1_x = 515
+                            text1_y = 120
+                    text1_surf = f1.render(text1, True, BLACK)
+                    text1_print = True
+                    sleep(0.3)
                 elif key_choose:
                     try:
                         if upkey_choose:
@@ -225,13 +276,15 @@ def sets(screen, score, language, keys):
                 # Change the current color of the input box.
                 color = color_active if active else color_inactive
             if event.type == pygame.KEYDOWN:
-                if active and not control_settings:
+                if active and not control_settings and event.key != pygame.K_RETURN and event.key != pygame.K_ESCAPE:
                     # if event.key == pygame.K_RETURN:
                     #    return text
                     if event.key == pygame.K_BACKSPACE:
                         text = text[:-1]
                     else:
                         text += event.unicode
+
+        time += 1
 
         screen.blit(surf, (200, 25))
 
@@ -381,8 +434,11 @@ def sets(screen, score, language, keys):
             # Blit the input_box rect.
             pygame.draw.rect(screen, color, input_box, 2)
 
-            if active:
+            if active and cursor_active:
                 pygame.draw.rect(screen, 'black', (cursor_x + txt_surface.get_width(), cursor_y, cursor_w, cursor_h))
+
+            if time % 20 == 0:
+                cursor_active = not cursor_active
 
         else:
             # pygame.draw.rect(screen, 'grey', (900, 450, 25, 25))
