@@ -109,6 +109,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     small_water_img = pygame.image.load('imgs/watter_ball.png')
     small_water_img = pygame.transform.scale(small_water_img, (25, 17))
     small_water_img.set_colorkey('white')
+    small_money_img = pygame.image.load('imgs/coin.png')
+    small_money_img = pygame.transform.scale(small_money_img, (14, 18))
+    small_money_img.set_colorkey('white')
     small_fire_img = pygame.image.load('imgs/fare_ball2.png')
     small_fire_img = pygame.transform.scale(small_fire_img, (25, 15))
     small_fire_img.set_colorkey('white')
@@ -122,10 +125,13 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     fire_ball_img = pygame.transform.scale(fire_ball_img, (45, 25))
     fire_ball_img.set_colorkey('white')
     fire_x = 35
-    fire_y = 10
+    fire_y = 30
     water_x = 35
-    water_y = 30
+    water_y = 50
+    money_x = 35
+    money_y = 10
     coin_status = 0
+    boss_die_t = 0
     clock = pygame.time.Clock()
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
@@ -171,6 +177,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     jump_status = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
+    boss_die_status = 0
     running = True
     road_v = 1.0
     road_speed = 10
@@ -218,62 +225,63 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
         # внутри игрового цикла ещё один цикл
         # приема и обработки сообщений
-        for event in pygame.event.get():
-            # при закрытии окна
-            if event.type == pygame.QUIT:
-                quit()  # running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
-                if event.button == 1 and not fire_status and fire_number:
-                    fire_number -= 1
-                    fire_status = True
-                    fire_cor_x = d.x + 89
-                    fire_cor_y = d.y
-                if event.button == 3 and not water_status and water_number:
-                    water_number -= 1
-                    water_status = True
-                    water_cor_x = d.x + 89
-                    water_cor_y = d.y
-                if status_dino == 'sit' and not fire_status:
-                    fire_cor_y = 234
-                    fire_cor_x = d.x + 120
-                if status_dino == 'sit' and not water_status:
-                    water_cor_y = 234
-                    water_cor_x = d.x + 120
-            if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
-                if event.key == pygame.K_ESCAPE:
-                    quit()
-                elif event.key == down_key:  # if event.unicode == 's':
-                    status_dino = 'sit'
-                    if not jump_status:
-                        d.y = d_y + 34  # d.y += 34
-                    if not jump_status:
-                        d.sit_anim(screen)
-                elif event.key == up_key and status_dino != 'sit':  # elif event.unicode == 'w':
-                    if jump_status == 0:  # and not stop_status:
-                        jump_status = 1
-                        jump_sound.play()
-                elif event.key == red_ball_key and not fire_status and fire_number:
-                    fire_number -= 1
-                    fire_status = True
-                    fire_cor_x = d.x + 89
-                    fire_cor_y = d.y
-                    if status_dino == 'sit':
+        if boss_die_status == 0:
+            for event in pygame.event.get():
+                # при закрытии окна
+                if event.type == pygame.QUIT:
+                    quit()  # running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
+                    if event.button == 1 and not fire_status and fire_number:
+                        fire_number -= 1
+                        fire_status = True
+                        fire_cor_x = d.x + 89
+                        fire_cor_y = d.y
+                    if event.button == 3 and not water_status and water_number:
+                        water_number -= 1
+                        water_status = True
+                        water_cor_x = d.x + 89
+                        water_cor_y = d.y
+                    if status_dino == 'sit' and not fire_status:
                         fire_cor_y = 234
                         fire_cor_x = d.x + 120
-                elif event.key == blue_ball_key and not water_status and water_number:
-                    water_number -= 1
-                    water_status = True
-                    water_cor_x = d.x + 89
-                    water_cor_y = d.y
-                    if status_dino == 'sit':
+                    if status_dino == 'sit' and not water_status:
                         water_cor_y = 234
                         water_cor_x = d.x + 120
-            if event.type == pygame.KEYUP:
-                if event.key == down_key:  # if event.unicode == 's':
-                    status_dino = 'run'
-                    d.y = d_y  # d.y -= 34
-                    if not jump_status:
-                        d.run_anim(screen)
+                if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
+                    if event.key == pygame.K_ESCAPE:
+                        quit()
+                    elif event.key == down_key:  # if event.unicode == 's':
+                        status_dino = 'sit'
+                        if not jump_status:
+                            d.y = d_y + 34  # d.y += 34
+                        if not jump_status:
+                            d.sit_anim(screen)
+                    elif event.key == up_key and status_dino != 'sit':  # elif event.unicode == 'w':
+                        if jump_status == 0:  # and not stop_status:
+                            jump_status = 1
+                            jump_sound.play()
+                    elif event.key == red_ball_key and not fire_status and fire_number:
+                        fire_number -= 1
+                        fire_status = True
+                        fire_cor_x = d.x + 89
+                        fire_cor_y = d.y
+                        if status_dino == 'sit':
+                            fire_cor_y = 234
+                            fire_cor_x = d.x + 120
+                    elif event.key == blue_ball_key and not water_status and water_number:
+                        water_number -= 1
+                        water_status = True
+                        water_cor_x = d.x + 89
+                        water_cor_y = d.y
+                        if status_dino == 'sit':
+                            water_cor_y = 234
+                            water_cor_x = d.x + 120
+                if event.type == pygame.KEYUP:
+                    if event.key == down_key:  # if event.unicode == 's':
+                        status_dino = 'run'
+                        d.y = d_y  # d.y -= 34
+                        if not jump_status:
+                            d.run_anim(screen)
 
         time += 1
         if time % 10 == 0:
@@ -783,14 +791,15 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         # двигает дорожку:
         screen.blit(road1, (road_cord_x1, 475))
         screen.blit(road2, (road_cord_x2, 475))
-        if road_cord_x2 <= 0:
-            road_cord_x1 = 0
-            road_cord_x2 = 2398
-        else:
-            road_cord_x1 -= int(road_speed * road_v)
-            road_cord_x2 -= int(road_speed * road_v)
-        if road_v < 1.9:
-            road_v += 0.00016
+        if boss_die_status == 0:
+            if road_cord_x2 <= 0:
+                road_cord_x1 = 0
+                road_cord_x2 = 2398
+            else:
+                road_cord_x1 -= int(road_speed * road_v)
+                road_cord_x2 -= int(road_speed * road_v)
+            if road_v < 1.9:
+                road_v += 0.00016
 
         if boss_fight:
             boss_group.update()
@@ -811,7 +820,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     ball.kill()
                 water_status = False
             if b.hp <= 0:
-                b.die()
+                boss_die_t += 1
+                boss_die_status = 1
+                road_speed = 0
+                b.die(boss_die_t)
 
         # полет огенного шара:
         if fire_status:
@@ -883,14 +895,18 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         next_barier = 'cactus'
                 water_status = False
 
-        screen.blit(small_fire_img, (10, 10))
+        screen.blit(small_fire_img, (10, 30))
         for i in range(len(str(fire_number))):
             num_fire_surf = pygame.transform.scale(nums_dict[str(fire_number)[i]], (15, 18))
             screen.blit(num_fire_surf, (fire_x + num_fire_surf.get_width() * i, fire_y))
-        screen.blit(small_water_img, (10, 30))
+        screen.blit(small_water_img, (10, 50))
         for i in range(len(str(water_number))):
             num_water_surf = pygame.transform.scale(nums_dict[str(water_number)[i]], (15, 18))
             screen.blit(num_water_surf, (water_x + num_water_surf.get_width() * i, water_y))
+        screen.blit(small_money_img, (17, 10))
+        for i in range(len(str(money))):
+            money_surf = pygame.transform.scale(nums_dict[str(money)[i]], (15, 18))
+            screen.blit(money_surf, (money_x + money_surf.get_width() * i, money_y))
 
         if color != color_must:
             if color_must == (255, 255, 255):
@@ -934,17 +950,20 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 quit()  # run = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and d.die_status:
-                    if int(event.pos[0]) >= 300 and int(event.pos[0]) <= 444 and int(event.pos[1]) >= 200 and int(
-                            event.pos[1]) <= 328:
+                    if int(event.pos[0]) >= 500 and int(event.pos[0]) <= 644 and int(event.pos[1]) >= 270 and int(
+                            event.pos[1]) <= 398:
                         score = 0
                         color = (255, 255, 255)
+                        money = 0
+                        water_number = 0
+                        fire_number = 0
                         origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number,
                                     money)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     quit()
 
-        screen.blit(rerun_img, (300, 200))
+        screen.blit(rerun_img, (500, 270))
 
         pygame.display.flip()
 
