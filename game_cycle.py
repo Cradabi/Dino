@@ -564,6 +564,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             cloud_x9 = 1200
         if cloud_x10 <= - 115:
             cloud_x10 = 1200
+        if moon_x <= -40:
+            moon_x = 1200
 
         # Проверка столкновений дино с кактусами и птицами:
         q1 = d.collide_check(all_cacti)
