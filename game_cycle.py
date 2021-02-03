@@ -614,12 +614,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
-                                if fire_number != 0:
+                                if water_number != 0:
                                     next_barier = 'fare_cactus'
                                 else:
                                     next_barier = 'cactus'
                             elif choose == 6:
-                                if water_number != 0:
+                                if fire_number != 0:
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
@@ -649,12 +649,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
-                                if fire_number != 0:
+                                if water_number != 0:
                                     next_barier = 'fare_cactus'
                                 else:
                                     next_barier = 'cactus'
                             elif choose == 6:
-                                if water_number != 0:
+                                if fire_number != 0:
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
@@ -679,12 +679,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
-                                if fire_number != 0:
+                                if water_number != 0:
                                     next_barier = 'fare_cactus'
                                 else:
                                     next_barier = 'cactus'
                             elif choose == 6:
-                                if water_number != 0:
+                                if fire_number != 0:
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
@@ -714,12 +714,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if choose == 4:
                         next_barier = 'bird'
                     elif choose == 5:
-                        if fire_number != 0:
+                        if water_number != 0:
                             next_barier = 'fare_cactus'
                         else:
                             next_barier = 'cactus'
                     elif choose == 6:
-                        if water_number != 0:
+                        if fire_number != 0:
                             next_barier = 'watter_cactus'
                         else:
                             next_barier = 'cactus'
@@ -862,12 +862,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if choose == 4:
                         next_barier = 'bird'
                     elif choose == 5:
-                        if fire_number != 0:
+                        if water_number != 0:
                             next_barier = 'fare_cactus'
                         else:
                             next_barier = 'cactus'
                     elif choose == 6:
-                        if water_number != 0:
+                        if fire_number != 0:
                             next_barier = 'watter_cactus'
                         else:
                             next_barier = 'cactus'
