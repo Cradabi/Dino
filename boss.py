@@ -22,6 +22,12 @@ class Boss(pygame.sprite.Sprite):
         self.jump_img = pygame.transform.scale(self.jump_img, (int(self.scale * 1.06), self.scale))
         self.jump_img.set_colorkey('white')
 
+        self.asteroid = pygame.image.load('imgs/asteroid.png')
+        self.asteroid = pygame.transform.scale(self.asteroid, (150, 67))
+        self.asteroid.set_colorkey('white')
+        self.asteroid_x = 100
+        self.asteroid_y = -120
+
         self.spit_img1 = pygame.image.load('imgs/boss/boss_spit1.png')
         self.spit_img1 = pygame.transform.scale(self.spit_img1, (int(self.scale * 1.06), self.scale))
         self.spit_img1.set_colorkey('white')
@@ -92,10 +98,9 @@ class Boss(pygame.sprite.Sprite):
         return False
 
     def die(self, boss_die_t):  # TODO сделать смерть
-        if boss_die_t > 0 and boss_die_t <= 500:
-            f2 = pygame.font.SysFont('arial', 62)
-            text = f2.render("You win.", False, (0, 0, 0))
-            screen.blit(text, (200, 250))
+        if boss_die_t > 300 and boss_die_t <= 330:
+            self.asteroid_x += 5
+            self.asteroid_y += 25
 
     def update(self):
         if self.jump_status != 0:

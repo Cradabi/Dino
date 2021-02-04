@@ -289,13 +289,13 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if event.key == down_key:  # if event.unicode == 's':
                         status_dino = 'run'
                         d.y = d_y  # d.y -= 34
-                        if not jump_status:
+                        if not jump_status and boss_die_status == 0:
                             d.run_anim(screen)
 
         time += 1
         if time % 10 == 0:
             screen.fill(color)
-            if jump_status == 0 and status_dino == 'run':
+            if jump_status == 0 and status_dino == 'run' and boss_die_status == 0:
                 d.run_anim(screen)
             elif jump_status == 0 and status_dino == 'sit':
                 d.sit_anim(screen)
@@ -345,7 +345,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     jump_time = 0
                     fast_jump = 0
                     # d.y = 210
-                    if status_dino == 'run':
+                    if status_dino == 'run' and boss_die_status == 0:
                         d.run_anim(screen)
                     elif status_dino == 'sit':
                         d.sit_anim(screen)
@@ -366,7 +366,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     jump_status = 0
                     jump_time = 0
                     fast_jump = 0
-                    if status_dino == 'run':
+                    if status_dino == 'run' and boss_die_status == 0:
                         d.run_anim(screen)
                     elif status_dino == 'sit':
                         if birthday_code:
@@ -519,28 +519,29 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             screen.blit(cloud, (cloud_x10, 100))
             screen.blit(night_sun, (sun_x, 100))
 
-        moon_x -= 1
-        star_x1 -= 1
-        star_x2 -= 1
-        star_x3 -= 1
-        star_x4 -= 1
-        star_x5 -= 1
-        star_x6 -= 1
-        star_x7 -= 1
-        star_x8 -= 1
-        star_x9 -= 1
-        star_x10 -= 1
-        cloud_x1 -= 1
-        cloud_x2 -= 1
-        cloud_x3 -= 1
-        cloud_x4 -= 1
-        cloud_x5 -= 1
-        cloud_x6 -= 1
-        cloud_x7 -= 1
-        cloud_x8 -= 1
-        cloud_x9 -= 1
-        cloud_x10 -= 1
-        sun_x -= 1
+        if boss_die_status == 0:
+            moon_x -= 1
+            star_x1 -= 1
+            star_x2 -= 1
+            star_x3 -= 1
+            star_x4 -= 1
+            star_x5 -= 1
+            star_x6 -= 1
+            star_x7 -= 1
+            star_x8 -= 1
+            star_x9 -= 1
+            star_x10 -= 1
+            cloud_x1 -= 1
+            cloud_x2 -= 1
+            cloud_x3 -= 1
+            cloud_x4 -= 1
+            cloud_x5 -= 1
+            cloud_x6 -= 1
+            cloud_x7 -= 1
+            cloud_x8 -= 1
+            cloud_x9 -= 1
+            cloud_x10 -= 1
+            sun_x -= 1
         if star_x1 <= -40:
             star_x1 = 1200
         if star_x2 <= -40:
@@ -720,39 +721,40 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                                 next_barier = 'cactus'
 
         # птицы:
-        birds.update(road_v * road_speed, time)
-        birds.draw(screen)
-        if now_barier == 'bird':
+        if boss_die_status == 0:
+            birds.update(road_v * road_speed, time)
+            birds.draw(screen)
+            if now_barier == 'bird':
 
-            for bird in birds:
-                if bird.rect.x < -94:
-                    bird.kill()  # удаляет спрайт, если он оказался за пределами экрана
-                if b.rect.x + b.rect.w < bird.rect.x <= b.rect.w + 40 + int(
-                        road_v * 10) + b.rect.x and bird.rect.y == 410:
-                    b.jump_status = 1
-            if not birds.spritedict:
-                if not boss_fight:
-                    choose = randint(1, 6)  # определяет какое препятсвие будет следующим
-                    if choose == 4:
-                        next_barier = 'bird'
-                    elif choose == 5:
-                        if water_number != 0 and watter_strelba:
-                            next_barier = 'fare_cactus'
-                        else:
-                            next_barier = 'cactus'
-                    elif choose == 6:
-                        if fire_number != 0 and fire_strelba:
-                            next_barier = 'watter_cactus'
+                for bird in birds:
+                    if bird.rect.x < -94:
+                        bird.kill()  # удаляет спрайт, если он оказался за пределами экрана
+                    if b.rect.x + b.rect.w < bird.rect.x <= b.rect.w + 40 + int(
+                            road_v * 10) + b.rect.x and bird.rect.y == 410:
+                        b.jump_status = 1
+                if not birds.spritedict:
+                    if not boss_fight:
+                        choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                        if choose == 4:
+                            next_barier = 'bird'
+                        elif choose == 5:
+                            if water_number != 0 and watter_strelba:
+                                next_barier = 'fare_cactus'
+                            else:
+                                next_barier = 'cactus'
+                        elif choose == 6:
+                            if fire_number != 0 and fire_strelba:
+                                next_barier = 'watter_cactus'
+                            else:
+                                next_barier = 'cactus'
                         else:
                             next_barier = 'cactus'
                     else:
-                        next_barier = 'cactus'
-                else:
-                    choose = randint(1, 4)  # определяет какое препятсвие будет следующим
-                    if choose == 4:
-                        next_barier = 'bird'
-                    else:
-                        next_barier = 'cactus'
+                        choose = randint(1, 4)  # определяет какое препятсвие будет следующим
+                        if choose == 4:
+                            next_barier = 'bird'
+                        else:
+                            next_barier = 'cactus'
 
         all_coin.update(road_v * road_speed)
         all_coin.draw(screen)
@@ -795,7 +797,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             HI_coard_x += 30
 
         # считает очки:
-        if score_t % 3 == 0 and stop_status == False:
+        if score_t % 3 == 0 and stop_status == False and boss_die_status == 0:
             score += 1
             score_str = str(score)
         score_t += 1
@@ -820,13 +822,13 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             bq2 = b.collide_check(d.fare_ball_sprites)
             bq3 = b.collide_check(d.watter_ball_sprites)
             if bq2:
-                b.hp -= 5
+                b.hp -= 10
                 print(b.hp)
                 for ball in d.fare_ball_sprites:
                     ball.kill()
                 fire_status = False
             if bq3:
-                b.hp -= 5
+                b.hp -= 10
                 print(b.hp)
                 for ball in d.watter_ball_sprites:
                     ball.kill()
@@ -835,6 +837,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 boss_die_t += 1
                 boss_die_status = 1
                 road_speed = 0
+                if boss_die_t > 0 and boss_die_t <= 300:
+                    f2 = pygame.font.SysFont('arial', 62)
+                    text = f2.render("You win.", False, (83, 83, 83))
+                    screen.blit(text, (400, 250))
+                if boss_die_t > 300 and boss_die_t < 330:
+                    screen.blit(b.asteroid, (b.asteroid_x, b.asteroid_y))
                 b.die(boss_die_t)
 
         # полет огенного шара:
@@ -959,6 +967,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         # отрисовка и изменение свойств объектов
         # ...
 
+        if boss_die_t > 330:
+            screen.fill('black')
+            running = False
         # обновление экрана
         pygame.display.flip()
 
@@ -966,6 +977,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     while run:
 
         clock.tick(FPS)
+        d.die_status = True
 
         for event in pygame.event.get():
             # при закрытии окна
@@ -987,6 +999,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     quit()
 
         screen.blit(rerun_img, (500, 270))
+        screen.blit(game_over_img, (400, 150))
 
         pygame.display.flip()
 
