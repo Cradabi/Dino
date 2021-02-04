@@ -93,18 +93,26 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 quit()  # running = False
             if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
                 if event.button == 1:
-                    if t > 200 and t < 900:
+                    if t > 200 and t < 1600:
                         t_c = t // 100
-                        t_c += 1
-                        t = t_c * 100
+                        if t_c % 2 == 1:
+                            t_c += 1
+                            t = t_c * 100
+                        elif t_c % 2 == 0:
+                            t_c += 2
+                            t = t_c * 100
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     quit()
                 if event.key == 32:
-                    if t > 200 and t < 1200:
+                    if t > 200 and t < 1600:
                         t_c = t // 100
-                        t_c += 1
-                        t = t_c * 100
+                        if t_c % 2 == 1:
+                            t_c += 1
+                            t = t_c * 100
+                        elif t_c % 2 == 0:
+                            t_c += 2
+                            t = t_c * 100
         screen.fill(color)
         screen.blit(dino1, (d_x, d_y + 95))
         screen.blit(road1, (0, 470))
@@ -115,7 +123,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
             # t += 1
             mag_cord_x -= 1
         screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-        if t > 200 and t < 300:
+        if t > 200 and t < 400:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))
             if language == 'rus':
@@ -127,7 +135,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Hi, Dino.", False, (0, 0, 0))
                 screen.blit(text, (930, 570))
-        elif t >= 300 and t < 400:
+        elif t >= 400 and t < 600:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 500))
             if language == 'rus':
@@ -151,7 +159,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render("a water mag.", False, (0, 0, 0))
                 screen.blit(text, (40, 590))
             # t += 1
-        elif t >= 400 and t < 500:
+        elif t >= 600 and t < 800:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))
             if language == 'rus':
@@ -177,7 +185,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("about our situation?", False, (0, 0, 0))
                 screen.blit(text, (930, 510))
-        elif t >= 500 and t < 600:
+        elif t >= 800 and t < 1000:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 500))
             if language == 'rus':
@@ -188,7 +196,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Yes.", False, (0, 0, 0))
                 screen.blit(text, (40, 590))
-        elif t >= 600 and t < 700:
+        elif t >= 1000 and t < 1200:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))
             if language == 'rus':
@@ -209,7 +217,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render("Sim. Salabim.", False,
                                  (0, 0, 0))
                 screen.blit(text, (930, 590))
-        elif t >= 700 and t < 800:
+        elif t >= 1200 and t < 1400:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))
             if language == 'rus':
@@ -254,7 +262,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                                  False,
                                  (0, 0, 0))
                 screen.blit(text, (930, 630))
-        elif t >= 800 and t < 900:
+        elif t >= 1400 and t < 1600:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 500))
             if language == 'rus':
@@ -271,11 +279,11 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render(" to help. Goodbye.", False, (0, 0, 0))
                 screen.blit(text, (40, 590))
-        elif t >= 900 and t < 1130:
+        elif t >= 1600 and t < 1830:
             # t += 1
             mag_cord_x += 1
             screen.blit(mag_right, (mag_cord_x, mag_cord_y))
-        elif t >= 1130:
+        elif t >= 1830:
             running = False
             # origin_dino(screen, color, score, HI, birthday_code, language, keys)
 

@@ -6,7 +6,8 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number, fire_number, money, road_speed, road_v):
+def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number, fire_number, money,
+               road_speed, road_v):
     clock = pygame.time.Clock()
 
     num_0 = pygame.image.load('imgs/0.png')
@@ -93,29 +94,35 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 quit()  # running = False
             if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
                 if event.button == 1:
-                    if t > 200 and t < 999:
+                    if (t > 200 and t < 1000) or (t > 1600 and t < 1800):
                         t_c = t // 100
-                        t_c += 1
-                        t = t_c * 100
+                        if t_c % 2 == 1:
+                            t_c += 1
+                            t = t_c * 100
+                        elif t_c % 2 == 0:
+                            t_c += 2
+                            t = t_c * 100
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     quit()
                 if event.key == 32:
-                    if t > 200 and t < 999:
+                    if (t > 200 and t < 1000) or (t > 1600 and t < 1800):
                         t_c = t // 100
-                        t_c += 1
-                        t = t_c * 100
+                        if t_c % 2 == 1:
+                            t_c += 1
+                            t = t_c * 100
+                        elif t_c % 2 == 0:
+                            t_c += 2
+                            t = t_c * 100
                 if event.unicode == 'e':
-                    if t >= 600 and t < 750:
+                    if t >= 1000 and t < 1300:
                         if money >= 50:
                             money -= 50
                             fire_number += 30
-                            print(1)
-                    elif t >= 750 and t < 900:
+                    elif t >= 1300 and t < 1600:
                         if money >= 50:
                             money -= 50
                             fire_number += 30
-                            print(1)
         screen.fill(color)
         screen.blit(dino1, (d_x, d_y + 95))
         screen.blit(road1, (0, 470))
@@ -126,7 +133,7 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
             # t += 1
             mag_cord_x -= 1
         screen.blit(mag_left, (mag_cord_x, mag_cord_y))
-        if t > 200 and t < 300:
+        if t > 200 and t < 400:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))
             if language == 'rus':
@@ -138,7 +145,7 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Hi, Dino.", False, (0, 0, 0))
                 screen.blit(text, (930, 570))
-        elif t >= 300 and t < 400:
+        elif t >= 400 and t < 600:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 500))
             if language == 'rus':
@@ -154,7 +161,7 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Who are you?", False, (0, 0, 0))
             # t += 1
-        elif t >= 400 and t < 500:
+        elif t >= 600 and t < 800:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))
             if language == 'rus':
@@ -189,7 +196,7 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("fire and water", False, (0, 0, 0))
                 screen.blit(text, (930, 650))
-        elif t >= 500 and t < 600:
+        elif t >= 800 and t < 1000:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 500))
             if language == 'rus':
@@ -203,7 +210,7 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("Can you tell more?", False, (0, 0, 0))
                 screen.blit(text, (40, 590))
-        elif t >= 600 and t < 750:
+        elif t >= 1000 and t < 1300:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))
             if language == 'rus':
@@ -232,7 +239,7 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render('by pressing "E".', False,
                                  (0, 0, 0))
                 screen.blit(text, (930, 610))
-        elif t >= 750 and t < 900:
+        elif t >= 1300 and t < 1600:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))
             if language == 'rus':
@@ -261,7 +268,7 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render('moneys by pressing "E".', False,
                                  (0, 0, 0))
                 screen.blit(text, (930, 610))
-        elif t >= 900 and t < 1000:
+        elif t >= 1600 and t < 1800:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 500))
             if language == 'rus':
@@ -278,11 +285,11 @@ def cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 f2 = pygame.font.SysFont('arial', 18)
                 text = f2.render("to help. Goodbye.", False, (0, 0, 0))
                 screen.blit(text, (40, 590))
-        elif t >= 1000 and t < 1230:
+        elif t >= 1800 and t < 2030:
             # t += 1
             mag_cord_x += 1
             screen.blit(mag_right, (mag_cord_x, mag_cord_y))
-        elif t >= 1230:
+        elif t >= 2030:
             running = False
             # origin_dino(screen, color, score, HI, birthday_code, language, keys)
 
