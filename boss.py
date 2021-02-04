@@ -92,7 +92,7 @@ class Boss(pygame.sprite.Sprite):
         return False
 
     def die(self, boss_die_t):  # TODO сделать смерть
-        if t > 0 and t <= 500:
+        if boss_die_t > 0 and boss_die_t <= 500:
             f2 = pygame.font.SysFont('arial', 62)
             text = f2.render("You win.", False, (0, 0, 0))
             screen.blit(text, (200, 250))

@@ -752,7 +752,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         all_coin.draw(screen)
         for coin in all_coin:
             if coin.collide_check(dino_group):
-                money += 10
+                money += 20
                 coin.kill()
 
         all_col.update(road_v * road_speed)
@@ -760,9 +760,9 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         for col in all_col:
             if col.collide_check(dino_group):
                 if col.type == 'fire':
-                    fire_number += 5
+                    fire_number += 10
                 elif col.type == 'water':
-                    water_number += 5
+                    water_number += 10
                 col.kill()
 
         # преобразует текущий счет в поверхность и выводит ее:
