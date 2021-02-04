@@ -65,7 +65,7 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, 
     dialog_right.set_colorkey('white')
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
-        d_y = 378
+        d_y = 310 - 32
         d_x = 100
     else:
         d_y = 310
@@ -106,7 +106,7 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                         t_c += 1
                         t = t_c * 100
         screen.fill(color)
-        screen.blit(dino1, (d.x, d.y + 95))
+        screen.blit(dino1, (d_x, d_y + 95))
         screen.blit(road1, (0, 470))
         screen.blit(cloud, (200, 100))
         screen.blit(night_sun, (30, 100))
