@@ -436,7 +436,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 if not was_scene_1:
                     was_scene_1 = True
                     cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money)
+                               fire_number, money, road_speed, road_v)
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -448,7 +448,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 elif not was_scene_2 and was_scene_1:
                     was_scene_2 = True
                     cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money)
+                               fire_number, money, road_speed, road_v)
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -460,7 +460,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 elif not was_scene_3 and was_scene_1 and was_scene_2:
                     was_scene_3 = True
                     cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money)
+                               fire_number, money, road_speed, road_v)
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -472,7 +472,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 elif not was_scene_4 and was_scene_1 and was_scene_2 and was_scene_3:
                     was_scene_4 = True
                     cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money)
+                               fire_number, money, road_speed, road_v)
                     stop_status = False
                     road_v = 1.0
                     score_t = 0

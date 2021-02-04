@@ -6,7 +6,7 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number, fire_number, money):
+def cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number, fire_number, money, road_speed, road_v):
     clock = pygame.time.Clock()
 
     num_0 = pygame.image.load('imgs/0.png')
