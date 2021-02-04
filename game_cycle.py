@@ -201,14 +201,18 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     HI_coard_y = 500 + 200
     fast_jump = 0
     bird_height = 2
+    fire_strelba = False
+    watter_strelba = False
     if score <= 2000:
         was_scene_1 = False
     else:
         was_scene_1 = True
+        fire_strelba = True
     if score <= 4000:
         was_scene_2 = False
     else:
         was_scene_2 = True
+        watter_strelba = True
     if score <= 6000:
         was_scene_3 = False
     else:
@@ -234,12 +238,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 if event.type == pygame.QUIT:
                     quit()  # running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
-                    if event.button == 1 and not fire_status and fire_number:
+                    if event.button == 1 and not fire_status and fire_number and fire_strelba:
                         fire_number -= 1
                         fire_status = True
                         fire_cor_x = d.x + 89
                         fire_cor_y = d.y
-                    if event.button == 3 and not water_status and water_number:
+                    if event.button == 3 and not water_status and water_number and watter_strelba:
                         water_number -= 1
                         water_status = True
                         water_cor_x = d.x + 89
@@ -265,7 +269,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         if jump_status == 0:  # and not stop_status:
                             jump_status = 1
                             jump_sound.play()
-                    elif event.key == red_ball_key and not fire_status and fire_number:
+                    elif event.key == red_ball_key and not fire_status and fire_number and fire_strelba:
                         fire_number -= 1
                         fire_status = True
                         fire_cor_x = d.x + 89
@@ -273,7 +277,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         if status_dino == 'sit':
                             fire_cor_y = 234
                             fire_cor_x = d.x + 120
-                    elif event.key == blue_ball_key and not water_status and water_number:
+                    elif event.key == blue_ball_key and not water_status and water_number and watter_strelba:
                         water_number -= 1
                         water_status = True
                         water_cor_x = d.x + 89
@@ -445,6 +449,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     watter_cacti = pygame.sprite.Group()
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
+                    fire_strelba = True
                 elif not was_scene_2 and was_scene_1:
                     was_scene_2 = True
                     cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
@@ -457,6 +462,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     watter_cacti = pygame.sprite.Group()
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
+                    watter_strelba = True
                 elif not was_scene_3 and was_scene_1 and was_scene_2:
                     was_scene_3 = True
                     cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
@@ -630,12 +636,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
-                                if water_number != 0:
+                                if water_number != 0 and watter_strelba:
                                     next_barier = 'fare_cactus'
                                 else:
                                     next_barier = 'cactus'
                             elif choose == 6:
-                                if fire_number != 0:
+                                if fire_number != 0 and fire_strelba:
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
@@ -665,12 +671,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
-                                if water_number != 0:
+                                if water_number != 0 and watter_strelba:
                                     next_barier = 'fare_cactus'
                                 else:
                                     next_barier = 'cactus'
                             elif choose == 6:
-                                if fire_number != 0:
+                                if fire_number != 0 and fire_strelba:
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
@@ -695,12 +701,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
-                                if water_number != 0:
+                                if water_number != 0 and watter_strelba:
                                     next_barier = 'fare_cactus'
                                 else:
                                     next_barier = 'cactus'
                             elif choose == 6:
-                                if fire_number != 0:
+                                if fire_number != 0 and fire_strelba:
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
@@ -730,12 +736,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if choose == 4:
                         next_barier = 'bird'
                     elif choose == 5:
-                        if water_number != 0:
+                        if water_number != 0 and watter_strelba:
                             next_barier = 'fare_cactus'
                         else:
                             next_barier = 'cactus'
                     elif choose == 6:
-                        if fire_number != 0:
+                        if fire_number != 0 and fire_strelba:
                             next_barier = 'watter_cactus'
                         else:
                             next_barier = 'cactus'
@@ -855,12 +861,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if choose == 4:
                         next_barier = 'bird'
                     elif choose == 5:
-                        if water_number != 0:
+                        if water_number != 0 and watter_strelba:
                             next_barier = 'fare_cactus'
                         else:
                             next_barier = 'cactus'
                     elif choose == 6:
-                        if fire_number != 0:
+                        if fire_number != 0 and fire_strelba:
                             next_barier = 'watter_cactus'
                         else:
                             next_barier = 'cactus'
@@ -882,12 +888,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if choose == 4:
                         next_barier = 'bird'
                     elif choose == 5:
-                        if water_number != 0:
+                        if water_number != 0 and watter_strelba:
                             next_barier = 'fare_cactus'
                         else:
                             next_barier = 'cactus'
                     elif choose == 6:
-                        if fire_number != 0:
+                        if fire_number != 0 and fire_strelba:
                             next_barier = 'watter_cactus'
                         else:
                             next_barier = 'cactus'
@@ -950,7 +956,6 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             stop_status = True
         elif score > 8000 and not was_scene_4:
             stop_status = True
-
         # отрисовка и изменение свойств объектов
         # ...
 
