@@ -12,6 +12,7 @@ from scene1 import cut_scen_1
 from scene2 import cut_scen_2
 from scene3 import cut_scen_3
 from scene4 import cut_scen_4
+from settings import sets
 import sqlite3
 
 pygame.font.init()
@@ -22,6 +23,8 @@ HEIGHT = 800
 
 
 def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money):
+    if not pygame.mixer.music.get_busy():
+        pygame.mixer.music.play(-1)
     up_key = keys[0]
     down_key = keys[1]
     blue_ball_key = keys[2]
@@ -250,6 +253,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                     if event.key == pygame.K_ESCAPE:
                         quit()
+                    elif event.key == 113:  # q
+                        sets(screen, score, language, keys, True)
                     elif event.key == down_key:  # if event.unicode == 's':
                         status_dino = 'sit'
                         if not jump_status:
@@ -581,6 +586,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         q3 = d.collide_check(fare_cacti)
         q4 = d.collide_check(watter_cacti)
         if q1 or q2 or q3 or q4:  # смерть
+            pygame.mixer.music.stop()
             die_sound.play()
             d.die(score)
             if status_dino == 'sit':

@@ -3,32 +3,11 @@
 
 from game_cycle import origin_dino
 from settings import sets
+from button import Button
 import string
 import pygame
 import os
 import sqlite3
-
-
-class Button:
-    def __init__(self, x, y, text, text_color):
-        self.x = x - 10
-        self.y = y - 10
-        self.w = text.get_width() + 20
-        self.h = text.get_height() + 20
-        self.border_width = 3
-        self.color = text_color
-        self.text = text
-
-    def draw(self, surf):
-        pygame.draw.rect(surf, self.color, (self.x, self.y, self.w, self.h), self.border_width)
-        screen.blit(self.text, (self.x + 10, self.y + 10))
-
-    def mouse_check(self, cort):
-        x, y = cort
-        if self.x <= x <= self.x + self.w and self.y <= y <= self.y + self.h:
-            return True
-        return False
-
 
 pygame.init()
 
@@ -67,6 +46,11 @@ image_tank1 = pygame.image.load('imgs/tank1.png')
 image_tank1.set_colorkey('white')
 image_tank2 = pygame.image.load('imgs/tank2.png')
 image_tank2.set_colorkey('white')
+print_tank1 = True
+
+filename = 'sounds/menu_sound_5.mp3'
+pygame.mixer.music.load(filename)
+pygame.mixer.music.play(-1)
 
 if language == 'rus':
     text1 = f1.render('Начать игру', True, text_color)
@@ -98,12 +82,20 @@ if __name__ == '__main__':
         # --------
         # изменение объектов и многое др.
         # --------
+        t += 1
+        if t % 10 == 0:
+            print_tank1 = not print_tank1
+
         screen.fill(menu_color)
+
+        if print_tank1:  # TODO сделать дорожку
+            screen.blit(image_tank1, (650, 270))
+        else:
+            screen.blit(image_tank2, (650, 271))
 
         play_button.draw(screen)
         settings_button.draw(screen)
 
-        # t += 1
         if play_button.mouse_check(pygame.mouse.get_pos()):
             play_button.color = 'red'
         else:
@@ -119,11 +111,12 @@ if __name__ == '__main__':
             x1, y1 = pygame.mouse.get_pos()
             if play_button.mouse_check((x1, y1)):
                 pygame.mouse.set_visible(True)
+                # pygame.mixer.music.stop()
                 origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number,
                             fire_number, money)  # запуск игры
             elif settings_button.mouse_check((x1, y1)):
                 pygame.mouse.set_visible(True)
-                birthday_code, score, language, keys = sets(screen, score, language, keys)  # настройки
+                birthday_code, score, language, keys = sets(screen, score, language, keys, False)  # настройки
                 if language == 'rus':
                     text1 = f1.render('Начать игру', True, text_color)
                     text2 = f1.render('Настройки', True, text_color)
