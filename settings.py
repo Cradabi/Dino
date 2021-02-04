@@ -172,6 +172,8 @@ def sets(screen, score, language, keys, is_from_game_cycle):
         music_load_button = Button(500, 250, f3.render('Load music', True, BLACK), BLACK)
     filename = ''
 
+    error_sound = pygame.mixer.Sound('sounds/error_sound.mp3')
+
     running = True
     while running:
 
@@ -326,7 +328,8 @@ def sets(screen, score, language, keys, is_from_game_cycle):
                         pygame.mixer.music.load(filename)
                         pygame.mixer.music.play(-1)
                     except Exception:
-                        pass
+                        pygame.mixer.music.stop()
+                        error_sound.play()
                 elif 875 <= x1 <= 975 and 75 <= y1 <= 107:  # проверка на коды
                     if is_from_game_cycle:
                         if language == 'rus':
