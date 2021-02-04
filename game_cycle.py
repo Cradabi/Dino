@@ -926,6 +926,18 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             color_must = (0, 0, 0)
         elif score == 1600:
             color_must = (255, 255, 255)
+        elif score == 2600:
+            color_must = (0, 0, 0)
+        elif score == 3400:
+            color_must = (255, 255, 255)
+        elif score == 4400:
+            color_must = (0, 0, 0)
+        elif score == 5000:
+            color_must = (255, 255, 255)
+        elif score == 6200:
+            color_must = (0, 0, 0)
+        elif score == 6800:
+            color_must = (255, 255, 255)
 
         if score % 1000 == 0 and score:
             score_1000_sound.play()
