@@ -22,7 +22,7 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money):
+def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, d):
     if not pygame.mixer.music.get_busy():
         pygame.mixer.music.play(-1)
     up_key = keys[0]
@@ -77,10 +77,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         '8': num_8,
         '9': num_9
     }
-    rerun_img = pygame.image.load('imgs/rerun.png')
-    rerun_img.set_colorkey('white')
-    game_over_img = pygame.image.load('imgs/game_over.png')
-    game_over_img.set_colorkey('white')
+
     HI_img = pygame.image.load('imgs/HI.png')
     HI_img.set_colorkey('white')
 
@@ -145,7 +142,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         d_x = 100
         dino1 = pygame.image.load('imgs/dino1.png')
     dino1.set_colorkey('white')
-    d = Dino(d_x, d_y, birthday_code)
+    # d = Dino(d_x, d_y, birthday_code)
     dino_group = pygame.sprite.GroupSingle(d)
     birds = pygame.sprite.Group()
     status_dino = 'run'
@@ -181,7 +178,6 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     road_cord_x1 = 0
     road_cord_x2 = 2398
     boss_die_status = 0
-    running = True
     road_v = 1.0
     road_speed = 10
     # num_s = ''
@@ -223,9 +219,15 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     else:
         was_scene_4 = True
         boss_fight = True
+        pygame.mixer.music.load('sounds/menu_sound_1.mp3')
+        pygame.mixer.music.play(-1)
 
     b = Boss(600, 366)
     boss_group = pygame.sprite.GroupSingle(b)
+
+    coin_sound = pygame.mixer.Sound('sounds/money_sound.mp3')
+
+    running = True
     while running:
 
         clock.tick(FPS)
@@ -423,12 +425,18 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 # добавляет кактус и определяет время через которе появится следующее препятсвие
                 last_cactus = True
                 rand_col = randint(1, 4)
-                if rand_col == 1:
-                    Col_fire_water(WIDTH, 320, fire_ball_img, 'fire', all_col)
-                elif rand_col == 2:
-                    Col_fire_water(WIDTH, 320, watter_ball_img, 'water', all_col)
+                if boss_fight:
+                    if rand_col == 1 or rand_col == 2:
+                        Col_fire_water(WIDTH, 320, fire_ball_img, 'fire', all_col)
+                    else:
+                        Col_fire_water(WIDTH, 320, watter_ball_img, 'water', all_col)
                 else:
-                    Coin(WIDTH, 350, coin_img, all_coin)
+                    if rand_col == 1:
+                        Col_fire_water(WIDTH, 320, fire_ball_img, 'fire', all_col)
+                    elif rand_col == 2:
+                        Col_fire_water(WIDTH, 320, watter_ball_img, 'water', all_col)
+                    else:
+                        Coin(WIDTH, 350, coin_img, all_coin)
                 now_barier = 'coin'
                 time = time % 10
                 rand_time = randint(-10, 40)
@@ -488,6 +496,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
                     boss_fight = True
+                    pygame.mixer.music.load('sounds/menu_sound_1.mp3')
+                    pygame.mixer.music.play(-1)
             else:
                 stop_t += 1
 
@@ -651,9 +661,11 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                             else:
                                 next_barier = 'cactus'
                         else:
-                            choose = randint(1, 4)  # определяет какое препятсвие будет следующим
+                            choose = randint(1, 6)  # определяет какое препятсвие будет следующим
                             if choose == 4:
                                 next_barier = 'bird'
+                            elif choose == 6:
+                                next_barier = 'coin'
                             else:
                                 next_barier = 'cactus'
                 if boss_fight:
@@ -668,7 +680,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
                         if not boss_fight:
-                            choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                            choose = randint(1, 7)  # определяет какое препятсвие будет следующим
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
@@ -681,12 +693,16 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
+                            elif choose == 7:
+                                next_barier = 'coin'
                             else:
                                 next_barier = 'cactus'
                         else:
-                            choose = randint(1, 4)  # определяет какое препятсвие будет следующим
+                            choose = randint(1, 6)  # определяет какое препятсвие будет следующим
                             if choose == 4:
                                 next_barier = 'bird'
+                            elif choose == 6:
+                                next_barier = 'coin'
                             else:
                                 next_barier = 'cactus'
 
@@ -698,7 +714,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     cactus.kill()  # удаляет спрайт, если он оказался за пределами экрана
                     if score > 50:
                         if not boss_fight:
-                            choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                            choose = randint(1, 7)  # определяет какое препятсвие будет следующим
                             if choose == 4:
                                 next_barier = 'bird'
                             elif choose == 5:
@@ -711,12 +727,16 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                                     next_barier = 'watter_cactus'
                                 else:
                                     next_barier = 'cactus'
+                            elif choose == 7:
+                                next_barier = 'coin'
                             else:
                                 next_barier = 'cactus'
                         else:
-                            choose = randint(1, 4)  # определяет какое препятсвие будет следующим
+                            choose = randint(1, 6)  # определяет какое препятсвие будет следующим
                             if choose == 4:
                                 next_barier = 'bird'
+                            elif choose == 6:
+                                next_barier = 'coin'
                             else:
                                 next_barier = 'cactus'
 
@@ -734,7 +754,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         b.jump_status = 1
                 if not birds.spritedict:
                     if not boss_fight:
-                        choose = randint(1, 6)  # определяет какое препятсвие будет следующим
+                        choose = randint(1, 7)  # определяет какое препятсвие будет следующим
                         if choose == 4:
                             next_barier = 'bird'
                         elif choose == 5:
@@ -747,12 +767,16 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                                 next_barier = 'watter_cactus'
                             else:
                                 next_barier = 'cactus'
+                        elif choose == 7:
+                            next_barier = 'coin'
                         else:
                             next_barier = 'cactus'
                     else:
-                        choose = randint(1, 4)  # определяет какое препятсвие будет следующим
+                        choose = randint(1, 6)  # определяет какое препятсвие будет следующим
                         if choose == 4:
                             next_barier = 'bird'
+                        elif choose == 6:
+                            next_barier = 'coin'
                         else:
                             next_barier = 'cactus'
 
@@ -760,6 +784,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         all_coin.draw(screen)
         for coin in all_coin:
             if coin.collide_check(dino_group):
+                coin_sound.play()
                 money += 20
                 coin.kill()
 
@@ -834,6 +859,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     ball.kill()
                 water_status = False
             if b.hp <= 0:
+                b.jump_status = 1
                 boss_die_t += 1
                 boss_die_status = 1
                 road_speed = 0
@@ -842,8 +868,13 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     text = f2.render("You win.", False, (83, 83, 83))
                     screen.blit(text, (400, 250))
                 if boss_die_t > 300 and boss_die_t < 330:
+                    b.asteroid_x += 15
+                    b.asteroid_y += 25
                     screen.blit(b.asteroid, (b.asteroid_x, b.asteroid_y))
-                b.die(boss_die_t)
+                # b.die(boss_die_t)
+                for boss in boss_group:
+                    if boss.y > HEIGHT:
+                        boss.kill()
 
         # полет огенного шара:
         if fire_status:
@@ -928,6 +959,23 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             money_surf = pygame.transform.scale(nums_dict[str(money)[i]], (15, 18))
             screen.blit(money_surf, (money_x + money_surf.get_width() * i, money_y))
 
+        if boss_fight:
+            pygame.draw.rect(screen, 'black', (100, 600, 230, 70), 3)
+            pygame.draw.rect(screen, 'red', (105, 605, 40, 65))
+            if b.hp > 40:
+                pygame.draw.rect(screen, 'red', (150, 605, 40, 60))
+            if b.hp > 80:
+                pygame.draw.rect(screen, 'red', (195, 605, 40, 60))
+            if b.hp > 120:
+                pygame.draw.rect(screen, 'red', (240, 605, 40, 60))
+            if b.hp > 160:
+                pygame.draw.rect(screen, 'red', (285, 605, 40, 60))
+
+            x_print = 340
+            for i in range(len(str(b.hp))):
+                screen.blit(nums_dict[str(b.hp)[i]], (x_print, 618))
+                x_print += 30
+
         if color != color_must:
             if color_must == (255, 255, 255):
                 color_rgb += 5
@@ -973,6 +1021,28 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         # обновление экрана
         pygame.display.flip()
 
+
+def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money):
+    clock = pygame.time.Clock()
+    if birthday_code:
+        dino1 = pygame.image.load('imgs/dino_bd_1.png')
+        d_y = 178 + 200
+        d_x = 100
+    else:
+        d_y = 210 + 200
+        d_x = 100
+        dino1 = pygame.image.load('imgs/dino1.png')
+    dino1.set_colorkey('white')
+    d = Dino(d_x, d_y, birthday_code)
+
+    rerun_img = pygame.image.load('imgs/rerun.png')
+    rerun_img.set_colorkey('white')
+    game_over_img = pygame.image.load('imgs/game_over.png')
+    game_over_img.set_colorkey('white')
+
+    origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number,
+                money, d)
+
     run = True
     while run:
 
@@ -987,16 +1057,27 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 if event.button == 1 and d.die_status:
                     if int(event.pos[0]) >= 500 and int(event.pos[0]) <= 644 and int(event.pos[1]) >= 270 and int(
                             event.pos[1]) <= 398:
+                        if birthday_code:
+                            dino1 = pygame.image.load('imgs/dino_bd_1.png')
+                            d_y = 178 + 200
+                            d_x = 100
+                        else:
+                            d_y = 210 + 200
+                            d_x = 100
+                            dino1 = pygame.image.load('imgs/dino1.png')
+                        dino1.set_colorkey('white')
+                        d = Dino(d_x, d_y, birthday_code)
                         score = 0
                         color = (255, 255, 255)
                         money = 0
                         water_number = 0
                         fire_number = 0
                         origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number,
-                                    money)
+                                    money, d)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
-                    quit()
+                    run = False
+                    pygame.mixer.music.play(-1)
 
         screen.blit(rerun_img, (500, 270))
         screen.blit(game_over_img, (400, 150))
@@ -1005,6 +1086,6 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
 
 if __name__ == '__main__':
-    origin_dino(screen, color, score, HI, birthday_code, language, keys)
+    game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money)
 
     pygame.quit()
