@@ -961,7 +961,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
         if boss_fight:
             pygame.draw.rect(screen, 'black', (100, 600, 230, 70), 3)
-            pygame.draw.rect(screen, 'red', (105, 605, 40, 65))
+            pygame.draw.rect(screen, 'red', (105, 605, 40, 60))
             if b.hp > 40:
                 pygame.draw.rect(screen, 'red', (150, 605, 40, 60))
             if b.hp > 80:
