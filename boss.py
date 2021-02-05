@@ -11,7 +11,7 @@ class Boss(pygame.sprite.Sprite):
         self.standart_x = x
         self.standart_y = y
 
-        self.hp = 0
+        self.hp = 200
 
         self.stand = pygame.image.load('imgs/boss/boss_spit1.png')
         self.stand = pygame.transform.scale(self.stand, (int(self.scale * 1.06), self.scale))
