@@ -6,8 +6,7 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number, fire_number, money,
-               road_speed, road_v):
+def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number, fire_number, money, road_speed, road_v):
     clock = pygame.time.Clock()
 
     num_0 = pygame.image.load('imgs/0.png')
@@ -53,12 +52,11 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, 
     HI_img = pygame.image.load('imgs/HI.png')
     HI_img.set_colorkey('white')
     mag_left = pygame.image.load('imgs/water_magician.png')
-    mag_left = pygame.transform.flip(mag_left, True, False)
     mag_left = pygame.transform.scale(mag_left, (48, 100))
-    mag_left.set_colorkey('white')
+    mag_left.set_colorkey((79, 79, 79))
     mag_right = pygame.image.load('imgs/water_magician.png')
     mag_right = pygame.transform.scale(mag_right, (48, 100))
-    mag_right.set_colorkey('white')
+    mag_right.set_colorkey((79, 79, 79))
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
     dialog_left = pygame.image.load('imgs/dialog_left.png')
@@ -124,7 +122,7 @@ def cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, 
         if t < 200:
             # t += 1
             mag_cord_x -= 1
-            screen.blit(mag_left, (mag_cord_x, mag_cord_y))
+        screen.blit(mag_left, (mag_cord_x, mag_cord_y))
         if t > 200 and t < 400:
             screen.blit(mag_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (900, 500))

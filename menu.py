@@ -1,13 +1,12 @@
 # ГЛАВНЫЙ ФАЙЛ
 
 
-from game_cycle import origin_dino, game_cycle
+from game_cycle import origin_dino
 from settings import sets
 from button import Button
-from time import sleep
+import string
 import pygame
 import os
-import subprocess
 import sqlite3
 
 pygame.init()
@@ -44,14 +43,12 @@ menu_color = (0, 0, 0)
 text_color = (255, 255, 255)
 
 image_tank1 = pygame.image.load('imgs/tank1.png')
-image_tank1 = pygame.transform.scale(image_tank1, (200, 152))
 image_tank1.set_colorkey('white')
 image_tank2 = pygame.image.load('imgs/tank2.png')
-image_tank2 = pygame.transform.scale(image_tank2, (200, 152))
 image_tank2.set_colorkey('white')
 print_tank1 = True
 
-filename = 'sounds/mario_sound.mp3'
+filename = 'sounds/menu_sound_5.mp3'
 pygame.mixer.music.load(filename)
 pygame.mixer.music.play(-1)
 
@@ -63,16 +60,6 @@ elif language == 'eng':
     text2 = f1.render('Settings', True, text_color)
 play_button = Button(100, 150, text1, text_color)
 settings_button = Button(110, 300, text2, text_color)
-
-road1 = pygame.image.load('imgs/road.png')
-road1.set_colorkey('white')
-road2 = pygame.image.load('imgs/road.png')
-road2.set_colorkey('white')
-road_cord_x1 = 0
-road_cord_x2 = 2398
-road_speed = 10
-
-codes_open = False
 
 # если надо до цикла отобразить объекты на экране
 screen.fill('black')
@@ -101,20 +88,10 @@ if __name__ == '__main__':
 
         screen.fill(menu_color)
 
-        # двигает дорожку:
-        screen.blit(road1, (road_cord_x1, 450))
-        screen.blit(road2, (road_cord_x2, 450))
-        if road_cord_x2 <= 0:
-            road_cord_x1 = 0
-            road_cord_x2 = 2398
-        else:
-            road_cord_x1 -= road_speed
-            road_cord_x2 -= road_speed
-
         if print_tank1:  # TODO сделать дорожку
-            screen.blit(image_tank1, (570, 315))
+            screen.blit(image_tank1, (650, 270))
         else:
-            screen.blit(image_tank2, (570, 316))
+            screen.blit(image_tank2, (650, 271))
 
         play_button.draw(screen)
         settings_button.draw(screen)
@@ -135,11 +112,8 @@ if __name__ == '__main__':
             if play_button.mouse_check((x1, y1)):
                 pygame.mouse.set_visible(True)
                 # pygame.mixer.music.stop()
-                game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number,
-                           fire_number, money)  # запуск игры
-            elif 635 <= x1 <= 670 and 395 <= y1 <= 405 and not codes_open:
-                codes_open = True
-                subprocess.Popen(r'explorer /open, secrets\more_secrets\codes.txt')
+                origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number,
+                            fire_number, money)  # запуск игры
             elif settings_button.mouse_check((x1, y1)):
                 pygame.mouse.set_visible(True)
                 birthday_code, score, language, keys = sets(screen, score, language, keys, False)  # настройки
