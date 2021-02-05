@@ -13,7 +13,7 @@ BLACK = (0, 0, 0)
 # filename = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "files (*.wav *.mp3 *.ogg)")
 # input_file = easygui.fileopenbox(filetypes=['*.wav', '*.mp3', '*.ogg'])
 
-def sets(screen, score, language, keys, is_from_game_cycle):
+def sets(screen, score, language, keys, money, is_from_game_cycle):
     clock = pygame.time.Clock()
 
     time = 0
@@ -249,6 +249,30 @@ def sets(screen, score, language, keys, is_from_game_cycle):
                                     text1 = 'code not found'
                                     text1_x = 515
                                     text1_y = 120
+                        elif ' '.join(text.lower().split()[:2:]) == 'set money' and len(text.lower().split()) == 3:
+                            # комманда, устанавливающая введенное значение для score
+                            try:
+                                if int(text.lower().split()[2]) < 0:
+                                    raise Exception
+                                money = int(text.lower().split()[2])
+                                text = ''
+                                if language == 'rus':
+                                    text1 = 'код успесшно активирован'
+                                    text1_x = 450
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code has been activated'
+                                    text1_x = 465
+                                    text1_y = 120
+                            except Exception:
+                                if language == 'rus':
+                                    text1 = 'код не найден'
+                                    text1_x = 510
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code not found'
+                                    text1_x = 515
+                                    text1_y = 120
                         else:
                             if language == 'rus':
                                 text1 = 'код не найден'
@@ -358,6 +382,30 @@ def sets(screen, score, language, keys, is_from_game_cycle):
                                 if int(text.lower().split()[2]) < 0:
                                     raise Exception
                                 score = int(text.lower().split()[2])
+                                text = ''
+                                if language == 'rus':
+                                    text1 = 'код успесшно активирован'
+                                    text1_x = 450
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code has been activated'
+                                    text1_x = 465
+                                    text1_y = 120
+                            except Exception:
+                                if language == 'rus':
+                                    text1 = 'код не найден'
+                                    text1_x = 510
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code not found'
+                                    text1_x = 515
+                                    text1_y = 120
+                        elif ' '.join(text.lower().split()[:2:]) == 'set money' and len(text.lower().split()) == 3:
+                            # комманда, устанавливающая введенное значение для score
+                            try:
+                                if int(text.lower().split()[2]) < 0:
+                                    raise Exception
+                                money = int(text.lower().split()[2])
                                 text = ''
                                 if language == 'rus':
                                     text1 = 'код успесшно активирован'
@@ -558,4 +606,4 @@ def sets(screen, score, language, keys, is_from_game_cycle):
         pygame.display.update()
 
     keys = [up_key, down_key, blue_ball_key, red_ball_key]
-    return birth_day_code, score, language, keys
+    return birth_day_code, score, language, keys, money

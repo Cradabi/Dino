@@ -43,6 +43,31 @@ keys = [119, 115, 100, 97]  # 1-вверх, 2-вниз, 3-синий шар, 4-�
 menu_color = (0, 0, 0)
 text_color = (255, 255, 255)
 
+moon_x = 400
+star_x1 = 300
+star_x2 = 150
+star_x3 = 900
+star_x4 = 450
+star_x5 = 271
+star_x6 = 800
+star_x7 = 615
+star_x8 = 361
+star_x9 = 18
+star_x10 = 501
+sun_x = 30
+cloud_x1 = 400
+cloud_x2 = 900
+cloud_x3 = 11
+cloud_x4 = 315
+cloud_x5 = 101
+cloud_x6 = 212
+cloud_x7 = 957
+cloud_x8 = 512
+cloud_x9 = 845
+cloud_x10 = 678
+moon_list = [moon_x, star_x1, star_x2, star_x3, star_x4, star_x5, star_x6, star_x7, star_x8, star_x9, star_x10]
+sun_list = [cloud_x1, cloud_x2, cloud_x3, cloud_x4, cloud_x5, cloud_x6, cloud_x7, cloud_x8, cloud_x9, cloud_x10, sun_x]
+
 image_tank1 = pygame.image.load('imgs/tank1.png')
 image_tank1 = pygame.transform.scale(image_tank1, (200, 152))
 image_tank1.set_colorkey('white')
@@ -136,13 +161,14 @@ if __name__ == '__main__':
                 pygame.mouse.set_visible(True)
                 # pygame.mixer.music.stop()
                 game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number,
-                           fire_number, money)  # запуск игры
+                           fire_number, money, moon_list, sun_list)  # запуск игры
             elif 635 <= x1 <= 670 and 395 <= y1 <= 405 and not codes_open:
                 codes_open = True
                 subprocess.Popen(r'explorer /open, secrets\more_secrets\codes.txt')
             elif settings_button.mouse_check((x1, y1)):
                 pygame.mouse.set_visible(True)
-                birthday_code, score, language, keys = sets(screen, score, language, keys, False)  # настройки
+                birthday_code, score, language, keys, money = sets(screen, score, language, keys, money,
+                                                                   False)  # настройки
                 if language == 'rus':
                     text1 = f1.render('Начать игру', True, text_color)
                     text2 = f1.render('Настройки', True, text_color)

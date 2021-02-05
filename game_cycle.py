@@ -22,7 +22,8 @@ WIDTH = 1200
 HEIGHT = 800
 
 
-def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, d):
+def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, d, moon_list,
+                sun_list):
     if not pygame.mixer.music.get_busy():
         pygame.mixer.music.play(-1)
     up_key = keys[0]
@@ -152,28 +153,28 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     water_status = False
     water_cor_x = d.x + 89
     water_cor_y = 200 + 200
-    moon_x = 400
-    star_x1 = 300
-    star_x2 = 150
-    star_x3 = 900
-    star_x4 = 450
-    star_x5 = 271
-    star_x6 = 800
-    star_x7 = 615
-    star_x8 = 361
-    star_x9 = 18
-    star_x10 = 501
-    sun_x = 30
-    cloud_x1 = 400
-    cloud_x2 = 900
-    cloud_x3 = 11
-    cloud_x4 = 315
-    cloud_x5 = 101
-    cloud_x6 = 212
-    cloud_x7 = 957
-    cloud_x8 = 512
-    cloud_x9 = 845
-    cloud_x10 = 678
+    moon_x = moon_list[0]
+    star_x1 = moon_list[1]
+    star_x2 = moon_list[2]
+    star_x3 = moon_list[3]
+    star_x4 = moon_list[4]
+    star_x5 = moon_list[5]
+    star_x6 = moon_list[6]
+    star_x7 = moon_list[7]
+    star_x8 = moon_list[8]
+    star_x9 = moon_list[9]
+    star_x10 = moon_list[10]
+    sun_x = sun_list[0]
+    cloud_x1 = sun_list[1]
+    cloud_x2 = sun_list[2]
+    cloud_x3 = sun_list[3]
+    cloud_x4 = sun_list[4]
+    cloud_x5 = sun_list[5]
+    cloud_x6 = sun_list[6]
+    cloud_x7 = sun_list[7]
+    cloud_x8 = sun_list[8]
+    cloud_x9 = sun_list[9]
+    cloud_x10 = sun_list[10]
     jump_status = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
@@ -260,7 +261,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if event.key == pygame.K_ESCAPE:
                         quit()
                     elif event.key == 113:  # q
-                        sets(screen, score, language, keys, True)
+                        sets(screen, score, language, keys, money, True)
                     elif event.key == down_key:  # if event.unicode == 's':
                         status_dino = 'sit'
                         if not jump_status:
@@ -447,8 +448,31 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             if stop_t % 50 == 0:
                 if not was_scene_1:
                     was_scene_1 = True
-                    cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money, road_speed, road_v)
+                    moon_list, sun_list = cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language,
+                                                     keys, water_number,
+                                                     fire_number, money, road_speed, road_v, moon_list, sun_list)
+                    moon_x = moon_list[0]
+                    star_x1 = moon_list[1]
+                    star_x2 = moon_list[2]
+                    star_x3 = moon_list[3]
+                    star_x4 = moon_list[4]
+                    star_x5 = moon_list[5]
+                    star_x6 = moon_list[6]
+                    star_x7 = moon_list[7]
+                    star_x8 = moon_list[8]
+                    star_x9 = moon_list[9]
+                    star_x10 = moon_list[10]
+                    sun_x = sun_list[0]
+                    cloud_x1 = sun_list[1]
+                    cloud_x2 = sun_list[2]
+                    cloud_x3 = sun_list[3]
+                    cloud_x4 = sun_list[4]
+                    cloud_x5 = sun_list[5]
+                    cloud_x6 = sun_list[6]
+                    cloud_x7 = sun_list[7]
+                    cloud_x8 = sun_list[8]
+                    cloud_x9 = sun_list[9]
+                    cloud_x10 = sun_list[10]
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -461,7 +485,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 elif not was_scene_2 and was_scene_1:
                     was_scene_2 = True
                     cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money, road_speed, road_v)
+                               fire_number, money, road_speed, road_v, moon_list, sun_list)
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -473,8 +497,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     watter_strelba = True
                 elif not was_scene_3 and was_scene_1 and was_scene_2:
                     was_scene_3 = True
-                    cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money, road_speed, road_v)
+                    money, fire_number, water_number = cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code,
+                                                                  language, keys, water_number,
+                                                                  fire_number, money, road_speed, road_v, moon_list,
+                                                                  sun_list)
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -486,7 +512,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 elif not was_scene_4 and was_scene_1 and was_scene_2 and was_scene_3:
                     was_scene_4 = True
                     cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money, road_speed, road_v)
+                               fire_number, money, road_speed, road_v, moon_list, sun_list)
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -596,6 +622,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             cloud_x10 = 1200
         if moon_x <= -40:
             moon_x = 1200
+
+        moon_list = [moon_x, star_x1, star_x2, star_x3, star_x4, star_x5, star_x6, star_x7, star_x8, star_x9, star_x10]
+        sun_list = [cloud_x1, cloud_x2, cloud_x3, cloud_x4, cloud_x5, cloud_x6, cloud_x7, cloud_x8, cloud_x9, cloud_x10,
+                    sun_x]
 
         # Проверка столкновений дино с кактусами и птицами:
         q1 = d.collide_check(all_cacti)
@@ -1022,7 +1052,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         pygame.display.flip()
 
 
-def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money):
+def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, moon_list,
+               sun_list):
     clock = pygame.time.Clock()
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
@@ -1041,7 +1072,7 @@ def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_nu
     game_over_img.set_colorkey('white')
 
     origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number,
-                money, d)
+                money, d, moon_list, sun_list)
 
     run = True
     while run:
@@ -1073,7 +1104,7 @@ def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_nu
                         water_number = 0
                         fire_number = 0
                         origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number,
-                                    money, d)
+                                    money, d, moon_list, sun_list)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     run = False
