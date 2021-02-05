@@ -46,6 +46,10 @@ def cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, 
     run_img = pygame.image.load('imgs/boss/boss_run.png')
     run_img = pygame.transform.scale(run_img, (int(130 * 1.06), 130))
     run_img.set_colorkey('white')
+    run_img_left = pygame.image.load('imgs/boss/boss_run.png')
+    run_img_left = pygame.transform.scale(run_img_left, (int(130 * 1.06), 130))
+    run_img_left = pygame.transform.flip(run_img_left, True, False)
+    run_img_left.set_colorkey('white')
     road1 = pygame.image.load('imgs/road.png')
     road1.set_colorkey('white')
     dialog_left = pygame.image.load('imgs/dialog_left.png')
@@ -119,9 +123,9 @@ def cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, 
         if t < 200:
             # t += 1
             mag_cord_x -= 3
-        screen.blit(run_img, (mag_cord_x, mag_cord_y))
+            screen.blit(run_img_left, (mag_cord_x, mag_cord_y))
         if t > 200 and t < 400:
-            screen.blit(run_img, (mag_cord_x, mag_cord_y))
+            screen.blit(run_img_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (600, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
@@ -133,7 +137,7 @@ def cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render("Hi, Dino.", False, (0, 0, 0))
                 screen.blit(text, (630, 570))
         elif t >= 400 and t < 600:
-            screen.blit(run_img, (mag_cord_x, mag_cord_y))
+            screen.blit(run_img_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
@@ -154,7 +158,7 @@ def cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 screen.blit(text, (40, 610))
             # t += 1
         elif t >= 600 and t < 800:
-            screen.blit(run_img, (mag_cord_x, mag_cord_y))
+            screen.blit(run_img_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (600, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
@@ -178,7 +182,7 @@ def cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 screen.blit(text, (630, 610))
                 f2 = pygame.font.SysFont('arial', 18)
         elif t >= 800 and t < 1000:
-            screen.blit(run_img, (mag_cord_x, mag_cord_y))
+            screen.blit(run_img_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_left, (10, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
@@ -195,7 +199,7 @@ def cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, 
                 text = f2.render("And free the city", False, (0, 0, 0))
                 screen.blit(text, (40, 590))
         elif t >= 1000 and t < 1200:
-            screen.blit(run_img, (mag_cord_x, mag_cord_y))
+            screen.blit(run_img_left, (mag_cord_x, mag_cord_y))
             screen.blit(dialog_right, (600, 500))
             if language == 'rus':
                 f2 = pygame.font.SysFont('arial', 18)
