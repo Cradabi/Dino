@@ -1,5 +1,8 @@
 import pygame
 
+WIDTH = 1200
+HEIGHT = 800
+
 
 class Boss(pygame.sprite.Sprite):
     def __init__(self, x, y, *group):
@@ -21,6 +24,14 @@ class Boss(pygame.sprite.Sprite):
         self.jump_img = pygame.image.load('imgs/boss/boss_jump.png')
         self.jump_img = pygame.transform.scale(self.jump_img, (int(self.scale * 1.06), self.scale))
         self.jump_img.set_colorkey('white')
+
+        self.asteroid = pygame.image.load('imgs/asteroid.png')
+        self.asteroid = pygame.transform.scale(self.asteroid, (150, 67))
+        self.asteroid = pygame.transform.rotate(self.asteroid, 45)
+        self.asteroid = pygame.transform.flip(self.asteroid, True, False)
+        self.asteroid.set_colorkey('white')
+        self.asteroid_x = 100
+        self.asteroid_y = -120
 
         self.spit_img1 = pygame.image.load('imgs/boss/boss_spit1.png')
         self.spit_img1 = pygame.transform.scale(self.spit_img1, (int(self.scale * 1.06), self.scale))
@@ -91,8 +102,8 @@ class Boss(pygame.sprite.Sprite):
                 return True
         return False
 
-    def die(self):  # TODO сделать смерть
-        quit()
+    def die(self, boss_die_t):
+        self.standart_y = HEIGHT * 2
 
     def update(self):
         if self.jump_status != 0:

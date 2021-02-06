@@ -1,5 +1,7 @@
-import pygame
 from time import sleep
+from button import Button
+import pygame
+import easygui
 
 FPS = 60
 WIDTH = 1200
@@ -8,7 +10,10 @@ HEIGHT = 800
 BLACK = (0, 0, 0)
 
 
-def sets(screen, score, language, keys):
+# filename = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "files (*.wav *.mp3 *.ogg)")
+# input_file = easygui.fileopenbox(filetypes=['*.wav', '*.mp3', '*.ogg'])
+
+def sets(screen, score, language, keys, money, is_from_game_cycle):
     clock = pygame.time.Clock()
 
     time = 0
@@ -160,6 +165,15 @@ def sets(screen, score, language, keys):
     cursor_h = 23
     cursor_active = False
 
+    music_load_button = Button(450, 250, f3.render('Загрузить музыку', True, BLACK), BLACK)
+    if language == 'rus':
+        music_load_button = Button(450, 250, f3.render('Загрузить музыку', True, BLACK), BLACK)
+    elif language == 'eng':
+        music_load_button = Button(500, 250, f3.render('Load music', True, BLACK), BLACK)
+    filename = ''
+
+    error_sound = pygame.mixer.Sound('sounds/error_sound.mp3')
+
     running = True
     while running:
 
@@ -190,23 +204,17 @@ def sets(screen, score, language, keys):
                             control_text1_h = 35
                         control_text1_surf = f3.render(control_text1, True, BLACK)
                 if event.key == pygame.K_RETURN:
-                    if text.lower() == 'dino birthday':  # код для внешнего вида дино
-                        text = ''
+                    if is_from_game_cycle:
                         if language == 'rus':
-                            text1 = 'код успесшно активирован'
-                            text1_x = 450
+                            text1 = 'код не найден'
+                            text1_x = 510
                             text1_y = 120
                         else:
-                            text1 = 'code has been activated'
-                            text1_x = 465
+                            text1 = 'code not found'
+                            text1_x = 515
                             text1_y = 120
-                        birth_day_code = True
-                    elif ' '.join(text.lower().split()[:2:]) == 'set score' and len(text.lower().split()) == 3:
-                        # комманда, устанавливающая введенное значение для score
-                        try:
-                            if int(text.lower().split()[2]) < 0:
-                                raise Exception
-                            score = int(text.lower().split()[2])
+                    else:
+                        if text.lower() == 'dino birthday':  # код для внешнего вида дино
                             text = ''
                             if language == 'rus':
                                 text1 = 'код успесшно активирован'
@@ -216,7 +224,56 @@ def sets(screen, score, language, keys):
                                 text1 = 'code has been activated'
                                 text1_x = 465
                                 text1_y = 120
-                        except Exception:
+                            birth_day_code = True
+                        elif ' '.join(text.lower().split()[:2:]) == 'set score' and len(text.lower().split()) == 3:
+                            # комманда, устанавливающая введенное значение для score
+                            try:
+                                if int(text.lower().split()[2]) < 0:
+                                    raise Exception
+                                score = int(text.lower().split()[2])
+                                text = ''
+                                if language == 'rus':
+                                    text1 = 'код успесшно активирован'
+                                    text1_x = 450
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code has been activated'
+                                    text1_x = 465
+                                    text1_y = 120
+                            except Exception:
+                                if language == 'rus':
+                                    text1 = 'код не найден'
+                                    text1_x = 510
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code not found'
+                                    text1_x = 515
+                                    text1_y = 120
+                        elif ' '.join(text.lower().split()[:2:]) == 'set money' and len(text.lower().split()) == 3:
+                            # комманда, устанавливающая введенное значение для score
+                            try:
+                                if int(text.lower().split()[2]) < 0:
+                                    raise Exception
+                                money = int(text.lower().split()[2])
+                                text = ''
+                                if language == 'rus':
+                                    text1 = 'код успесшно активирован'
+                                    text1_x = 450
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code has been activated'
+                                    text1_x = 465
+                                    text1_y = 120
+                            except Exception:
+                                if language == 'rus':
+                                    text1 = 'код не найден'
+                                    text1_x = 510
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code not found'
+                                    text1_x = 515
+                                    text1_y = 120
+                        else:
                             if language == 'rus':
                                 text1 = 'код не найден'
                                 text1_x = 510
@@ -225,15 +282,6 @@ def sets(screen, score, language, keys):
                                 text1 = 'code not found'
                                 text1_x = 515
                                 text1_y = 120
-                    else:
-                        if language == 'rus':
-                            text1 = 'код не найден'
-                            text1_x = 510
-                            text1_y = 120
-                        else:
-                            text1 = 'code not found'
-                            text1_x = 515
-                            text1_y = 120
                     text1_surf = f1.render(text1, True, BLACK)
                     text1_print = True
                     sleep(0.3)
@@ -298,24 +346,26 @@ def sets(screen, score, language, keys):
             pressed = pygame.mouse.get_pressed()
             if pressed[0]:  # обработка нажатий левой кнопки мыши
                 x1, y1 = pygame.mouse.get_pos()
-                if 875 <= x1 <= 975 and 75 <= y1 <= 107:  # проверка на коды
-                    if text.lower() == 'dino birthday':  # код для внешнего вида дино
-                        text = ''
+                if music_load_button.mouse_check((x1, y1)):
+                    filename = easygui.fileopenbox(filetypes=['*.mp3', '*.wav', '*.ogg'])
+                    try:
+                        pygame.mixer.music.load(filename)
+                        pygame.mixer.music.play(-1)
+                    except Exception:
+                        pygame.mixer.music.stop()
+                        error_sound.play()
+                elif 875 <= x1 <= 975 and 75 <= y1 <= 107:  # проверка на коды
+                    if is_from_game_cycle:
                         if language == 'rus':
-                            text1 = 'код успесшно активирован'
-                            text1_x = 450
+                            text1 = 'код не найден'
+                            text1_x = 510
                             text1_y = 120
                         else:
-                            text1 = 'code has been activated'
-                            text1_x = 465
+                            text1 = 'code not found'
+                            text1_x = 515
                             text1_y = 120
-                        birth_day_code = True
-                    elif ' '.join(text.lower().split()[:2:]) == 'set score' and len(text.lower().split()) == 3:
-                        # комманда, устанавливающая введенное значение для score
-                        try:
-                            if int(text.lower().split()[2]) < 0:
-                                raise Exception
-                            score = int(text.lower().split()[2])
+                    else:
+                        if text.lower() == 'dino birthday':  # код для внешнего вида дино
                             text = ''
                             if language == 'rus':
                                 text1 = 'код успесшно активирован'
@@ -325,7 +375,56 @@ def sets(screen, score, language, keys):
                                 text1 = 'code has been activated'
                                 text1_x = 465
                                 text1_y = 120
-                        except Exception:
+                            birth_day_code = True
+                        elif ' '.join(text.lower().split()[:2:]) == 'set score' and len(text.lower().split()) == 3:
+                            # комманда, устанавливающая введенное значение для score
+                            try:
+                                if int(text.lower().split()[2]) < 0:
+                                    raise Exception
+                                score = int(text.lower().split()[2])
+                                text = ''
+                                if language == 'rus':
+                                    text1 = 'код успесшно активирован'
+                                    text1_x = 450
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code has been activated'
+                                    text1_x = 465
+                                    text1_y = 120
+                            except Exception:
+                                if language == 'rus':
+                                    text1 = 'код не найден'
+                                    text1_x = 510
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code not found'
+                                    text1_x = 515
+                                    text1_y = 120
+                        elif ' '.join(text.lower().split()[:2:]) == 'set money' and len(text.lower().split()) == 3:
+                            # комманда, устанавливающая введенное значение для score
+                            try:
+                                if int(text.lower().split()[2]) < 0:
+                                    raise Exception
+                                money = int(text.lower().split()[2])
+                                text = ''
+                                if language == 'rus':
+                                    text1 = 'код успесшно активирован'
+                                    text1_x = 450
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code has been activated'
+                                    text1_x = 465
+                                    text1_y = 120
+                            except Exception:
+                                if language == 'rus':
+                                    text1 = 'код не найден'
+                                    text1_x = 510
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code not found'
+                                    text1_x = 515
+                                    text1_y = 120
+                        else:
                             if language == 'rus':
                                 text1 = 'код не найден'
                                 text1_x = 510
@@ -334,15 +433,6 @@ def sets(screen, score, language, keys):
                                 text1 = 'code not found'
                                 text1_x = 515
                                 text1_y = 120
-                    else:
-                        if language == 'rus':
-                            text1 = 'код не найден'
-                            text1_x = 510
-                            text1_y = 120
-                        else:
-                            text1 = 'code not found'
-                            text1_x = 515
-                            text1_y = 120
                     text1_surf = f1.render(text1, True, BLACK)
                     text1_print = True
                     sleep(0.3)
@@ -358,6 +448,7 @@ def sets(screen, score, language, keys):
                     control_text1_y = 170
                     control_text1_w = 200
                     control_text1_h = 35
+                    music_load_button = Button(450, 250, f3.render('Загрузить музыку', True, BLACK), BLACK)
                 elif 265 <= x1 <= 380 and 275 <= y1 <= 310:
                     language = 'eng'
                     text_lang1 = 'Language'
@@ -370,6 +461,7 @@ def sets(screen, score, language, keys):
                     control_text1_y = 170
                     control_text1_w = 125
                     control_text1_h = 35
+                    music_load_button = Button(500, 250, f3.render('Load music', True, BLACK), BLACK)
                 elif control_text1_x <= x1 <= control_text1_x + control_text1_w and \
                         control_text1_y <= y1 <= control_text1_y + control_text1_h:
                     control_settings = True
@@ -413,6 +505,12 @@ def sets(screen, score, language, keys):
                 screen.blit(text1_surf, (text1_x, text1_y))
 
             screen.blit(control_text1_surf, (control_text1_x, control_text1_y))
+
+            music_load_button.draw(screen)
+            if music_load_button.mouse_check(pygame.mouse.get_pos()):
+                music_load_button.color = 'red'
+            else:
+                music_load_button.color = BLACK
 
             if language == 'rus':
                 text_lang_rus_surf = f2.render(text_lang_rus, True, 'blue')
@@ -508,4 +606,4 @@ def sets(screen, score, language, keys):
         pygame.display.update()
 
     keys = [up_key, down_key, blue_ball_key, red_ball_key]
-    return birth_day_code, score, language, keys
+    return birth_day_code, score, language, keys, money
