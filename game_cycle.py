@@ -878,7 +878,6 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             bq3 = b.collide_check(d.watter_ball_sprites)
             if bq2:
                 b.hp -= 10
-                print(b.hp)
                 for ball in d.fare_ball_sprites:
                     ball.kill()
                 fire_status = False
