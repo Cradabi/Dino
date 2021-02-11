@@ -481,7 +481,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     watter_cacti = pygame.sprite.Group()
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
-                    fire_strelba = True
+                    watter_strelba = True
                 elif not was_scene_2 and was_scene_1:
                     was_scene_2 = True
                     cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
@@ -494,7 +494,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     watter_cacti = pygame.sprite.Group()
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
-                    watter_strelba = True
+                    fire_strelba = True
                 elif not was_scene_3 and was_scene_1 and was_scene_2:
                     was_scene_3 = True
                     money, fire_number, water_number = cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code,
@@ -878,7 +878,6 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             bq3 = b.collide_check(d.watter_ball_sprites)
             if bq2:
                 b.hp -= 10
-                print(b.hp)
                 for ball in d.fare_ball_sprites:
                     ball.kill()
                 fire_status = False
