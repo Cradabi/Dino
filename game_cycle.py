@@ -228,6 +228,11 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
     coin_sound = pygame.mixer.Sound('sounds/money_sound.mp3')
 
+    save_score = score
+    save_waterballs = water_number
+    save_fireballs = fire_number
+    save_money = money
+
     running = True
     while running:
 
@@ -443,7 +448,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 rand_time = randint(-10, 40)
                 next_barier = 'cactus'
         elif not all_cacti.spritedict and not birds.spritedict \
-                and not fare_cacti.spritedict and not watter_cacti.spritedict and not all_coin:  # проверка остались ли еще препятсвия
+                and not fare_cacti.spritedict and not watter_cacti.spritedict and not all_coin and jump_status == 0:
+            # проверка остались ли еще препятсвия
             stop_status = True
             if stop_t % 50 == 0:
                 if not was_scene_1:
@@ -1035,12 +1041,28 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
         if score > 2000 and not was_scene_1:
             stop_status = True
+            save_score = 2001
+            save_waterballs = water_number
+            save_fireballs = fire_number
+            save_money = money
         elif score > 4000 and not was_scene_2:
             stop_status = True
+            save_score = 4001
+            save_waterballs = water_number
+            save_fireballs = fire_number
+            save_money = money
         elif score > 6000 and not was_scene_3:
             stop_status = True
+            save_score = 6001
+            save_waterballs = water_number
+            save_fireballs = fire_number
+            save_money = money
         elif score > 8000 and not was_scene_4:
             stop_status = True
+            save_score = 8001
+            save_waterballs = water_number
+            save_fireballs = fire_number
+            save_money = money
         # отрисовка и изменение свойств объектов
         # ...
 
@@ -1049,6 +1071,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             running = False
         # обновление экрана
         pygame.display.flip()
+
+    return save_score, save_waterballs, save_fireballs, save_money
 
 
 def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, moon_list,
@@ -1070,8 +1094,9 @@ def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_nu
     game_over_img = pygame.image.load('imgs/game_over.png')
     game_over_img.set_colorkey('white')
 
-    origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number,
-                money, d, moon_list, sun_list)
+    score, water_number, fire_number, money = origin_dino(screen, color, score, HI, birthday_code, language, keys,
+                                                          water_number, fire_number,
+                                                          money, d, moon_list, sun_list)
 
     run = True
     while run:
@@ -1097,13 +1122,11 @@ def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_nu
                             dino1 = pygame.image.load('imgs/dino1.png')
                         dino1.set_colorkey('white')
                         d = Dino(d_x, d_y, birthday_code)
-                        score = 0
                         color = (255, 255, 255)
-                        money = 0
-                        water_number = 0
-                        fire_number = 0
-                        origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number,
-                                    money, d, moon_list, sun_list)
+                        score, water_number, fire_number, money = origin_dino(screen, color, score, HI, birthday_code,
+                                                                              language, keys,
+                                                                              water_number, fire_number,
+                                                                              money, d, moon_list, sun_list)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     run = False
