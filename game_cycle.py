@@ -23,8 +23,8 @@ HEIGHT = 800
 
 
 def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, d, moon_list,
-                sun_list):
-    if not pygame.mixer.music.get_busy():
+                sun_list, audio_turn_off):
+    if not pygame.mixer.music.get_busy() and not audio_turn_off:
         pygame.mixer.music.play(-1)
     up_key = keys[0]
     down_key = keys[1]
@@ -266,7 +266,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if event.key == pygame.K_ESCAPE:
                         quit()
                     elif event.key == 113:  # q
-                        sets(screen, score, language, keys, money, True)
+                        audio_turn_off = sets(screen, score, language, keys, money, True, audio_turn_off)
                     elif event.key == down_key:  # if event.unicode == 's':
                         status_dino = 'sit'
                         if not jump_status:
@@ -1072,11 +1072,11 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         # обновление экрана
         pygame.display.flip()
 
-    return save_score, save_waterballs, save_fireballs, save_money
+    return save_score, save_waterballs, save_fireballs, save_money, audio_turn_off
 
 
 def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, moon_list,
-               sun_list):
+               sun_list, audio_turn_off):
     clock = pygame.time.Clock()
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
@@ -1094,9 +1094,10 @@ def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_nu
     game_over_img = pygame.image.load('imgs/game_over.png')
     game_over_img.set_colorkey('white')
 
-    score, water_number, fire_number, money = origin_dino(screen, color, score, HI, birthday_code, language, keys,
-                                                          water_number, fire_number,
-                                                          money, d, moon_list, sun_list)
+    score, water_number, fire_number, money, audio_turn_off = origin_dino(screen, color, score, HI, birthday_code,
+                                                                          language, keys,
+                                                                          water_number, fire_number,
+                                                                          money, d, moon_list, sun_list, audio_turn_off)
 
     run = True
     while run:
@@ -1123,14 +1124,17 @@ def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_nu
                         dino1.set_colorkey('white')
                         d = Dino(d_x, d_y, birthday_code)
                         color = (255, 255, 255)
-                        score, water_number, fire_number, money = origin_dino(screen, color, score, HI, birthday_code,
-                                                                              language, keys,
-                                                                              water_number, fire_number,
-                                                                              money, d, moon_list, sun_list)
+                        score, water_number, fire_number, money, audio_turn_off = origin_dino(screen, color, score, HI,
+                                                                                              birthday_code,
+                                                                                              language, keys,
+                                                                                              water_number, fire_number,
+                                                                                              money, d, moon_list,
+                                                                                              sun_list, audio_turn_off)
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     run = False
-                    pygame.mixer.music.play(-1)
+                    if not audio_turn_off:
+                        pygame.mixer.music.play(-1)
 
         screen.blit(rerun_img, (500, 270))
         screen.blit(game_over_img, (400, 150))
