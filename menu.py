@@ -77,8 +77,10 @@ image_tank2.set_colorkey('white')
 print_tank1 = True
 
 filename = 'sounds/mario_sound.mp3'
+audio_turn_off = True
 pygame.mixer.music.load(filename)
-pygame.mixer.music.play(-1)
+if not audio_turn_off:
+    pygame.mixer.music.play(-1)
 
 if language == 'rus':
     text1 = f1.render('Начать игру', True, text_color)
@@ -98,8 +100,6 @@ road_cord_x2 = 2398
 road_speed = 10
 
 codes_open = False
-
-audio_turn_off = False
 
 # если надо до цикла отобразить объекты на экране
 screen.fill('black')
