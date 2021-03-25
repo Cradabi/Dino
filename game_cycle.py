@@ -21,9 +21,12 @@ FPS = 60
 WIDTH = 1200
 HEIGHT = 800
 
+menu_exit = False
+
 
 def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, d, moon_list,
                 sun_list, audio_turn_off):
+    global menu_exit
     if not pygame.mixer.music.get_busy() and not audio_turn_off:
         pygame.mixer.music.play(-1)
     up_key = keys[0]
@@ -102,6 +105,15 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     all_col = pygame.sprite.Group()
     fare_cacti = pygame.sprite.Group()
     watter_cacti = pygame.sprite.Group()
+
+    asteroid = pygame.image.load('imgs/asteroid.png')
+    asteroid = pygame.transform.scale(asteroid, (150, 67))
+    asteroid = pygame.transform.rotate(asteroid, 45)
+    asteroid = pygame.transform.flip(asteroid, True, False)
+    asteroid.set_colorkey('white')
+    asteroid_x = 100
+    asteroid_y = -120
+    f2 = pygame.font.SysFont('arial', 62)
 
     jump_sound = pygame.mixer.Sound('sounds/dino_jump_sound.mp3')
     score_1000_sound = pygame.mixer.Sound('sounds/dino_1000_sound.mp3')
@@ -241,11 +253,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
         # внутри игрового цикла ещё один цикл
         # приема и обработки сообщений
-        if boss_die_status == 0:
-            for event in pygame.event.get():
-                # при закрытии окна
-                if event.type == pygame.QUIT:
-                    quit()  # running = False
+
+        for event in pygame.event.get():
+            # при закрытии окна
+            if event.type == pygame.QUIT:
+                quit()  # running = False
+            if boss_die_status == 0:
                 if event.type == pygame.MOUSEBUTTONDOWN:  # обработка событий мыши
                     if event.button == 1 and not fire_status and fire_number and fire_strelba:
                         fire_number -= 1
@@ -265,7 +278,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         water_cor_x = d.x + 120
                 if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                     if event.key == pygame.K_ESCAPE:
-                        quit()
+                        menu_exit = True
+                        running = False
                     elif event.key == 113:  # q
                         audio_turn_off = sets(screen, score, language, keys, money, fire_number, water_number, True,
                                               audio_turn_off)
@@ -307,7 +321,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
             screen.fill(color)
             if d.jump_status == 0 and status_dino == 'run' and boss_die_status == 0:
                 d.run_anim(screen)
-            elif d.jump_status == 0 and status_dino == 'sit':
+            elif d.jump_status == 0 and status_dino == 'sit' and boss_die_status == 0:
                 d.sit_anim(screen)
             elif d.jump_status != 0 and status_dino == 'sit':
                 pass
@@ -830,22 +844,25 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     ball.kill()
                 water_status = False
             if b.hp <= 0 and d.jump_status == 0:
+                if boss_die_status == 0:
+                    boss_die_t = 1
+                    boss_die_status = 1
+                    road_speed = 0
                 b.jump_status = 1
                 boss_die_t += 1
-                boss_die_status = 1
-                road_speed = 0
-                if boss_die_t > 0 and boss_die_t <= 300:
-                    f2 = pygame.font.SysFont('arial', 62)
-                    text = f2.render("You win.", False, (83, 83, 83))
-                    screen.blit(text, (400, 250))
-                if boss_die_t > 300 and boss_die_t < 330:
-                    b.asteroid_x += 15
-                    b.asteroid_y += 25
-                    screen.blit(b.asteroid, (b.asteroid_x, b.asteroid_y))
                 # b.die(boss_die_t)
                 for boss in boss_group:
                     if boss.y > HEIGHT:
                         boss.kill()
+
+        if boss_die_status == 1:
+            if 0 < boss_die_t <= 300:
+                text = f2.render("You win.", False, (83, 83, 83))
+                screen.blit(text, (400, 250))
+            elif 300 < boss_die_t < 330:
+                asteroid_x += 15
+                asteroid_y += 25
+                screen.blit(asteroid, (asteroid_x, asteroid_y))
 
         # полет огенного шара:
         if fire_status:
@@ -1015,6 +1032,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
 def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, moon_list,
                sun_list, audio_turn_off):
+    global menu_exit
     clock = pygame.time.Clock()
     if birthday_code:
         dino1 = pygame.image.load('imgs/dino_bd_1.png')
@@ -1037,7 +1055,10 @@ def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_nu
                                                                           water_number, fire_number,
                                                                           money, d, moon_list, sun_list, audio_turn_off)
 
-    run = True
+    if menu_exit:
+        run = False
+    else:
+        run = True
     while run:
 
         clock.tick(FPS)
@@ -1068,6 +1089,8 @@ def game_cycle(screen, color, score, HI, birthday_code, language, keys, water_nu
                                                                                               water_number, fire_number,
                                                                                               money, d, moon_list,
                                                                                               sun_list, audio_turn_off)
+                        if menu_exit:
+                            run = False
             if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                 if event.key == pygame.K_ESCAPE:
                     run = False
