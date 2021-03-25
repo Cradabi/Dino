@@ -10,10 +10,7 @@ HEIGHT = 800
 BLACK = (0, 0, 0)
 
 
-# filename = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "files (*.wav *.mp3 *.ogg)")
-# input_file = easygui.fileopenbox(filetypes=['*.wav', '*.mp3', '*.ogg'])
-
-def sets(screen, score, language, keys, money, is_from_game_cycle):
+def sets(screen, score, language, keys, money, is_from_game_cycle , audio_turn_off):
     clock = pygame.time.Clock()
 
     time = 0
@@ -173,6 +170,15 @@ def sets(screen, score, language, keys, money, is_from_game_cycle):
     filename = ''
 
     error_sound = pygame.mixer.Sound('sounds/error_sound.mp3')
+
+    sound_on = pygame.image.load('imgs/audio_on.png')
+    sound_on.set_colorkey('white')
+    sound_on = pygame.transform.scale(sound_on, (75, 75))
+    sound_off = pygame.image.load('imgs/audio_off.png')
+    sound_off.set_colorkey('white')
+    sound_off = pygame.transform.scale(sound_off, (75, 75))
+
+
 
     running = True
     while running:
@@ -350,7 +356,8 @@ def sets(screen, score, language, keys, money, is_from_game_cycle):
                     filename = easygui.fileopenbox(filetypes=['*.mp3', '*.wav', '*.ogg'])
                     try:
                         pygame.mixer.music.load(filename)
-                        pygame.mixer.music.play(-1)
+                        if not audio_turn_off:
+                            pygame.mixer.music.play(-1)
                     except Exception:
                         pygame.mixer.music.stop()
                         error_sound.play()
@@ -462,6 +469,14 @@ def sets(screen, score, language, keys, money, is_from_game_cycle):
                     control_text1_w = 125
                     control_text1_h = 35
                     music_load_button = Button(500, 250, f3.render('Load music', True, BLACK), BLACK)
+                elif 855 <= x1 <= 930 and 220 <= y1 <= 295:
+                    if audio_turn_off:
+                        audio_turn_off = False
+                        pygame.mixer.music.play(-1)
+                    else:
+                        audio_turn_off = True
+                        pygame.mixer.music.stop()
+                    sleep(0.3)
                 elif control_text1_x <= x1 <= control_text1_x + control_text1_w and \
                         control_text1_y <= y1 <= control_text1_y + control_text1_h:
                     control_settings = True
@@ -535,6 +550,11 @@ def sets(screen, score, language, keys, money, is_from_game_cycle):
             if active and cursor_active:
                 pygame.draw.rect(screen, 'black', (cursor_x + txt_surface.get_width(), cursor_y, cursor_w, cursor_h))
 
+            if audio_turn_off:
+                screen.blit(sound_off, (855, 220))
+            else:
+                screen.blit(sound_on, (855, 220))
+
             if time % 20 == 0:
                 cursor_active = not cursor_active
 
@@ -606,4 +626,6 @@ def sets(screen, score, language, keys, money, is_from_game_cycle):
         pygame.display.update()
 
     keys = [up_key, down_key, blue_ball_key, red_ball_key]
-    return birth_day_code, score, language, keys, money
+    if not is_from_game_cycle:
+        return birth_day_code, score, language, keys, money, audio_turn_off
+    return audio_turn_off

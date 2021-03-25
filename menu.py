@@ -77,8 +77,10 @@ image_tank2.set_colorkey('white')
 print_tank1 = True
 
 filename = 'sounds/mario_sound.mp3'
+audio_turn_off = True
 pygame.mixer.music.load(filename)
-pygame.mixer.music.play(-1)
+if not audio_turn_off:
+    pygame.mixer.music.play(-1)
 
 if language == 'rus':
     text1 = f1.render('Начать игру', True, text_color)
@@ -161,14 +163,14 @@ if __name__ == '__main__':
                 pygame.mouse.set_visible(True)
                 # pygame.mixer.music.stop()
                 game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number,
-                           fire_number, money, moon_list, sun_list)  # запуск игры
+                           fire_number, money, moon_list, sun_list, audio_turn_off)  # запуск игры
             elif 635 <= x1 <= 670 and 395 <= y1 <= 405 and not codes_open:
                 codes_open = True
                 subprocess.Popen(r'explorer /open, secrets\more_secrets\codes.txt')
             elif settings_button.mouse_check((x1, y1)):
                 pygame.mouse.set_visible(True)
-                birthday_code, score, language, keys, money = sets(screen, score, language, keys, money,
-                                                                   False)  # настройки
+                birthday_code, score, language, keys, money, audio_turn_off = sets(screen, score, language, keys, money,
+                                                                                   False, audio_turn_off)  # настройки
                 if language == 'rus':
                     text1 = f1.render('Начать игру', True, text_color)
                     text2 = f1.render('Настройки', True, text_color)
