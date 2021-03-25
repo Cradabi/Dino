@@ -70,6 +70,10 @@ class Dino(pygame.sprite.Sprite):
         self.watter_ball_sprites = pygame.sprite.Group()
         self.watter_ball_sprite = pygame.sprite.Sprite()
 
+        self.jump_status = 0
+        self.jump_time = 0
+        self.fast_jump = 0
+
     def run_anim(self, screen):  # меняет ноги у бегущего прямо дино и выводит дино
         if self.image == self.sit_img1:
             self.image = self.run_img2
@@ -155,6 +159,75 @@ class Dino(pygame.sprite.Sprite):
             self.HI_s = self.cur.execute(
                 """Update Hi Set HI = {} Where id = 0""".format(score)).fetchall()
         self.con.commit()
+
+    def jump(self, screen, status_dino, dino1, boss_die_status, d_y):
+        if self.jump_status == 1:  # дино летит вверх
+            self.jump_time += 1
+            if self.jump_time % 20 != 0:
+                if self.jump_time % 2 == 0:
+                    self.fast_jump += 1
+                self.y -= 14
+                self.y += self.fast_jump
+                self.image = dino1
+                # screen.blit(dino1, (d_x, d_y))
+            else:
+                self.jump_status = 2
+                self.jump_time = 0
+            if status_dino == 'sit':
+                self.jump_status = 4
+        elif self.jump_status == 2:  # дино весит в воздухе
+            self.jump_time += 1
+            if self.jump_time % 1 != 0:
+                self.image = dino1
+                # screen.blit(dino1, (d_x, d_y))
+            else:
+                self.jump_status = 3
+                self.jump_time = 0
+        elif self.jump_status == 3:  # дино просто опускается
+            self.jump_time += 1
+            if self.jump_time % 20 != 0 and self.y < 410:
+                self.y += 14
+                self.y -= self.fast_jump
+                if self.jump_time % 2 == 0:
+                    self.fast_jump -= 1
+                self.image = dino1
+                # screen.blit(dino1, (d_x, d_y))
+            else:
+                self.jump_status = 0
+                self.jump_time = 0
+                self.fast_jump = 0
+                # d.y = 210
+                if status_dino == 'run' and boss_die_status == 0:
+                    self.run_anim(screen)
+                elif status_dino == 'sit':
+                    self.sit_anim(screen)
+
+            if status_dino == 'sit':
+                self.jump_status = 4
+
+        elif self.jump_status == 4:  # дино резко опускается т.к. была нажата клавиша вниз
+            self.jump_time += 2
+            if self.jump_time % 20 != 0 and self.y < 410:
+                self.y += 28
+                self.y -= self.fast_jump
+                if self.jump_time % 2 == 0:
+                    self.fast_jump -= 2
+                self.image = dino1
+                # screen.blit(dino1, (d_x, d_y))
+            else:
+                self.jump_status = 0
+                self.jump_time = 0
+                self.fast_jump = 0
+                if status_dino == 'run' and boss_die_status == 0:
+                    self.run_anim(screen)
+                elif status_dino == 'sit':
+                    if self.birthday:
+                        self.y = d_y + 40
+                    else:
+                        self.y = d_y + 34
+
+                    self.sit_anim(screen)
+                self.sit_anim(screen)
 
     def update(self, screen):  # обновляет и выводит дино
         self.rect = self.image.get_rect()

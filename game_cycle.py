@@ -175,7 +175,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     cloud_x8 = sun_list[8]
     cloud_x9 = sun_list[9]
     cloud_x10 = sun_list[10]
-    jump_status = 0
+    # jump_status = 0
     road_cord_x1 = 0
     road_cord_x2 = 2398
     boss_die_status = 0
@@ -191,12 +191,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
     next_barier = 'cactus'
     last_cactus = True
     score_str = str(score)
-    jump_time = 0
+    # jump_time = 0
     time = -1
     HI_str = str(HI)
     HI_t = 0
     HI_coard_y = 500 + 200
-    fast_jump = 0
+    # fast_jump = 0
     bird_height = 2
     fire_strelba = False
     watter_strelba = False
@@ -267,16 +267,17 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if event.key == pygame.K_ESCAPE:
                         quit()
                     elif event.key == 113:  # q
-                        audio_turn_off = sets(screen, score, language, keys, money, True, audio_turn_off)
+                        audio_turn_off = sets(screen, score, language, keys, money, fire_number, water_number, True,
+                                              audio_turn_off)
                     elif event.key == down_key:  # if event.unicode == 's':
                         status_dino = 'sit'
-                        if not jump_status:
+                        if not d.jump_status:
                             d.y = d_y + 34  # d.y += 34
-                        if not jump_status:
+                        if not d.jump_status:
                             d.sit_anim(screen)
                     elif event.key == up_key and status_dino != 'sit':  # elif event.unicode == 'w':
-                        if jump_status == 0:  # and not stop_status:
-                            jump_status = 1
+                        if d.jump_status == 0:  # and not stop_status:
+                            d.jump_status = 1
                             jump_sound.play()
                     elif event.key == red_ball_key and not fire_status and fire_number and fire_strelba:
                         fire_number -= 1
@@ -298,17 +299,17 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     if event.key == down_key:  # if event.unicode == 's':
                         status_dino = 'run'
                         d.y = d_y  # d.y -= 34
-                        if not jump_status and boss_die_status == 0:
+                        if not d.jump_status and boss_die_status == 0:
                             d.run_anim(screen)
 
         time += 1
         if time % 10 == 0:
             screen.fill(color)
-            if jump_status == 0 and status_dino == 'run' and boss_die_status == 0:
+            if d.jump_status == 0 and status_dino == 'run' and boss_die_status == 0:
                 d.run_anim(screen)
-            elif jump_status == 0 and status_dino == 'sit':
+            elif d.jump_status == 0 and status_dino == 'sit':
                 d.sit_anim(screen)
-            elif jump_status != 0 and status_dino == 'sit':
+            elif d.jump_status != 0 and status_dino == 'sit':
                 pass
                 # if d.y <= 180:
                 #    d.y += 20
@@ -317,74 +318,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 #    jump_status = 0
 
         # прыжок:
-        if running:
-            if jump_status == 1:  # дино летит вверх
-                jump_time += 1
-                if jump_time % 20 != 0:
-                    if jump_time % 2 == 0:
-                        fast_jump += 1
-                    d.y -= 14
-                    d.y += fast_jump
-                    d.image = dino1
-                    # screen.blit(dino1, (d_x, d_y))
-                else:
-                    jump_status = 2
-                    jump_time = 0
-                if status_dino == 'sit':
-                    jump_status = 4
-            elif jump_status == 2:  # дино весит в воздухе
-                jump_time += 1
-                if jump_time % 1 != 0:
-                    d.image = dino1
-                    # screen.blit(dino1, (d_x, d_y))
-                else:
-                    jump_status = 3
-                    jump_time = 0
-            elif jump_status == 3:  # дино просто опускается
-                jump_time += 1
-                if jump_time % 20 != 0 and d.y < 410:
-                    d.y += 14
-                    d.y -= fast_jump
-                    if jump_time % 2 == 0:
-                        fast_jump -= 1
-                    d.image = dino1
-                    # screen.blit(dino1, (d_x, d_y))
-                else:
-                    jump_status = 0
-                    jump_time = 0
-                    fast_jump = 0
-                    # d.y = 210
-                    if status_dino == 'run' and boss_die_status == 0:
-                        d.run_anim(screen)
-                    elif status_dino == 'sit':
-                        d.sit_anim(screen)
-
-                if status_dino == 'sit':
-                    jump_status = 4
-
-            elif jump_status == 4:  # дино резко опускается т.к. была нажата клавиша вниз
-                jump_time += 2
-                if jump_time % 20 != 0 and d.y < 410:
-                    d.y += 28
-                    d.y -= fast_jump
-                    if jump_time % 2 == 0:
-                        fast_jump -= 2
-                    d.image = dino1
-                    # screen.blit(dino1, (d_x, d_y))
-                else:
-                    jump_status = 0
-                    jump_time = 0
-                    fast_jump = 0
-                    if status_dino == 'run' and boss_die_status == 0:
-                        d.run_anim(screen)
-                    elif status_dino == 'sit':
-                        if birthday_code:
-                            d.y = d_y + 40
-                        else:
-                            d.y = d_y + 34
-
-                        d.sit_anim(screen)
-                    d.sit_anim(screen)
+        d.jump(screen, status_dino, dino1, boss_die_status, d_y)
 
         if not stop_status:
             if (time % (70 + rand_time) == 0 and next_barier == 'cactus' and last_cactus) or (
@@ -449,7 +383,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 rand_time = randint(-10, 40)
                 next_barier = 'cactus'
         elif not all_cacti.spritedict and not birds.spritedict \
-                and not fare_cacti.spritedict and not watter_cacti.spritedict and not all_coin and jump_status == 0:
+                and not fare_cacti.spritedict and not watter_cacti.spritedict and not all_coin and d.jump_status == 0:
             # проверка остались ли еще препятсвия
             stop_status = True
             if stop_t % 50 == 0:
@@ -891,11 +825,11 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 fire_status = False
             if bq3:
                 b.hp -= 10
-                #print(b.hp)
+                # print(b.hp)
                 for ball in d.watter_ball_sprites:
                     ball.kill()
                 water_status = False
-            if b.hp <= 0:
+            if b.hp <= 0 and d.jump_status == 0:
                 b.jump_status = 1
                 boss_die_t += 1
                 boss_die_status = 1
