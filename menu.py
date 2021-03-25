@@ -79,6 +79,7 @@ print_tank1 = True
 filename = 'sounds/mario_sound.mp3'
 audio_turn_off = True
 pygame.mixer.music.load(filename)
+pygame.mixer.music.set_volume(0.5)
 if not audio_turn_off:
     pygame.mixer.music.play(-1)
 
