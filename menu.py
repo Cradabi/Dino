@@ -20,6 +20,11 @@ DINO_COLOR = (83, 83, 83)
 color = (255, 255, 255)
 size = width, height = WIDTH, HEIGHT
 screen = pygame.display.set_mode(size)
+cap = pygame.image.load('imgs/caption/caption.png')
+cap.set_colorkey('white')
+cap = pygame.transform.scale(cap, (32, 32))
+pygame.display.set_caption('Dino')
+pygame.display.set_icon(cap)
 screen.fill(color)
 score = 0
 con = sqlite3.connect('HI.db')
@@ -170,8 +175,10 @@ if __name__ == '__main__':
                 subprocess.Popen(r'explorer /open, secrets\more_secrets\codes.txt')
             elif settings_button.mouse_check((x1, y1)):
                 pygame.mouse.set_visible(True)
-                birthday_code, score, language, keys, money, audio_turn_off = sets(screen, score, language, keys, money,
-                                                                                   False, audio_turn_off)  # настройки
+                birthday_code, score, language, keys, money, \
+                fire_number, water_number, audio_turn_off = sets(screen, score, language, keys, money,
+                                                                 fire_number, water_number, False,
+                                                                 audio_turn_off)  # настройки
                 if language == 'rus':
                     text1 = f1.render('Начать игру', True, text_color)
                     text2 = f1.render('Настройки', True, text_color)

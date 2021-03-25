@@ -10,7 +10,7 @@ HEIGHT = 800
 BLACK = (0, 0, 0)
 
 
-def sets(screen, score, language, keys, money, is_from_game_cycle , audio_turn_off):
+def sets(screen, score, language, keys, money, fire_number, water_number, is_from_game_cycle, audio_turn_off):
     clock = pygame.time.Clock()
 
     time = 0
@@ -178,8 +178,6 @@ def sets(screen, score, language, keys, money, is_from_game_cycle , audio_turn_o
     sound_off.set_colorkey('white')
     sound_off = pygame.transform.scale(sound_off, (75, 75))
 
-
-
     running = True
     while running:
 
@@ -256,11 +254,59 @@ def sets(screen, score, language, keys, money, is_from_game_cycle , audio_turn_o
                                     text1_x = 515
                                     text1_y = 120
                         elif ' '.join(text.lower().split()[:2:]) == 'set money' and len(text.lower().split()) == 3:
-                            # комманда, устанавливающая введенное значение для score
+                            # комманда, устанавливающая введенное значение для money
                             try:
                                 if int(text.lower().split()[2]) < 0:
                                     raise Exception
                                 money = int(text.lower().split()[2])
+                                text = ''
+                                if language == 'rus':
+                                    text1 = 'код успесшно активирован'
+                                    text1_x = 450
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code has been activated'
+                                    text1_x = 465
+                                    text1_y = 120
+                            except Exception:
+                                if language == 'rus':
+                                    text1 = 'код не найден'
+                                    text1_x = 510
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code not found'
+                                    text1_x = 515
+                                    text1_y = 120
+                        elif ' '.join(text.lower().split()[:2:]) == 'set fireballs' and len(text.lower().split()) == 3:
+                            # комманда, устанавливающая введенное значение для money
+                            try:
+                                if int(text.lower().split()[2]) < 0:
+                                    raise Exception
+                                fire_number = int(text.lower().split()[2])
+                                text = ''
+                                if language == 'rus':
+                                    text1 = 'код успесшно активирован'
+                                    text1_x = 450
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code has been activated'
+                                    text1_x = 465
+                                    text1_y = 120
+                            except Exception:
+                                if language == 'rus':
+                                    text1 = 'код не найден'
+                                    text1_x = 510
+                                    text1_y = 120
+                                else:
+                                    text1 = 'code not found'
+                                    text1_x = 515
+                                    text1_y = 120
+                        elif ' '.join(text.lower().split()[:2:]) == 'set waterballs' and len(text.lower().split()) == 3:
+                            # комманда, устанавливающая введенное значение для money
+                            try:
+                                if int(text.lower().split()[2]) < 0:
+                                    raise Exception
+                                water_number = int(text.lower().split()[2])
                                 text = ''
                                 if language == 'rus':
                                     text1 = 'код успесшно активирован'
@@ -627,5 +673,5 @@ def sets(screen, score, language, keys, money, is_from_game_cycle , audio_turn_o
 
     keys = [up_key, down_key, blue_ball_key, red_ball_key]
     if not is_from_game_cycle:
-        return birth_day_code, score, language, keys, money, audio_turn_off
+        return birth_day_code, score, language, keys, money, fire_number, water_number, audio_turn_off
     return audio_turn_off

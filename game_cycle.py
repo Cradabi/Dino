@@ -221,7 +221,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         was_scene_4 = True
         boss_fight = True
         pygame.mixer.music.load('sounds/menu_sound_1.mp3')
-        pygame.mixer.music.play(-1)
+        if not audio_turn_off:
+            pygame.mixer.music.play(-1)
 
     b = Boss(600, 366)
     boss_group = pygame.sprite.GroupSingle(b)
@@ -257,10 +258,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         water_cor_x = d.x + 89
                         water_cor_y = d.y
                     if status_dino == 'sit' and not fire_status:
-                        fire_cor_y = 234
+                        fire_cor_y = d.y
                         fire_cor_x = d.x + 120
                     if status_dino == 'sit' and not water_status:
-                        water_cor_y = 234
+                        water_cor_y = d.y
                         water_cor_x = d.x + 120
                 if event.type == pygame.KEYDOWN:  # обработка событий клавиатуры
                     if event.key == pygame.K_ESCAPE:
@@ -283,7 +284,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         fire_cor_x = d.x + 89
                         fire_cor_y = d.y
                         if status_dino == 'sit':
-                            fire_cor_y = 234
+                            fire_cor_y = d.y
                             fire_cor_x = d.x + 120
                     elif event.key == blue_ball_key and not water_status and water_number and watter_strelba:
                         water_number -= 1
@@ -291,7 +292,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                         water_cor_x = d.x + 89
                         water_cor_y = d.y
                         if status_dino == 'sit':
-                            water_cor_y = 234
+                            water_cor_y = d.y
                             water_cor_x = d.x + 120
                 if event.type == pygame.KEYUP:
                     if event.key == down_key:  # if event.unicode == 's':
@@ -890,7 +891,7 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 fire_status = False
             if bq3:
                 b.hp -= 10
-                print(b.hp)
+                #print(b.hp)
                 for ball in d.watter_ball_sprites:
                     ball.kill()
                 water_status = False
@@ -1008,6 +1009,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 pygame.draw.rect(screen, 'red', (285, 605, 40, 60))
 
             x_print = 340
+            if b.hp < 0:
+                b.hp = 0
             for i in range(len(str(b.hp))):
                 screen.blit(nums_dict[str(b.hp)[i]], (x_print, 618))
                 x_print += 30
