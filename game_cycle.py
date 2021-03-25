@@ -204,12 +204,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
         was_scene_1 = False
     else:
         was_scene_1 = True
-        fire_strelba = True
+        watter_strelba = True
     if score <= 4000:
         was_scene_2 = False
     else:
         was_scene_2 = True
-        watter_strelba = True
+        fire_strelba = True
     if score <= 6000:
         was_scene_3 = False
     else:
@@ -529,7 +529,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     all_col = pygame.sprite.Group()
                     boss_fight = True
                     pygame.mixer.music.load('sounds/menu_sound_1.mp3')
-                    pygame.mixer.music.play(-1)
+                    if not audio_turn_off:
+                        pygame.mixer.music.play(-1)
             else:
                 stop_t += 1
 
