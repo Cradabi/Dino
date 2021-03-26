@@ -74,6 +74,30 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
         dino1 = pygame.image.load('imgs/dino1.png')
     dino1.set_colorkey('white')
     d = Dino(d_x, d_y)
+
+    moon_x = moon_list[0]
+    star_x1 = moon_list[1]
+    star_x2 = moon_list[2]
+    star_x3 = moon_list[3]
+    star_x4 = moon_list[4]
+    star_x5 = moon_list[5]
+    star_x6 = moon_list[6]
+    star_x7 = moon_list[7]
+    star_x8 = moon_list[8]
+    star_x9 = moon_list[9]
+    star_x10 = moon_list[10]
+    cloud_x1 = sun_list[0]
+    cloud_x2 = sun_list[1]
+    cloud_x3 = sun_list[2]
+    cloud_x4 = sun_list[3]
+    cloud_x5 = sun_list[4]
+    cloud_x6 = sun_list[5]
+    cloud_x7 = sun_list[6]
+    cloud_x8 = sun_list[7]
+    cloud_x9 = sun_list[8]
+    cloud_x10 = sun_list[9]
+    sun_x = sun_list[10]
+
     running = True
     mag_cord_x = WIDTH
     mag_cord_y = 384
@@ -117,28 +141,6 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
         screen.fill(color)
         screen.blit(dino1, (d_x, d_y + 95))
         screen.blit(road1, (0, 470))
-        moon_x = moon_list[0]
-        star_x1 = moon_list[1]
-        star_x2 = moon_list[2]
-        star_x3 = moon_list[3]
-        star_x4 = moon_list[4]
-        star_x5 = moon_list[5]
-        star_x6 = moon_list[6]
-        star_x7 = moon_list[7]
-        star_x8 = moon_list[8]
-        star_x9 = moon_list[9]
-        star_x10 = moon_list[10]
-        cloud_x1 = sun_list[0]
-        cloud_x2 = sun_list[1]
-        cloud_x3 = sun_list[2]
-        cloud_x4 = sun_list[3]
-        cloud_x5 = sun_list[4]
-        cloud_x6 = sun_list[5]
-        cloud_x7 = sun_list[6]
-        cloud_x8 = sun_list[7]
-        cloud_x9 = sun_list[8]
-        cloud_x10 = sun_list[9]
-        sun_x = sun_list[10]
         if color == (0, 0, 0):
             screen.blit(moon, (moon_x, 80))
             screen.blit(star, (star_x1, 125))
@@ -426,3 +428,7 @@ def cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, 
             screen.blit(nums_dict[score_out[i]], (HI_coard_x, HI_coard_y))
             HI_coard_x += 30
         pygame.display.flip()
+    moon_list = [moon_x, star_x1, star_x2, star_x3, star_x4, star_x5, star_x6, star_x7, star_x8, star_x9, star_x10]
+    sun_list = [sun_x, cloud_x1, cloud_x2, cloud_x3, cloud_x4, cloud_x5, cloud_x6, cloud_x7, cloud_x8, cloud_x9,
+                cloud_x10]
+    return moon_list, sun_list

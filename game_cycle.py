@@ -404,8 +404,8 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                 if not was_scene_1:
                     was_scene_1 = True
                     moon_list, sun_list = cut_scen_1(screen, color, score, HI, road_cord_x1, birthday_code, language,
-                                                     keys, water_number,
-                                                     fire_number, money, road_speed, road_v, moon_list, sun_list)
+                                                     keys, water_number, fire_number, money, road_speed, road_v,
+                                                     moon_list, sun_list)
                     moon_x = moon_list[0]
                     star_x1 = moon_list[1]
                     star_x2 = moon_list[2]
@@ -439,8 +439,31 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     watter_strelba = True
                 elif not was_scene_2 and was_scene_1:
                     was_scene_2 = True
-                    cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money, road_speed, road_v, moon_list, sun_list)
+                    moon_list, sun_list = cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language,
+                                                     keys, water_number, fire_number, money, road_speed, road_v,
+                                                     moon_list, sun_list)
+                    moon_x = moon_list[0]
+                    star_x1 = moon_list[1]
+                    star_x2 = moon_list[2]
+                    star_x3 = moon_list[3]
+                    star_x4 = moon_list[4]
+                    star_x5 = moon_list[5]
+                    star_x6 = moon_list[6]
+                    star_x7 = moon_list[7]
+                    star_x8 = moon_list[8]
+                    star_x9 = moon_list[9]
+                    star_x10 = moon_list[10]
+                    sun_x = sun_list[0]
+                    cloud_x1 = sun_list[1]
+                    cloud_x2 = sun_list[2]
+                    cloud_x3 = sun_list[3]
+                    cloud_x4 = sun_list[4]
+                    cloud_x5 = sun_list[5]
+                    cloud_x6 = sun_list[6]
+                    cloud_x7 = sun_list[7]
+                    cloud_x8 = sun_list[8]
+                    cloud_x9 = sun_list[9]
+                    cloud_x10 = sun_list[10]
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -452,10 +475,32 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     fire_strelba = True
                 elif not was_scene_3 and was_scene_1 and was_scene_2:
                     was_scene_3 = True
-                    money, fire_number, water_number = cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code,
-                                                                  language, keys, water_number,
-                                                                  fire_number, money, road_speed, road_v, moon_list,
-                                                                  sun_list)
+                    money, fire_number, water_number, \
+                    moon_list, sun_list = cut_scen_3(screen, color, score, HI, road_cord_x1, birthday_code, language,
+                                                     keys, water_number, fire_number, money, road_speed, road_v,
+                                                     moon_list, sun_list)
+                    moon_x = moon_list[0]
+                    star_x1 = moon_list[1]
+                    star_x2 = moon_list[2]
+                    star_x3 = moon_list[3]
+                    star_x4 = moon_list[4]
+                    star_x5 = moon_list[5]
+                    star_x6 = moon_list[6]
+                    star_x7 = moon_list[7]
+                    star_x8 = moon_list[8]
+                    star_x9 = moon_list[9]
+                    star_x10 = moon_list[10]
+                    sun_x = sun_list[0]
+                    cloud_x1 = sun_list[1]
+                    cloud_x2 = sun_list[2]
+                    cloud_x3 = sun_list[3]
+                    cloud_x4 = sun_list[4]
+                    cloud_x5 = sun_list[5]
+                    cloud_x6 = sun_list[6]
+                    cloud_x7 = sun_list[7]
+                    cloud_x8 = sun_list[8]
+                    cloud_x9 = sun_list[9]
+                    cloud_x10 = sun_list[10]
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
@@ -466,8 +511,31 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     all_col = pygame.sprite.Group()
                 elif not was_scene_4 and was_scene_1 and was_scene_2 and was_scene_3:
                     was_scene_4 = True
-                    cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language, keys, water_number,
-                               fire_number, money, road_speed, road_v, moon_list, sun_list)
+                    moon_list, sun_list = cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language,
+                                                     keys, water_number, fire_number, money, road_speed, road_v,
+                                                     moon_list, sun_list)
+                    moon_x = moon_list[0]
+                    star_x1 = moon_list[1]
+                    star_x2 = moon_list[2]
+                    star_x3 = moon_list[3]
+                    star_x4 = moon_list[4]
+                    star_x5 = moon_list[5]
+                    star_x6 = moon_list[6]
+                    star_x7 = moon_list[7]
+                    star_x8 = moon_list[8]
+                    star_x9 = moon_list[9]
+                    star_x10 = moon_list[10]
+                    sun_x = sun_list[0]
+                    cloud_x1 = sun_list[1]
+                    cloud_x2 = sun_list[2]
+                    cloud_x3 = sun_list[3]
+                    cloud_x4 = sun_list[4]
+                    cloud_x5 = sun_list[5]
+                    cloud_x6 = sun_list[6]
+                    cloud_x7 = sun_list[7]
+                    cloud_x8 = sun_list[8]
+                    cloud_x9 = sun_list[9]
+                    cloud_x10 = sun_list[10]
                     stop_status = False
                     road_v = 1.0
                     score_t = 0
