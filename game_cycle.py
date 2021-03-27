@@ -27,6 +27,7 @@ menu_exit = False
 def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_number, fire_number, money, d, moon_list,
                 sun_list, audio_turn_off):
     global menu_exit
+    menu_exit = False
     if not pygame.mixer.music.get_busy() and not audio_turn_off:
         pygame.mixer.music.play(-1)
     up_key = keys[0]
