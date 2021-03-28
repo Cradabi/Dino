@@ -438,6 +438,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
                     watter_strelba = True
+                    save_score = 2001
+                    save_waterballs = water_number
+                    save_fireballs = fire_number
+                    save_money = money
                 elif not was_scene_2 and was_scene_1:
                     was_scene_2 = True
                     moon_list, sun_list = cut_scen_2(screen, color, score, HI, road_cord_x1, birthday_code, language,
@@ -474,6 +478,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
                     fire_strelba = True
+                    save_score = 4001
+                    save_waterballs = water_number
+                    save_fireballs = fire_number
+                    save_money = money
                 elif not was_scene_3 and was_scene_1 and was_scene_2:
                     was_scene_3 = True
                     money, fire_number, water_number, \
@@ -510,6 +518,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     watter_cacti = pygame.sprite.Group()
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
+                    save_score = 6001
+                    save_waterballs = water_number
+                    save_fireballs = fire_number
+                    save_money = money
                 elif not was_scene_4 and was_scene_1 and was_scene_2 and was_scene_3:
                     was_scene_4 = True
                     moon_list, sun_list = cut_scen_4(screen, color, score, HI, road_cord_x1, birthday_code, language,
@@ -546,6 +558,10 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
                     all_coin = pygame.sprite.Group()
                     all_col = pygame.sprite.Group()
                     boss_fight = True
+                    save_score = 8001
+                    save_waterballs = water_number
+                    save_fireballs = fire_number
+                    save_money = money
                     pygame.mixer.music.load('sounds/menu_sound_1.mp3')
                     if not audio_turn_off:
                         pygame.mixer.music.play(-1)
@@ -1065,28 +1081,12 @@ def origin_dino(screen, color, score, HI, birthday_code, language, keys, water_n
 
         if score > 2000 and not was_scene_1:
             stop_status = True
-            save_score = 2001
-            save_waterballs = water_number
-            save_fireballs = fire_number
-            save_money = money
         elif score > 4000 and not was_scene_2:
             stop_status = True
-            save_score = 4001
-            save_waterballs = water_number
-            save_fireballs = fire_number
-            save_money = money
         elif score > 6000 and not was_scene_3:
             stop_status = True
-            save_score = 6001
-            save_waterballs = water_number
-            save_fireballs = fire_number
-            save_money = money
         elif score > 8000 and not was_scene_4:
             stop_status = True
-            save_score = 8001
-            save_waterballs = water_number
-            save_fireballs = fire_number
-            save_money = money
         # отрисовка и изменение свойств объектов
         # ...
 
