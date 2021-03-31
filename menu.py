@@ -4,7 +4,6 @@
 from game_cycle import origin_dino, game_cycle
 from settings import sets
 from button import Button
-from time import sleep
 import pygame
 import os
 import subprocess
@@ -35,7 +34,7 @@ HI = int(HI_s[0][0])
 clock = pygame.time.Clock()
 f1 = pygame.font.Font(None, 60)
 f1.set_italic(True)
-f2 = pygame.font.Font(None, 18)
+f2 = pygame.font.Font(None, 32)
 t = 0
 water_number = 0
 fire_number = 0
@@ -107,6 +106,8 @@ road_speed = 10
 
 codes_open = False
 
+menu = True
+
 # если надо до цикла отобразить объекты на экране
 screen.fill('black')
 
@@ -123,70 +124,117 @@ if __name__ == '__main__':
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    quit()
+                    if not menu:
+                        menu = True
+                    else:
+                        quit()
 
         # --------
         # изменение объектов и многое др.
         # --------
-        t += 1
-        if t % 10 == 0:
-            print_tank1 = not print_tank1
+        if menu:
+            t += 1
+            if t % 10 == 0:
+                print_tank1 = not print_tank1
 
-        screen.fill(menu_color)
+            screen.fill(menu_color)
 
-        # двигает дорожку:
-        screen.blit(road1, (road_cord_x1, 450))
-        screen.blit(road2, (road_cord_x2, 450))
-        if road_cord_x2 <= 0:
-            road_cord_x1 = 0
-            road_cord_x2 = 2398
+            # двигает дорожку:
+            screen.blit(road1, (road_cord_x1, 450))
+            screen.blit(road2, (road_cord_x2, 450))
+            if road_cord_x2 <= 0:
+                road_cord_x1 = 0
+                road_cord_x2 = 2398
+            else:
+                road_cord_x1 -= road_speed
+                road_cord_x2 -= road_speed
+
+            if print_tank1:  # TODO сделать дорожку
+                screen.blit(image_tank1, (570, 315))
+            else:
+                screen.blit(image_tank2, (570, 316))
+
+            play_button.draw(screen)
+            settings_button.draw(screen)
+
+            if play_button.mouse_check(pygame.mouse.get_pos()):
+                play_button.color = 'red'
+            else:
+                play_button.color = text_color
+
+            if settings_button.mouse_check(pygame.mouse.get_pos()):
+                settings_button.color = 'red'
+            else:
+                settings_button.color = text_color
+
+            pressed = pygame.mouse.get_pressed()
+            if pressed[0]:  # обработка нажатий левой кнопки мыши
+                x1, y1 = pygame.mouse.get_pos()
+                if play_button.mouse_check((x1, y1)):
+                    pygame.mouse.set_visible(True)
+                    # pygame.mixer.music.stop()
+                    # game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number,
+                    #           fire_number, money, moon_list, sun_list, audio_turn_off)  # запуск игры
+                    menu = False
+
+                    back_surf = pygame.Surface((WIDTH, HEIGHT))
+                    back_surf.set_alpha(100)
+                    back_surf.fill('black')
+                    screen.blit(back_surf, (0, 0))
+
+                    surf = pygame.Surface((400, 200))
+                    surf.fill('white')
+                    surf.set_alpha(255)
+                    screen.blit(surf, (400, 200))
+
+                    text_plot = f2.render('Сюжет', True, (0, 0, 0))
+                    plot_btn = Button(440, 280, text_plot, 'black')
+                    text_inf = f2.render('Бесконечный режим', True, (0, 0, 0))
+                    inf_btn = Button(540, 280, text_inf, 'black')
+
+                elif 635 <= x1 <= 670 and 395 <= y1 <= 405 and not codes_open:
+                    codes_open = True
+                    subprocess.Popen(r'explorer /open, secrets\more_secrets\codes.txt')
+                elif settings_button.mouse_check((x1, y1)):
+                    pygame.mouse.set_visible(True)
+                    birthday_code, score, language, keys, money, \
+                    fire_number, water_number, audio_turn_off = sets(screen, score, language, keys, money,
+                                                                     fire_number, water_number, False,
+                                                                     audio_turn_off)  # настройки
+                    if language == 'rus':
+                        text1 = f1.render('Начать игру', True, text_color)
+                        text2 = f1.render('Настройки', True, text_color)
+                    elif language == 'eng':
+                        text1 = f1.render('Play', True, text_color)
+                        text2 = f1.render('Settings', True, text_color)
+                    play_button = Button(100, 150, text1, text_color)
+                    settings_button = Button(110, 300, text2, text_color)
         else:
-            road_cord_x1 -= road_speed
-            road_cord_x2 -= road_speed
+            plot_btn.draw(screen)
 
-        if print_tank1:  # TODO сделать дорожку
-            screen.blit(image_tank1, (570, 315))
-        else:
-            screen.blit(image_tank2, (570, 316))
+            if plot_btn.mouse_check(pygame.mouse.get_pos()):
+                plot_btn.color = 'red'
+            else:
+                plot_btn.color = 'black'
 
-        play_button.draw(screen)
-        settings_button.draw(screen)
+            inf_btn.draw(screen)
 
-        if play_button.mouse_check(pygame.mouse.get_pos()):
-            play_button.color = 'red'
-        else:
-            play_button.color = text_color
+            if inf_btn.mouse_check(pygame.mouse.get_pos()):
+                inf_btn.color = 'red'
+            else:
+                inf_btn.color = 'black'
 
-        if settings_button.mouse_check(pygame.mouse.get_pos()):
-            settings_button.color = 'red'
-        else:
-            settings_button.color = text_color
-
-        pressed = pygame.mouse.get_pressed()
-        if pressed[0]:  # обработка нажатий левой кнопки мыши
-            x1, y1 = pygame.mouse.get_pos()
-            if play_button.mouse_check((x1, y1)):
-                pygame.mouse.set_visible(True)
-                # pygame.mixer.music.stop()
-                game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number,
-                           fire_number, money, moon_list, sun_list, audio_turn_off)  # запуск игры
-            elif 635 <= x1 <= 670 and 395 <= y1 <= 405 and not codes_open:
-                codes_open = True
-                subprocess.Popen(r'explorer /open, secrets\more_secrets\codes.txt')
-            elif settings_button.mouse_check((x1, y1)):
-                pygame.mouse.set_visible(True)
-                birthday_code, score, language, keys, money, \
-                fire_number, water_number, audio_turn_off = sets(screen, score, language, keys, money,
-                                                                 fire_number, water_number, False,
-                                                                 audio_turn_off)  # настройки
-                if language == 'rus':
-                    text1 = f1.render('Начать игру', True, text_color)
-                    text2 = f1.render('Настройки', True, text_color)
-                elif language == 'eng':
-                    text1 = f1.render('Play', True, text_color)
-                    text2 = f1.render('Settings', True, text_color)
-                play_button = Button(100, 150, text1, text_color)
-                settings_button = Button(110, 300, text2, text_color)
+            pressed = pygame.mouse.get_pressed()
+            if pressed[0]:  # обработка нажатий левой кнопки мыши
+                x1, y1 = pygame.mouse.get_pos()
+                if plot_btn.mouse_check((x1, y1)):
+                    game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number,
+                               fire_number, money, moon_list, sun_list, audio_turn_off, False)  # запуск игры
+                    menu = True
+                elif inf_btn.mouse_check((x1, y1)):
+                    game_cycle(screen, color, score, HI, birthday_code, language, keys, water_number,
+                               fire_number, money, moon_list, sun_list, audio_turn_off, True)  # запуск игры
+                    menu = True
 
         # обновление экрана
         pygame.display.update()
