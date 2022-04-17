@@ -72,13 +72,21 @@ cloud_x10 = 678
 moon_list = [moon_x, star_x1, star_x2, star_x3, star_x4, star_x5, star_x6, star_x7, star_x8, star_x9, star_x10]
 sun_list = [cloud_x1, cloud_x2, cloud_x3, cloud_x4, cloud_x5, cloud_x6, cloud_x7, cloud_x8, cloud_x9, cloud_x10, sun_x]
 
-image_tank1 = pygame.image.load('imgs/tank1.png')
-image_tank1 = pygame.transform.scale(image_tank1, (200, 152))
-image_tank1.set_colorkey('white')
-image_tank2 = pygame.image.load('imgs/tank2.png')
-image_tank2 = pygame.transform.scale(image_tank2, (200, 152))
-image_tank2.set_colorkey('white')
-print_tank1 = True
+# отложено до более мирных времен
+# image_tank1 = pygame.image.load('imgs/tank1.png')
+# image_tank1 = pygame.transform.scale(image_tank1, (200, 152))
+# image_tank1.set_colorkey('white')
+# image_tank2 = pygame.image.load('imgs/tank2.png')
+# image_tank2 = pygame.transform.scale(image_tank2, (200, 152))
+# image_tank2.set_colorkey('white')
+print1 = True
+
+image_dino1 = pygame.image.load('imgs/dino_bd_2.png')
+image_dino1 = pygame.transform.scale(image_dino1, (90, 132))
+image_dino1.set_colorkey('white')
+image_dino2 = pygame.image.load('imgs/dino_bd_3.png')
+image_dino2 = pygame.transform.scale(image_dino2, (90, 132))
+image_dino2.set_colorkey('white')
 
 filename = 'sounds/mario_sound.mp3'
 audio_turn_off = True
@@ -135,7 +143,7 @@ if __name__ == '__main__':
         if menu:
             t += 1
             if t % 10 == 0:
-                print_tank1 = not print_tank1
+                print1 = not print1
 
             screen.fill(menu_color)
 
@@ -149,10 +157,14 @@ if __name__ == '__main__':
                 road_cord_x1 -= road_speed
                 road_cord_x2 -= road_speed
 
-            if print_tank1:  # TODO сделать дорожку
-                screen.blit(image_tank1, (570, 315))
+            if print1:
+                # screen.blit(image_tank1, (570, 315))
+                screen.blit(image_dino1, (600, 335))
+                pass
             else:
-                screen.blit(image_tank2, (570, 316))
+                # screen.blit(image_tank2, (570, 316))
+                screen.blit(image_dino2, (600, 335))
+                pass
 
             play_button.draw(screen)
             settings_button.draw(screen)
@@ -187,10 +199,16 @@ if __name__ == '__main__':
                     surf.set_alpha(255)
                     screen.blit(surf, (400, 200))
 
-                    text_plot = f2.render('Сюжет', True, (0, 0, 0))
-                    plot_btn = Button(440, 280, text_plot, 'black')
-                    text_inf = f2.render('Бесконечный режим', True, (0, 0, 0))
-                    inf_btn = Button(540, 280, text_inf, 'black')
+                    if language == 'rus':
+                        text_plot = f2.render('Сюжет', True, (0, 0, 0))
+                        plot_btn = Button(440, 280, text_plot, 'black')
+                        text_inf = f2.render('Бесконечный режим', True, (0, 0, 0))
+                        inf_btn = Button(540, 280, text_inf, 'black')
+                    elif language == 'eng':
+                        text_plot = f2.render('Story mode', True, (0, 0, 0))
+                        plot_btn = Button(440, 280, text_plot, 'black')
+                        text_inf = f2.render('Endless mode', True, (0, 0, 0))
+                        inf_btn = Button(600, 280, text_inf, 'black')
 
                 elif 635 <= x1 <= 670 and 395 <= y1 <= 405 and not codes_open:
                     codes_open = True
